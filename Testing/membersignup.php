@@ -1,6 +1,4 @@
-<?php
-include 'includes/dbh.inc.php';
-?>
+
 
 <!DOCTYPE html>
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -55,7 +53,8 @@ include 'includes/dbh.inc.php';
     </style>
 
     <?php
-    if (isset($_POST) && isset($_POST["btnSubmit"])) {
+    include "includes/dbh.inc.php";
+    if (isset($_POST) && isset($_POST["btnSubmit"]) && !empty($_FILES['memberprofilepic']['tmp_name'])) {
         $secretKey = '6LcrZPEcAAAAADHir9dVmYUYIDN2HedLkrlqo6Fv';
         $token = $_POST["g-toekn"];
         $ip = $_SERVER['REMOTE_ADDR'];
@@ -65,10 +64,33 @@ include 'includes/dbh.inc.php';
         $response = json_decode($request);
 
         if ($response->success) {
-            echo '<h1>Validation Success</h1>';
-        } else {
-            echo '<h1>Validation Failed</h1>';
+           $memberEmail = $_POST['memberemail'];
+           $memberPass = $_POST['memberpassword'];
+           $memberUsername = $_POST['memberusername'];
+           $memberTelno = $_POST['membertelno'];
+           $memberProfilepic = addslashes(file_get_contents($_FILES['memberprofilepic']['tmp_name']));
+           $memberStatus = 1;
+           $memberJoineddate = date("Y/m/d");
+          
+
+           //validate duplicate username
+           $sqlcheckdupname = mysqli_query($conn,"SELECT * FROM `member` WHERE name ='$memberUsername'");
+           if (mysqli_num_rows($sqlcheckdupname) == 0 && !empty($_FILES['memberprofilepic']['tmp_name'])) {
+            $insert = "INSERT INTO `member` (`name`, `email`,  `pass`, `telNo`, `status`, `datejoined`, `profilepic`) VALUES ('$memberUsername', '$memberEmail',  '$memberPass', '$memberTelno', '$memberStatus', '$memberJoineddate', '$memberProfilepic')";
+
+           
+            if (mysqli_query($conn, $insert)){
+                
+            }
+            else{
+                echo "Error occured: " . mysqli_error($conn);
+            }
         }
+         else {
+           ;
+        }
+        }
+        
     }
     ?>
 </head>
@@ -81,7 +103,7 @@ include 'includes/dbh.inc.php';
 
                 </div>
                 <div class="col-8">
-                    <form style="padding-top: 20vh;" class="form-group" method="post">
+                    <form style="padding-top: 20vh;" class="form-group" method="POST" enctype="multipart/form-data">
                         <input type="hidden" id="g-token" name="g-toekn" />
 
                         <p style="color: #b5b0aa; font-family: 'Questrial'; padding-right: 6vw;">E-mail &nbsp;<a href="#" data-toggle="tooltip" title="The email is used for sign-in and other purpose such as 2FA on our website"><i class='fas fa-question-circle'></i></a></p>
