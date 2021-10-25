@@ -63,7 +63,7 @@
                     
 
                     <a href="homePage.html" class="btn btn-dark"
-                        style="font-size: 0.75vw; font-family: 'Questrial'; width: 20vw; margin-bottom: 2vh; font-size: 2em;"><img src="E:\FYP\htdocs\FYP--ComputerArc\Testing\user.png" alt="Logo" style="width: 17vw;padding-bottom: 5vh;">Join as Member</a>
+                        style="font-size: 0.75vw; font-family: 'Questrial'; width: 20vw; margin-bottom: 2vh; font-size: 2em;"><img src="user.png" alt="Logo" style="width: 17vw;padding-bottom: 5vh;">Join as Member</a>
                     
                 </div>
                 <div class="col-3">
@@ -82,7 +82,7 @@
                    
 
                     <a href="#" class="btn btn-dark"
-                    style="font-size: 0.75vw; font-family: 'Questrial'; width: 20vw; margin-bottom: 2vh; font-size: 2em;"> <img src="E:\FYP\htdocs\FYP--ComputerArc\Testing\partner.png" alt="Logo" style="width: 17vw;padding-bottom: 5vh;">Join as Partner</a>
+                    style="font-size: 0.75vw; font-family: 'Questrial'; width: 20vw; margin-bottom: 2vh; font-size: 2em;"> <img src="partner.png" alt="Logo" style="width: 17vw;padding-bottom: 5vh;">Join as Partner</a>
                 </div>
                 <div class="col-3">
                     

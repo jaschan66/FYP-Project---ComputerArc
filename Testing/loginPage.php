@@ -89,10 +89,10 @@
 
                 </div>
                 <div class="col-6" style="text-align: center;">
-                    <p style="color: #b5b0aa; font-family: 'Questrial'; width: 20vw;">Join ComputerArc and discover the world of PC</p>
-                    <p style="color: #b5b0aa; font-family: 'Questrial'; width: 20vw;">It's free and easy to use</p>  
-                    <img src="E:\FYP\htdocs\FYP--ComputerArc\Testing\Logo stuff\image-removebg-preview.png" alt="Logo" style="width: 20vw;padding-bottom: 5vh;">
-                    <a href="chooseSignUp.html" class="btn btn-dark"
+                    <p style="color: #b5b0aa; font-family: 'Questrial'; padding-left:2vw; width: 20vw;">Join ComputerArc and discover the world of PC</p>
+                    <p style="color: #b5b0aa; font-family: 'Questrial'; padding-left:2vw; width: 20vw;">It's free and easy to use</p>  
+                    <img src="Logo stuff\image-removebg-preview.png" alt="Logo" style="width: 20vw;padding-bottom: 5vh;">
+                    <a href="chooseSignUp.php" class="btn btn-dark"
                     style="font-size: 0.75vw; font-family: 'Questrial'; width: 20vw; margin-bottom: 2vh;">Join ComputerArc</a>
                 </div>
                 <div class="col-3">

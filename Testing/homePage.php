@@ -177,7 +177,7 @@
 <body>
     <form id="form1" runat="server">
 
-        <nav class="navbar navbar-expand-sm bg-white navbar-light">
+        <nav class="navbar navbar-expand-sm bg-white navbar-light" style="max-height: 3vh;margin-top: 3vh;">
             <!-- Brand/logo -->
             <a class="navbar-brand" href="homePage.html">
                 <img src="Logo stuff\arc-logo-removebg-preview.png" alt="logo"
@@ -213,7 +213,7 @@
                     <a class="nav-link" style="font-size: 1vw;" href="Category.aspx">Auction</a>
                 </li>
                 <li class="nav-item" style="padding-right:1vw">
-                    <a class="nav-link" style="font-size: 1vw;" href="AboutUs.html">About Us</a>
+                    <a class="nav-link" style="font-size: 1vw;" href="AboutUs.php">About Us</a>
                 </li>
             </ul>
         
@@ -226,25 +226,15 @@
 
 
 
-                <li class="nav-item dropdown" style="padding-right:1vw" runat="server" id="loginDDL">
+                <li class="nav-item" style="padding-right:1vw" >
 
-                    <a class="nav-link dropdown-toggle" href="#" style="font-size: 1vw;" id="navbardrop1" data-toggle="dropdown">
-                        Login
+                    <a class="nav-link" href="loginPage.php" style="font-size: 1vw;" >
+                        Get Started
                     </a>
 
-                    <div class="dropdown-menu">
-                        <a class="dropdown-item" style="font-size: 1vw;" href="signInCustomer.aspx">Login as Customer</a>
-                        <a class="dropdown-item" style="font-size: 1vw;" href="signInArtist.aspx">Login as Artist</a>
-
-                    </div>
+                    
                 </li>
 
-                <li class="nav-item" style="padding-right:1vw">
-                    <asp:Label runat="server" ID="hypLink2">
-                        <a class="nav-link hypLink" style="font-size: 1vw;" href="signUp.aspx">Sign up</a>
-
-                    </asp:Label>
-                </li>
 
             </ul>
         </div>
@@ -266,22 +256,22 @@
                     </ul>
                     <div class="carousel-inner">
                         <div class="carousel-item active">
-                            <img src="96b6e8d3-72e4-49b0-be3f-3c49656d1458._CR0,0,1464,600_PT0_SX1464__.jpg"
-                                alt="New York" width="1100" height="500">
+                            <img src="HomePage Design Photo/96b6e8d3-72e4-49b0-be3f-3c49656d1458._CR0,0,1464,600_PT0_SX1464__.jpg"
+                                alt="The Organ" width="1100" height="500">
                             <div class="carousel-caption">
                                 <h3 style="font-size: 3vw;">The Organ</h3>
                                 <p style="font-size: 1vw;">Powerful organ with wisdom</p>
                             </div>
                         </div>
                         <div class="carousel-item">
-                            <img src="4a4zp609ufe51.png" alt="Mystery" width="1100" height="">
+                            <img src="HomePage Design Photo/4a4zp609ufe51.png" alt="Dream Workspace" width="1100" height="">
                             <div class="carousel-caption">
                                 <h3 style="font-size: 3vw;">Dream Workspace</h3>
                                 <p style="font-size: 1vw;">Make it your dream</p>
                             </div>
                         </div>
                         <div class="carousel-item">
-                            <img src="image_2021-07-15_213513.png" alt="The Beast" width="1100" height="500">
+                            <img src="HomePage Design Photo/image_2021-07-15_213513.png" alt="The Beast" width="1100" height="500">
                             <div class="carousel-caption">
                                 <h3 style="font-size: 3vw;">The Beast</h3>
                                 <p style="font-size: 1vw;">Own the beast</p>
@@ -322,7 +312,7 @@
                 <table style="width:100vw;">
                     <tr>
                         <td class="productTD" style="width:25vw">
-                            <img class="img_img" src="20190316104702_53156.jpg" alt="Colourful Kudan">
+                            <img class="img_img" src="Product Photo/20190316104702_53156.jpg" alt="Colourful Kudan">
                             <p class="img__description text-center"
                                 style="padding-top:20vh;height:50.2vh;width:25.1vw;color:black;font-weight:700;font-size: 1vw;">
                                 Colourful Kudan<br /><br />RM 9999.00<br /><br />
@@ -330,7 +320,7 @@
                             </p>
                         </td>
                         <td class="productTD" style="width:25vw">
-                            <img class="img_img" src="20-236-551-V01_1024x1024.jpg" alt="Corsair Vengeance RGB PRO"
+                            <img class="img_img" src="Product Photo/20-236-551-V01_1024x1024.jpg" alt="Corsair Vengeance RGB PRO"
                                 width="25vw">
                             <p class="img__description text-center"
                                 style="padding-top:20vh;height:50.2vh;width:25.1vw;color:black;font-weight:700;font-size: 1vw;">
@@ -339,7 +329,7 @@
                             </p>
                         </td>
                         <td class="productTD" style="width:25vw">
-                            <img class="img_img" src="DIY-CAS-SEGOTEP-LUX2-BLK-1-1_1024x1024.jpg"
+                            <img class="img_img" src="Product Photo/DIY-CAS-SEGOTEP-LUX2-BLK-1-1_1024x1024.jpg"
                                 alt="Segotep Lux II PC Casing">
                             <p class="img__description text-center"
                                 style="padding-top:20vh;height:50.2vh;width:25.1vw;color:black;font-weight:700;font-size: 1vw;">
@@ -348,7 +338,7 @@
                             </p>
                         </td>
                         <td class="productTD" style="width:25vw">
-                            <img class="img_img" src="69d9e63f0cc4edd000bfd61b7e646811.jpg" alt="Asrock H470M-HDV MATX">
+                            <img class="img_img" src="Product Photo/69d9e63f0cc4edd000bfd61b7e646811.jpg" alt="Asrock H470M-HDV MATX">
                             <p class="img__description text-center"
                                 style="padding-top:20vh;height:50.2vh;width:25.1vw;color:black;font-weight:700;font-size: 1vw;">
                                 Asrock H470M-HDV MATX<br /><br />RM 319.00<br /><br />
@@ -375,7 +365,7 @@
                 <table style="width:100vw">
                     <tr>
                         <td class="productTD" style="width:25vw">
-                            <img class="img_img" src="Toshiba_3.5Hdd_F-700x700.png" alt="TOSHIBA HDD 3.5 1TB SATA">
+                            <img class="img_img" src="Product Photo/Toshiba_3.5Hdd_F-700x700.png" alt="TOSHIBA HDD 3.5 1TB SATA">
                             <p class="img__description text-center"
                                 style="padding-top:20vh;height:50.2vh;width:25.1vw;color:black;font-weight:700;font-size: 1vw;">
                                 TOSHIBA HDD 3.5" 1TB SATA<br /><br />RM 175.00<br /><br />
@@ -383,7 +373,7 @@
                             </p>
                         </td>
                         <td class="productTD" style="width:25vw">
-                            <img class="img_img" src="SAM-970EvoPlus_SSD_F2-700x700.png"
+                            <img class="img_img" src="Product Photo/SAM-970EvoPlus_SSD_F2-700x700.png"
                                 alt="SAMSUNG SSD M.2 970EVO PLUS 1TB">
                             <p class="img__description text-center"
                                 style="padding-top:20vh;height:50.2vh;width:25.1vw;color:black;font-weight:700;font-size: 1vw;">
@@ -392,7 +382,7 @@
                             </p>
                         </td>
                         <td class="productTD" style="width:25vw">
-                            <img class="img_img" src="0b08551e285ed6831acf2970df0e951f-1.jpg"
+                            <img class="img_img" src="Product Photo/0b08551e285ed6831acf2970df0e951f-1.jpg"
                                 alt="Corsair CV CV450 80 Plus Bronze">
                             <p class="img__description text-center"
                                 style="padding-top:20vh;height:50.2vh;width:25.1vw;color:black;font-weight:700;font-size: 1vw;">
@@ -401,7 +391,7 @@
                             </p>
                         </td>
                         <td class="productTD" style="width:25vw">
-                            <img class="img_img" src="66558456_7640314848.jpg"
+                            <img class="img_img" src="Product Photo/66558456_7640314848.jpg"
                                 alt="Corsair Internal Power Individually Sleeved PSU Cables Pro Kit - White">
                             <p class="img__description text-center"
                                 style="padding-top:20vh;height:50.2vh;width:25.1vw;color:black;font-weight:700;font-size: 1vw;">
@@ -440,7 +430,7 @@
                 <table style="width:100vw">
                     <tr>
                         <td class="productTD" style="width:25vw">
-                            <img class="img_img" src="Toshiba_3.5Hdd_F-700x700.png" alt="TOSHIBA HDD 3.5 1TB SATA">
+                            <img class="img_img" src="Product Photo/Toshiba_3.5Hdd_F-700x700.png" alt="TOSHIBA HDD 3.5 1TB SATA">
                             <p class="img__description text-center"
                                 style="padding-top:20vh;height:50.2vh;width:25.1vw;color:black;font-weight:700;font-size: 1vw;">
                                 TOSHIBA HDD 3.5" 1TB SATA<br /><br />RM 175.00<br /><br />
@@ -448,7 +438,7 @@
                             </p>
                         </td>
                         <td class="productTD" style="width:25vw">
-                            <img class="img_img" src="SAM-970EvoPlus_SSD_F2-700x700.png"
+                            <img class="img_img" src="Product Photo/SAM-970EvoPlus_SSD_F2-700x700.png"
                                 alt="SAMSUNG SSD M.2 970EVO PLUS 1TB">
                             <p class="img__description text-center"
                                 style="padding-top:20vh;height:50.2vh;width:25.1vw;color:black;font-weight:700;font-size: 1vw;">
@@ -457,7 +447,7 @@
                             </p>
                         </td>
                         <td class="productTD" style="width:25vw">
-                            <img class="img_img" src="0b08551e285ed6831acf2970df0e951f-1.jpg"
+                            <img class="img_img" src="Product Photo/0b08551e285ed6831acf2970df0e951f-1.jpg"
                                 alt="Corsair CV CV450 80 Plus Bronze">
                             <p class="img__description text-center"
                                 style="padding-top:20vh;height:50.2vh;width:25.1vw;color:black;font-weight:700;font-size: 1vw;">
@@ -466,7 +456,7 @@
                             </p>
                         </td>
                         <td class="productTD" style="width:25vw">
-                            <img class="img_img" src="66558456_7640314848.jpg"
+                            <img class="img_img" src="Product Photo/66558456_7640314848.jpg"
                                 alt="Corsair Internal Power Individually Sleeved PSU Cables Pro Kit - White">
                             <p class="img__description text-center"
                                 style="padding-top:20vh;height:50.2vh;width:25.1vw;color:black;font-weight:700;font-size: 1vw;">
@@ -498,7 +488,7 @@
         </div>
 
         <div class="row" style="height:100vh;">
-            <div class="col-6  text-center" style="background-image: url('martin-katler-7wCxlBfGMdk-unsplash (4).jpg'); font-family:'Questrial'; max-width:100%;
+            <div class="col-6  text-center" style="background-image: url('HomePage Design Photo/martin-katler-7wCxlBfGMdk-unsplash (4).jpg'); font-family:'Questrial'; max-width:100%;
                 max-height:100%; background-repeat: no-repeat; background-size: cover; ">
                 <p class="text-center fade" style=" font-size:4vw;padding-top:45vh;color:white">PC Parts</p>
                 <a href="Category.aspx?category=popurbanart" class="btn"
@@ -506,7 +496,7 @@
 
             </div>
             <div class="col-6 text-center"
-                style="background-image: url('Verification (2) (1) (1).png'); font-family:'Questrial'; background-size: cover;">
+                style="background-image: url('HomePage Design Photo/Verification (2) (1) (1).png'); font-family:'Questrial'; background-size: cover;">
 
                 <p class=" text-center fade" style=" font-size:4vw;padding-top:45vh;color:white">Pre-Build PC</p>
                 <a href="Category.aspx?category=fashionicons" class="btn"
@@ -516,7 +506,7 @@
         </div>
 
         <div class="row"
-            style="height:100vh;background-image: url('5437549.jpg');background-repeat: no-repeat; background-size: cover;height:100vh">
+            style="height:100vh;background-image: url('HomePage Design Photo/5437549.jpg');background-repeat: no-repeat; background-size: cover;height:100vh">
             <div class="col-12" style="max-height: 50vh;">
                 <p class="text-center fade"
                     style="font-family:'Questrial'; font-size:7vw;padding-top:15vh;color:white">
@@ -537,7 +527,7 @@
                     <table style="width:100vw;">
                         <tr>
                             <td class="productTD" style="width:25vw">
-                                <img class="img_img" src="20190316104702_53156_adobespark.png" alt="Colourful Kudan">
+                                <img class="img_img" src="Product Photo/20190316104702_53156_adobespark.png" alt="Colourful Kudan">
                                 <p class="img__descriptionG text-center"
                                     style="padding-top:20vh;height:50.2vh;width:25.1vw;color:white;font-weight:700;font-size: 1vw;">
                                     Colourful Kudan<br /><br />RM 9999.00<br /><br />
@@ -546,7 +536,7 @@
                                 </p>
                             </td>
                             <td class="productTD" style="width:25vw">
-                                <img class="img_img" src="20-236-551-V01_1024x1024_adobespark.png" alt="Corsair Vengeance RGB PRO"
+                                <img class="img_img" src="Product Photo/20-236-551-V01_1024x1024_adobespark.png" alt="Corsair Vengeance RGB PRO"
                                     width="25vw">
                                 <p class="img__descriptionG text-center"
                                     style="padding-top:20vh;height:50.2vh;width:25.1vw;color:white;font-weight:700;font-size: 1vw;">
@@ -556,7 +546,7 @@
                                 </p>
                             </td>
                             <td class="productTD" style="width:25vw">
-                                <img class="img_img" src="DIY-CAS-SEGOTEP-LUX2-BLK-1-1_1024x1024-removebg.png"
+                                <img class="img_img" src="Product Photo/DIY-CAS-SEGOTEP-LUX2-BLK-1-1_1024x1024-removebg.png"
                                     alt="Segotep Lux II PC Casing">
                                 <p class="img__descriptionG text-center"
                                     style="padding-top:20vh;height:50.2vh;width:25.1vw;color:white;font-weight:700;font-size: 1vw;">
@@ -566,7 +556,7 @@
                                 </p>
                             </td>
                             <td class="productTD" style="width:25vw">
-                                <img class="img_img" src="107451fcf9f5193bd8ec16daa91b75ea_adobespark.png"
+                                <img class="img_img" src="Product Photo/107451fcf9f5193bd8ec16daa91b75ea_adobespark.png"
                                     alt="sus ROG Strix B460-F ATX Gaming Motherboard">
                                 <p class="img__descriptionG text-center"
                                     style="padding-top:20vh;height:50.2vh;width:25.1vw;color:white;font-weight:700;font-size: 1vw;">
