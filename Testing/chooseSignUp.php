@@ -54,15 +54,15 @@
     <div class="row">
         <div class="col-6 "
             style="height: 100vh; background-image: linear-gradient(to right, #1f2428 80%, #2c3037 )">
-            <div class="row" style="padding-top: 30vh;">
-                <div class="col-3">
-
+            <div class="row" >
+                <div class="col-3" style="padding-top:2vh">
+                <a href="loginPage.php" ><i class='fas fa-angle-left' style="color:white; font-size:48px"></i></a>
                 </div>
-                <div class="col-6" style="text-align: center;">
+                <div class="col-6" style="text-align: center; padding-top: 30vh;">
                     <p style="color: #b5b0aa; font-family: 'Questrial'; width: 20vw; margin-left: 1.5vw;">Join ComputerArc and discover the world of PC</p>
                     
 
-                    <a href="homePage.html" class="btn btn-dark"
+                    <a href="membersignup.php" class="btn btn-dark"
                         style="font-size: 0.75vw; font-family: 'Questrial'; width: 20vw; margin-bottom: 2vh; font-size: 2em;"><img src="user.png" alt="Logo" style="width: 17vw;padding-bottom: 5vh;">Join as Member</a>
                     
                 </div>
@@ -81,7 +81,7 @@
                     <p style="color: #b5b0aa; font-family: 'Questrial'; width: 20vw; margin-left: 1.5vw;">Join ComputerArc and discover the world of PC</p>
                    
 
-                    <a href="#" class="btn btn-dark"
+                    <a href="partnersignup.php" class="btn btn-dark"
                     style="font-size: 0.75vw; font-family: 'Questrial'; width: 20vw; margin-bottom: 2vh; font-size: 2em;"> <img src="partner.png" alt="Logo" style="width: 17vw;padding-bottom: 5vh;">Join as Partner</a>
                 </div>
                 <div class="col-3">

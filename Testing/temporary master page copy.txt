@@ -6,6 +6,7 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
     <script src='https://kit.fontawesome.com/a076d05399.js'></script>
     <link rel="icon" href="Logo stuff\favicon-32x32.png" type="image/x-icon">
+    <link href='https://fonts.googleapis.com/css?family=Questrial' rel='stylesheet'>
     <style>
 * {
             box-sizing: border-box;
@@ -70,72 +71,67 @@ html,
 <body>
     <form id="form1" runat="server">
 
-        <nav class="navbar navbar-expand-sm bg-white navbar-light">
+       <nav class="navbar navbar-expand-sm bg-white navbar-light" style="max-height: 3vh;margin-top: 3vh;">
             <!-- Brand/logo -->
             <a class="navbar-brand" href="homePage.html">
                 <img src="Logo stuff\arc-logo-removebg-preview.png" alt="logo"
                     style="width:7vh;height:2.5vh;padding-bottom:0.3vh;background-repeat: no-repeat; background-size: cover;">
             </a>
 
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
+                <span class="navbar-toggler-icon"></span>
+            </button>
             <!-- Links -->
+            <div class="collapse navbar-collapse" id="collapsibleNavbar">
             <ul class="navbar-nav mr-auto"
-                style="font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;">
+                style="font-family:'Questrial">
                 <li class="nav-item dropdown" style="padding-right:1vw">
-                    <a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown" style="font-size: 1vw;">
                         Products
                     </a>
                     <div class="dropdown-menu">
-                        <a class="dropdown-item" href="Category.aspx?category=popurbanart">PC Part</a>
-                        <a class="dropdown-item" href="Category.aspx?category=fashionicons">Pre-build PC</a>
+                        <a class="dropdown-item" style="font-size: 1vw;" href="Category.aspx?category=popurbanart">PC Part</a>
+                        <a class="dropdown-item" style="font-size: 1vw;" href="Category.aspx?category=fashionicons">Pre-build PC</a>
                     </div>
                 </li>
                 <li class="nav-item" style="padding-right:1vw">
-                    <a class="nav-link" href="Category.aspx">Build A Desktop</a>
+                    <a class="nav-link" style="font-size: 1vw;" href="Category.aspx">Build A Desktop</a>
                 </li>
                 <li class="nav-item" style="padding-right:1vw">
-                    <a class="nav-link" href="Category.aspx">Forum</a>
+                    <a class="nav-link" style="font-size: 1vw;" href="Category.aspx">Forum</a>
                 </li>
                 <li class="nav-item" style="padding-right:1vw">
-                    <a class="nav-link" href="Category.aspx">Raffle</a>
+                    <a class="nav-link" style="font-size: 1vw;" href="Category.aspx">Raffle</a>
                 </li>
                 <li class="nav-item" style="padding-right:1vw">
-                    <a class="nav-link" href="Category.aspx">Auction</a>
+                    <a class="nav-link" style="font-size: 1vw;" href="Category.aspx">Auction</a>
                 </li>
                 <li class="nav-item" style="padding-right:1vw">
-                    <a class="nav-link" href="AboutUs.html">About Us</a>
+                    <a class="nav-link" style="font-size: 1vw;" href="AboutUs.php">About Us</a>
                 </li>
             </ul>
+        
             <button id="profileBtn" class="btn" OnServerClick="Account_Click" type="button" runat="server"
                 style="text-align:right;padding-right:1vw"><i class="far fa-address-card"></i></button>
             <button id="logoutBtn" class="btn" OnServerClick="Logout_Click" type="button" runat="server"
                 style="text-align:right;padding-right:1vw;display: none;"><i class='fas fa-sign-out-alt'></i></button>
-            <ul class="navbar-nav" style="font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;">
+            <ul class="navbar-nav" style="font-family:'Questrial'">
 
 
 
 
-                <li class="nav-item dropdown" style="padding-right:1vw" runat="server" id="loginDDL">
+                <li class="nav-item" style="padding-right:1vw" >
 
-                    <a class="nav-link dropdown-toggle" href="#" id="navbardrop1" data-toggle="dropdown">
-                        Login
+                    <a class="nav-link" href="loginPage.php" style="font-size: 1vw;" >
+                        Get Started
                     </a>
 
-                    <div class="dropdown-menu">
-                        <a class="dropdown-item" href="signInCustomer.aspx">Login as Customer</a>
-                        <a class="dropdown-item" href="signInArtist.aspx">Login as Artist</a>
-
-                    </div>
+                    
                 </li>
 
-                <li class="nav-item" style="padding-right:1vw">
-                    <asp:Label runat="server" ID="hypLink2">
-                        <a class="nav-link hypLink" href="signUp.aspx">Sign up</a>
-
-                    </asp:Label>
-                </li>
 
             </ul>
-
+        </div>
         </nav>
         <hr />
 <!--Content after here-->

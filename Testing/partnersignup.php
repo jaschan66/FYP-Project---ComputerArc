@@ -7,7 +7,7 @@ include 'includes/dbh.inc.php';
 <meta charset=" utf-8" />
 
 <head>
-    <title>ComputerArc - Member Sign Up</title>
+    <title>ComputerArc - partner Sign Up</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
     <script src='https://kit.fontawesome.com/a076d05399.js'></script>
     <link rel="icon" href="Logo stuff\favicon-32x32.png" type="image/x-icon">
@@ -81,24 +81,27 @@ include 'includes/dbh.inc.php';
 
                 </div>
                 <div class="col-8">
-                    <form style="padding-top: 20vh;" class="form-group" method="post">
+                    <form style="padding-top: 15vh;" class="form-group" method="post">
                         <input type="hidden" id="g-token" name="g-toekn" />
 
                         <p style="color: #b5b0aa; font-family: 'Questrial'; padding-right: 6vw;">E-mail &nbsp;<a href="#" data-toggle="tooltip" title="The email is used for sign-in and other purpose such as 2FA on our website"><i class='fas fa-question-circle'></i></a></p>
-                        <input class="form-control" id="memberemail" name="memberemail" type="text" style="margin-bottom: 3vh;background-image: linear-gradient(to right, #2c3037, #1f2428); color: white;" required placeholder="e.g. Nicky@gmail.com">
+                        <input class="form-control" id="partneremail" name="partneremail" type="text" style="margin-bottom: 3vh;background-image: linear-gradient(to right, #2c3037, #1f2428); color: white;" required placeholder="e.g. Nicky@gmail.com">
 
                         <p style="color: #b5b0aa; font-family: 'Questrial'; padding-right: 6vw;">Password &nbsp;<a href="#" data-toggle="tooltip" title="Password must be at least 6 characters long"><i class='fas fa-question-circle'></i></a></p>
-                        <input class="form-control" id="memberpassword" name="memberpassword" type="password" style="margin-bottom: 5vh; background-image: linear-gradient(to right, #2c3037, #1f2428); color: white;" required placeholder="e.g. abc123">
+                        <input class="form-control" id="partnerpassword" name="partnerpassword" type="password" style="margin-bottom: 5vh; background-image: linear-gradient(to right, #2c3037, #1f2428); color: white;" required placeholder="e.g. abc123">
 
                         <p style="color: #b5b0aa; font-family: 'Questrial'; padding-right: 6vw;">Username &nbsp;<a href="#" data-toggle="tooltip" title="The username assigned is used to display on our page"><i class='fas fa-question-circle'></i></a></p>
-                        <input class="form-control" id="memberusername" name="memberusername" type="text" style="margin-bottom: 3vh;background-image: linear-gradient(to right, #2c3037, #1f2428); color: white;" required placeholder="e.g. Nicky">
+                        <input class="form-control" id="partnerusername" name="partnerusername" type="text" style="margin-bottom: 3vh;background-image: linear-gradient(to right, #2c3037, #1f2428); color: white;" required placeholder="e.g. Nicky">
 
-                        <p style="color: #b5b0aa; font-family: 'Questrial'; padding-right: 6vw;">Tel No.&nbsp;<a href="#" data-toggle="tooltip" title="The tel no. is used for our partner to contact you (just in case)"><i class='fas fa-question-circle'></i></a></p>
-                        <input class="form-control" id="membertelno" name="membertelno" type="text" style="margin-bottom: 3vh;background-image: linear-gradient(to right, #2c3037, #1f2428); color: white;" pattern="[0-9]{10}" required placeholder="e.g. 0123456789">
+                        <p style="color: #b5b0aa; font-family: 'Questrial'; padding-right: 6vw;">Tel No.&nbsp;<a href="#" data-toggle="tooltip" title="The tel no. is used for our staff to contact you (just in case)"><i class='fas fa-question-circle'></i></a></p>
+                        <input class="form-control" id="partnertelno" name="partnertelno" type="text" style="margin-bottom: 3vh;background-image: linear-gradient(to right, #2c3037, #1f2428); color: white;" pattern="[0-9]{10}" required placeholder="e.g. 0123456789">
+
+                        <p style="color: #b5b0aa; font-family: 'Questrial'; padding-right: 6vw;">Fax No.&nbsp;<a href="#" data-toggle="tooltip" title="The Fax no. is used for our staff to contact you "><i class='fas fa-question-circle'></i></a></p>
+                        <input class="form-control" id="partnerfaxno" name="partnerfaxno" type="text" style="margin-bottom: 3vh;background-image: linear-gradient(to right, #2c3037, #1f2428); color: white;" pattern="[0-9]{10}"  placeholder="e.g. 0123456789">
 
                         <p style="color: #b5b0aa; font-family: 'Questrial'; padding-right: 6vw;">Profile Picture</p>
                         <div class="custom-file" style="margin-bottom: 5vh;">
-                            <input class="custom-file-input" id="memberprofilepic" name="memberprofilepic" type="file" style="background-image: linear-gradient(to right, #2c3037, #1f2428); color: white;">
+                            <input class="custom-file-input" id="partnerprofilepic" name="partnerprofilepic" type="file" style="background-image: linear-gradient(to right, #2c3037, #1f2428); color: white;">
                             <label class="custom-file-label" for="customFile">Choose file</label>
                         </div>
                         <input type="submit" name="btnSubmit" class="btn btn-primary" style="font-size: 0.75vw; font-family: 'Questrial'; width:22.4vw; margin-bottom: 2vh;" value="Sign Up">
@@ -121,7 +124,7 @@ include 'includes/dbh.inc.php';
                     <p style="color:#b5b0aa; font-family: 'Questrial'; padding-bottom: 5vh; text-align: center; font-size: 3em;">
                         Signing up as</p>
                     <p style="color:#ffffff; font-family: 'Questrial'; padding-bottom: 5vh; text-align: center; font-size: 5em;">
-                        Member</p>
+                        Partner</p>
                 </div>
                 <div class="col-3">
 

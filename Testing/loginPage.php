@@ -63,19 +63,19 @@
                         <p
                             style="color:#ffffff; font-family: 'Questrial'; padding-bottom: 5vh; text-align: center; font-size: 2.5em;">
                             SIGN IN</p>
-                        <p style="color: #b5b0aa; font-family: 'Questrial'; padding-right: 6vw;">Username</p>
+                        <p style="color: #b5b0aa; font-family: 'Questrial'; padding-right: 6vw;">E-mail</p>
                         <input class="form-control" id="username" type="text"
                             style="margin-bottom: 3vh;background-image: linear-gradient(to right, #2c3037, #1f2428); color: white;">
                         <p style="color: #b5b0aa; font-family: 'Questrial'; padding-right: 6vw;">Password</p>
                         <input class="form-control" id="password" type="text"
                             style="margin-bottom: 5vh; background-image: linear-gradient(to right, #2c3037, #1f2428); color: white;">
                     </form>
-                    <a href="homePage.html" class="btn btn-primary"
-                        style="font-size: 0.75vw; font-family: 'Questrial'; width: 20vw; margin-left: 1vw; margin-bottom: 2vh;">Sign
-                        In</a>
+                    <input type="submit" name="btnSubmitLogin" class="btn btn-primary" style="font-size: 0.75vw; font-family: 'Questrial'; width:14vw;  margin-bottom: 2vh;" value="Sign In">
+                    <a href="homePage.php" class="btn btn-dark" style="font-size: 0.75vw; font-family: 'Questrial'; width: 8vw;  margin-bottom: 2vh;">Back to home</a>
                     <a href="#"
                         style="font-size: 0.75vw; font-family: 'Questrial'; width: 20vw; margin-left: 7.3vw; color: #ffffff;">Forgot
                         Your Password?</a>
+    
                 </div>
                 <div class="col-3">
 
