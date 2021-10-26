@@ -1,7 +1,3 @@
-<?php
-include 'includes/dbh.inc.php';
-?>
-
 <!DOCTYPE html>
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <meta charset=" utf-8" />
@@ -55,22 +51,48 @@ include 'includes/dbh.inc.php';
     </style>
 
     <?php
-    if (isset($_POST) && isset($_POST["btnSubmit"])) {
-        $secretKey = '6LcrZPEcAAAAADHir9dVmYUYIDN2HedLkrlqo6Fv';
-        $token = $_POST["g-toekn"];
-        $ip = $_SERVER['REMOTE_ADDR'];
-
-        $url = "https://www.google.com/recaptcha/api/siteverify?secret=" . $secretKey . "&response=" . $token . "&remoteip=" . $ip;
-        $request = file_get_contents($url);
-        $response = json_decode($request);
-
-        if ($response->success) {
-            echo '<h1>Validation Success</h1>';
-        } else {
-            echo '<h1>Validation Failed</h1>';
-        }
-    }
-    ?>
+     
+     include "includes/dbh.inc.php";
+     if (isset($_POST) && isset($_POST["btnSubmitPartner"]) && !empty($_FILES['partnerprofilepic']['tmp_name'])) {
+         $secretKey = '6LcrZPEcAAAAADHir9dVmYUYIDN2HedLkrlqo6Fv';
+         $token = $_POST["g-toekn"];
+         $ip = $_SERVER['REMOTE_ADDR'];
+ 
+         $url = "https://www.google.com/recaptcha/api/siteverify?secret=" . $secretKey . "&response=" . $token . "&remoteip=" . $ip;
+         $request = file_get_contents($url);
+         $response = json_decode($request);
+ 
+         if ($response->success) {
+            $partnerEmail = $_POST['partneremail'];
+            $partnerPass = $_POST['partnerpassword'];
+            $partnerUsername = $_POST['partnerusername'];
+            $partnerTelno = $_POST['partnertelno'];
+            $partnerFaxNo = $_POST['partnerfaxno'];
+            $partnerProfilepic = addslashes(file_get_contents($_FILES['partnerprofilepic']['tmp_name']));
+            $partnerStatus = 1;
+            $partnerJoineddate = date("Y/m/d");
+           
+ 
+            //validate duplicate username
+            $sqlcheckdupname = mysqli_query($conn,"SELECT * FROM `partner` WHERE name ='$partnerUsername'");
+            if (mysqli_num_rows($sqlcheckdupname) == 0 && !empty($_FILES['partnerprofilepic']['tmp_name'])) {
+             $insert = "INSERT INTO `partner` (`name`, `email`, `pass`, `telNo`, `faxNo`, `status`, `datejoined`, `profilepic`) VALUES ('$partnerUsername', '$partnerEmail', '$partnerPass', '$partnerTelno', '$partnerFaxNo', '$partnerStatus', '$partnerJoineddate', '$partnerProfilepic')";
+ 
+            
+             if (mysqli_query($conn, $insert)){
+                 header("Location: loginPage.php");
+             }
+             else{
+                 echo "Error occured: " . mysqli_error($conn);
+             }
+         }
+          else {
+            ;
+         }
+         }
+         
+     }
+     ?>
 </head>
 
 <body>
@@ -81,7 +103,7 @@ include 'includes/dbh.inc.php';
 
                 </div>
                 <div class="col-8">
-                    <form style="padding-top: 15vh;" class="form-group" method="post">
+                    <form style="padding-top: 15vh;" class="form-group" method="POST" enctype="multipart/form-data">
                         <input type="hidden" id="g-token" name="g-toekn" />
 
                         <p style="color: #b5b0aa; font-family: 'Questrial'; padding-right: 6vw;">E-mail &nbsp;<a href="#" data-toggle="tooltip" title="The email is used for sign-in and other purpose such as 2FA on our website"><i class='fas fa-question-circle'></i></a></p>
@@ -104,7 +126,7 @@ include 'includes/dbh.inc.php';
                             <input class="custom-file-input" id="partnerprofilepic" name="partnerprofilepic" type="file" style="background-image: linear-gradient(to right, #2c3037, #1f2428); color: white;">
                             <label class="custom-file-label" for="customFile">Choose file</label>
                         </div>
-                        <input type="submit" name="btnSubmit" class="btn btn-primary" style="font-size: 0.75vw; font-family: 'Questrial'; width:22.4vw; margin-bottom: 2vh;" value="Sign Up">
+                        <input type="submit" name="btnSubmitPartner" class="btn btn-primary" style="font-size: 0.75vw; font-family: 'Questrial'; width:22.4vw; margin-bottom: 2vh;" value="Sign Up">
                         <a href="chooseSignUp.php" class="btn btn-dark" style="font-size: 0.75vw; font-family: 'Questrial'; width: 8vw;  margin-bottom: 2vh;">Back</a>
 
                     </form>

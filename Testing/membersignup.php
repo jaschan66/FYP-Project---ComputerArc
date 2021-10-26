@@ -80,7 +80,7 @@
 
            
             if (mysqli_query($conn, $insert)){
-                
+                header("Location: loginPage.php");  
             }
             else{
                 echo "Error occured: " . mysqli_error($conn);
