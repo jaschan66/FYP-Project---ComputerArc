@@ -71,8 +71,8 @@
             bottom: 0;
             left: 0;
             right: 0;
-            background:linear-gradient(to bottom right, rgb(255,0,0,0.8), rgb(0,0,0,0.8));
-            
+            background: linear-gradient(to bottom right, rgb(255, 0, 0, 0.8), rgb(0, 0, 0, 0.8));
+
             color: #fff;
             visibility: hidden;
             opacity: 0;
@@ -174,76 +174,13 @@
 
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+
 <body>
     <form id="form1" runat="server">
 
-        <nav class="navbar navbar-expand-sm bg-white navbar-light" style="max-height: 3vh;margin-top: 3vh;">
-            <!-- Brand/logo -->
-            <a class="navbar-brand" href="homePage.html">
-                <img src="Logo stuff\arc-logo-removebg-preview.png" alt="logo"
-                    style="width:7vh;height:2.5vh;padding-bottom:0.3vh;background-repeat: no-repeat; background-size: cover;">
-            </a>
-
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <!-- Links -->
-            <div class="collapse navbar-collapse" id="collapsibleNavbar">
-            <ul class="navbar-nav mr-auto"
-                style="font-family:'Questrial">
-                <li class="nav-item dropdown" style="padding-right:1vw">
-                    <a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown" style="font-size: 1vw;">
-                        Products
-                    </a>
-                    <div class="dropdown-menu">
-                        <a class="dropdown-item" style="font-size: 1vw;" href="Category.aspx?category=popurbanart">PC Part</a>
-                        <a class="dropdown-item" style="font-size: 1vw;" href="Category.aspx?category=fashionicons">Pre-build PC</a>
-                    </div>
-                </li>
-                <li class="nav-item" style="padding-right:1vw">
-                    <a class="nav-link" style="font-size: 1vw;" href="Category.aspx">Build A Desktop</a>
-                </li>
-                <li class="nav-item" style="padding-right:1vw">
-                    <a class="nav-link" style="font-size: 1vw;" href="Category.aspx">Forum</a>
-                </li>
-                <li class="nav-item" style="padding-right:1vw">
-                    <a class="nav-link" style="font-size: 1vw;" href="Category.aspx">Raffle</a>
-                </li>
-                <li class="nav-item" style="padding-right:1vw">
-                    <a class="nav-link" style="font-size: 1vw;" href="Category.aspx">Auction</a>
-                </li>
-                <li class="nav-item" style="padding-right:1vw">
-                    <a class="nav-link" style="font-size: 1vw;" href="AboutUs.php">About Us</a>
-                </li>
-            </ul>
-        
-            <button id="profileBtn" class="btn" OnServerClick="Account_Click" type="button" runat="server"
-                style="text-align:right;padding-right:1vw"><i class="far fa-address-card"></i></button>
-            <button id="logoutBtn" class="btn" OnServerClick="Logout_Click" type="button" runat="server"
-                style="text-align:right;padding-right:1vw;display: none;"><i class='fas fa-sign-out-alt'></i></button>
-            <ul class="navbar-nav" style="font-family:'Questrial'">
-
-
-
-
-                <li class="nav-item" style="padding-right:1vw" >
-
-                    <a class="nav-link" href="loginPage.php" style="font-size: 1vw;" >
-                        Get Started
-                    </a>
-
-                    
-                </li>
-
-
-            </ul>
-        </div>
-        </nav>
-        <hr />
-
-
-
-
+        <!--header-->
+        <?php
+        require "includes/header.php";?>
 
 
         <div class="row" style="height:70vh">
@@ -256,8 +193,7 @@
                     </ul>
                     <div class="carousel-inner">
                         <div class="carousel-item active">
-                            <img src="HomePage Design Photo/96b6e8d3-72e4-49b0-be3f-3c49656d1458._CR0,0,1464,600_PT0_SX1464__.jpg"
-                                alt="The Organ" width="1100" height="500">
+                            <img src="HomePage Design Photo/96b6e8d3-72e4-49b0-be3f-3c49656d1458._CR0,0,1464,600_PT0_SX1464__.jpg" alt="The Organ" width="1100" height="500">
                             <div class="carousel-caption">
                                 <h3 style="font-size: 3vw;">The Organ</h3>
                                 <p style="font-size: 1vw;">Powerful organ with wisdom</p>
@@ -294,11 +230,9 @@
 
         <div class="row" style="height:50vh;">
             <div class="col-12" style="max-height:50vh">
-                <p class="text-center"
-                    style="font-family:'Questrial'; font-size:5em;padding-top:15vh;color:black;font-size: 7vw;">
+                <p class="text-center" style="font-family:'Questrial'; font-size:5em;padding-top:15vh;color:black;font-size: 7vw;">
                     New Arrival</p>
-                <p class="text-center"
-                    style="font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif; font-size:0.9em;color:grey">
+                <p class="text-center" style="font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif; font-size:0.9em;color:grey">
                     _________</p>
             </div>
         </div>
@@ -313,34 +247,28 @@
                     <tr>
                         <td class="productTD" style="width:25vw">
                             <img class="img_img" src="Product Photo/20190316104702_53156.jpg" alt="Colourful Kudan">
-                            <p class="img__description text-center"
-                                style="padding-top:20vh;height:50.2vh;width:25.1vw;color:black;font-weight:700;font-size: 1vw;">
+                            <p class="img__description text-center" style="padding-top:20vh;height:50.2vh;width:25.1vw;color:black;font-weight:700;font-size: 1vw;">
                                 Colourful Kudan<br /><br />RM 9999.00<br /><br />
                                 <a href="ProductPage.aspx?ID=&Category=" class="btn btn-dark" style="font-size: 0.75vw;" role="button">Detail</a>
                             </p>
                         </td>
                         <td class="productTD" style="width:25vw">
-                            <img class="img_img" src="Product Photo/20-236-551-V01_1024x1024.jpg" alt="Corsair Vengeance RGB PRO"
-                                width="25vw">
-                            <p class="img__description text-center"
-                                style="padding-top:20vh;height:50.2vh;width:25.1vw;color:black;font-weight:700;font-size: 1vw;">
+                            <img class="img_img" src="Product Photo/20-236-551-V01_1024x1024.jpg" alt="Corsair Vengeance RGB PRO" width="25vw">
+                            <p class="img__description text-center" style="padding-top:20vh;height:50.2vh;width:25.1vw;color:black;font-weight:700;font-size: 1vw;">
                                 Corsair Vengeance RGB PRO<br /><br />RM 799.00<br /><br />
                                 <a href="ProductPage.aspx?ID=&Category=" class="btn btn-dark" style="font-size: 0.75vw;" role="button">Detail</a>
                             </p>
                         </td>
                         <td class="productTD" style="width:25vw">
-                            <img class="img_img" src="Product Photo/DIY-CAS-SEGOTEP-LUX2-BLK-1-1_1024x1024.jpg"
-                                alt="Segotep Lux II PC Casing">
-                            <p class="img__description text-center"
-                                style="padding-top:20vh;height:50.2vh;width:25.1vw;color:black;font-weight:700;font-size: 1vw;">
+                            <img class="img_img" src="Product Photo/DIY-CAS-SEGOTEP-LUX2-BLK-1-1_1024x1024.jpg" alt="Segotep Lux II PC Casing">
+                            <p class="img__description text-center" style="padding-top:20vh;height:50.2vh;width:25.1vw;color:black;font-weight:700;font-size: 1vw;">
                                 Segotep Lux II PC Casing<br /><br />RM 178.00<br /><br />
                                 <a href="ProductPage.aspx?ID=&Category=" class="btn btn-dark" style="font-size: 0.75vw;" role="button">Detail</a>
                             </p>
                         </td>
                         <td class="productTD" style="width:25vw">
                             <img class="img_img" src="Product Photo/69d9e63f0cc4edd000bfd61b7e646811.jpg" alt="Asrock H470M-HDV MATX">
-                            <p class="img__description text-center"
-                                style="padding-top:20vh;height:50.2vh;width:25.1vw;color:black;font-weight:700;font-size: 1vw;">
+                            <p class="img__description text-center" style="padding-top:20vh;height:50.2vh;width:25.1vw;color:black;font-weight:700;font-size: 1vw;">
                                 Asrock H470M-HDV MATX<br /><br />RM 319.00<br /><br />
                                 <a href="ProductPage.aspx?ID=&Category=" class="btn btn-dark" style="font-size: 0.75vw;" role="button">Detail</a>
                             </p>
@@ -366,35 +294,28 @@
                     <tr>
                         <td class="productTD" style="width:25vw">
                             <img class="img_img" src="Product Photo/Toshiba_3.5Hdd_F-700x700.png" alt="TOSHIBA HDD 3.5 1TB SATA">
-                            <p class="img__description text-center"
-                                style="padding-top:20vh;height:50.2vh;width:25.1vw;color:black;font-weight:700;font-size: 1vw;">
+                            <p class="img__description text-center" style="padding-top:20vh;height:50.2vh;width:25.1vw;color:black;font-weight:700;font-size: 1vw;">
                                 TOSHIBA HDD 3.5" 1TB SATA<br /><br />RM 175.00<br /><br />
                                 <a href="ProductPage.aspx?ID=&Category=" class="btn btn-dark" style="font-size: 0.75vw;" role="button">Detail</a>
                             </p>
                         </td>
                         <td class="productTD" style="width:25vw">
-                            <img class="img_img" src="Product Photo/SAM-970EvoPlus_SSD_F2-700x700.png"
-                                alt="SAMSUNG SSD M.2 970EVO PLUS 1TB">
-                            <p class="img__description text-center"
-                                style="padding-top:20vh;height:50.2vh;width:25.1vw;color:black;font-weight:700;font-size: 1vw;">
+                            <img class="img_img" src="Product Photo/SAM-970EvoPlus_SSD_F2-700x700.png" alt="SAMSUNG SSD M.2 970EVO PLUS 1TB">
+                            <p class="img__description text-center" style="padding-top:20vh;height:50.2vh;width:25.1vw;color:black;font-weight:700;font-size: 1vw;">
                                 SAMSUNG SSD M.2 970EVO PLUS 1TB<br /><br />RM 749.00<br /><br />
                                 <a href="ProductPage.aspx?ID=&Category=" class="btn btn-dark" style="font-size: 0.75vw;" role="button">Detail</a>
                             </p>
                         </td>
                         <td class="productTD" style="width:25vw">
-                            <img class="img_img" src="Product Photo/0b08551e285ed6831acf2970df0e951f-1.jpg"
-                                alt="Corsair CV CV450 80 Plus Bronze">
-                            <p class="img__description text-center"
-                                style="padding-top:20vh;height:50.2vh;width:25.1vw;color:black;font-weight:700;font-size: 1vw;">
+                            <img class="img_img" src="Product Photo/0b08551e285ed6831acf2970df0e951f-1.jpg" alt="Corsair CV CV450 80 Plus Bronze">
+                            <p class="img__description text-center" style="padding-top:20vh;height:50.2vh;width:25.1vw;color:black;font-weight:700;font-size: 1vw;">
                                 Corsair CV CV450 80 Plus Bronze<br /><br />RM 165.00<br /><br />
                                 <a href="ProductPage.aspx?ID=&Category=" class="btn btn-dark" style="font-size: 0.75vw;" role="button">Detail</a>
                             </p>
                         </td>
                         <td class="productTD" style="width:25vw">
-                            <img class="img_img" src="Product Photo/66558456_7640314848.jpg"
-                                alt="Corsair Internal Power Individually Sleeved PSU Cables Pro Kit - White">
-                            <p class="img__description text-center"
-                                style="padding-top:20vh;height:50.2vh;width:25.1vw;color:black;font-weight:700;font-size: 1vw;">
+                            <img class="img_img" src="Product Photo/66558456_7640314848.jpg" alt="Corsair Internal Power Individually Sleeved PSU Cables Pro Kit - White">
+                            <p class="img__description text-center" style="padding-top:20vh;height:50.2vh;width:25.1vw;color:black;font-weight:700;font-size: 1vw;">
                                 Corsair Internal Power Individually Sleeved PSU Cables Pro Kit - White<br /><br />RM
                                 459.00<br /><br />
                                 <a href="ProductPage.aspx?ID=&Category=" class="btn btn-dark" style="font-size: 0.75vw;" role="button">Detail</a>
@@ -413,11 +334,9 @@
 
         <div class="row" style="height:50vh">
             <div class="col-12" style="max-height:50vh">
-                <p class="text-center"
-                    style="font-family:'Questrial'; font-size:7vw;padding-top:15vh;color:black">
+                <p class="text-center" style="font-family:'Questrial'; font-size:7vw;padding-top:15vh;color:black">
                     Daily Discover</p>
-                <p class="text-center"
-                    style="font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif; font-size:1.5vw;color:grey">
+                <p class="text-center" style="font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif; font-size:1.5vw;color:grey">
                     _________</p>
             </div>
         </div>
@@ -431,35 +350,28 @@
                     <tr>
                         <td class="productTD" style="width:25vw">
                             <img class="img_img" src="Product Photo/Toshiba_3.5Hdd_F-700x700.png" alt="TOSHIBA HDD 3.5 1TB SATA">
-                            <p class="img__description text-center"
-                                style="padding-top:20vh;height:50.2vh;width:25.1vw;color:black;font-weight:700;font-size: 1vw;">
+                            <p class="img__description text-center" style="padding-top:20vh;height:50.2vh;width:25.1vw;color:black;font-weight:700;font-size: 1vw;">
                                 TOSHIBA HDD 3.5" 1TB SATA<br /><br />RM 175.00<br /><br />
                                 <a href="ProductPage.aspx?ID=&Category=" class="btn btn-dark" style="font-size: 0.75vw;" role="button">Detail</a>
                             </p>
                         </td>
                         <td class="productTD" style="width:25vw">
-                            <img class="img_img" src="Product Photo/SAM-970EvoPlus_SSD_F2-700x700.png"
-                                alt="SAMSUNG SSD M.2 970EVO PLUS 1TB">
-                            <p class="img__description text-center"
-                                style="padding-top:20vh;height:50.2vh;width:25.1vw;color:black;font-weight:700;font-size: 1vw;">
+                            <img class="img_img" src="Product Photo/SAM-970EvoPlus_SSD_F2-700x700.png" alt="SAMSUNG SSD M.2 970EVO PLUS 1TB">
+                            <p class="img__description text-center" style="padding-top:20vh;height:50.2vh;width:25.1vw;color:black;font-weight:700;font-size: 1vw;">
                                 SAMSUNG SSD M.2 970EVO PLUS 1TB<br /><br />RM 749.00<br /><br />
                                 <a href="ProductPage.aspx?ID=&Category=" class="btn btn-dark" style="font-size: 0.75vw;" role="button">Detail</a>
                             </p>
                         </td>
                         <td class="productTD" style="width:25vw">
-                            <img class="img_img" src="Product Photo/0b08551e285ed6831acf2970df0e951f-1.jpg"
-                                alt="Corsair CV CV450 80 Plus Bronze">
-                            <p class="img__description text-center"
-                                style="padding-top:20vh;height:50.2vh;width:25.1vw;color:black;font-weight:700;font-size: 1vw;">
+                            <img class="img_img" src="Product Photo/0b08551e285ed6831acf2970df0e951f-1.jpg" alt="Corsair CV CV450 80 Plus Bronze">
+                            <p class="img__description text-center" style="padding-top:20vh;height:50.2vh;width:25.1vw;color:black;font-weight:700;font-size: 1vw;">
                                 Corsair CV CV450 80 Plus Bronze<br /><br />RM 165.00<br /><br />
                                 <a href="ProductPage.aspx?ID=&Category=" class="btn btn-dark" style="font-size: 0.75vw;" role="button">Detail</a>
                             </p>
                         </td>
                         <td class="productTD" style="width:25vw">
-                            <img class="img_img" src="Product Photo/66558456_7640314848.jpg"
-                                alt="Corsair Internal Power Individually Sleeved PSU Cables Pro Kit - White">
-                            <p class="img__description text-center"
-                                style="padding-top:20vh;height:50.2vh;width:25.1vw;color:black;font-weight:700;font-size: 1vw;">
+                            <img class="img_img" src="Product Photo/66558456_7640314848.jpg" alt="Corsair Internal Power Individually Sleeved PSU Cables Pro Kit - White">
+                            <p class="img__description text-center" style="padding-top:20vh;height:50.2vh;width:25.1vw;color:black;font-weight:700;font-size: 1vw;">
                                 Corsair Internal Power Individually Sleeved PSU Cables Pro Kit - White<br /><br />RM
                                 459.00<br /><br />
                                 <a href="ProductPage.aspx?ID=&Category=" class="btn btn-dark" style="font-size: 0.75vw;" role="button">Detail</a>
@@ -478,11 +390,9 @@
 
         <div class="row" style="height:50vh">
             <div class="col-12" style="max-height:50vh">
-                <p class="text-center"
-                    style="font-family:'Questrial'; font-size:7vw;padding-top:15vh;color:black">
+                <p class="text-center" style="font-family:'Questrial'; font-size:7vw;padding-top:15vh;color:black">
                     Shop by Categories</p>
-                <p class="text-center"
-                    style="font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif; font-size:1.5vw;color:grey">
+                <p class="text-center" style="font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif; font-size:1.5vw;color:grey">
                     _________</p>
             </div>
         </div>
@@ -491,31 +401,24 @@
             <div class="col-6  text-center" style="background-image: url('HomePage Design Photo/martin-katler-7wCxlBfGMdk-unsplash (4).jpg'); font-family:'Questrial'; max-width:100%;
                 max-height:100%; background-repeat: no-repeat; background-size: cover; ">
                 <p class="text-center fade" style=" font-size:4vw;padding-top:45vh;color:white">PC Parts</p>
-                <a href="Category.aspx?category=popurbanart" class="btn"
-                    style="background-color:black;color:white;font-size:1vw">Shop Now</a>
+                <a href="Category.aspx?category=popurbanart" class="btn" style="background-color:black;color:white;font-size:1vw">Shop Now</a>
 
             </div>
-            <div class="col-6 text-center"
-                style="background-image: url('HomePage Design Photo/Verification (2) (1) (1).png'); font-family:'Questrial'; background-size: cover;">
+            <div class="col-6 text-center" style="background-image: url('HomePage Design Photo/Verification (2) (1) (1).png'); font-family:'Questrial'; background-size: cover;">
 
                 <p class=" text-center fade" style=" font-size:4vw;padding-top:45vh;color:white">Pre-Build PC</p>
-                <a href="Category.aspx?category=fashionicons" class="btn"
-                    style="background-color:black;color:white;font-size:1vw">Shop Now</a>
+                <a href="Category.aspx?category=fashionicons" class="btn" style="background-color:black;color:white;font-size:1vw">Shop Now</a>
             </div>
 
         </div>
 
-        <div class="row"
-            style="height:100vh;background-image: url('HomePage Design Photo/5437549.jpg');background-repeat: no-repeat; background-size: cover;height:100vh">
+        <div class="row" style="height:100vh;background-image: url('HomePage Design Photo/5437549.jpg');background-repeat: no-repeat; background-size: cover;height:100vh">
             <div class="col-12" style="max-height: 50vh;">
-                <p class="text-center fade"
-                    style="font-family:'Questrial'; font-size:7vw;padding-top:15vh;color:white">
+                <p class="text-center fade" style="font-family:'Questrial'; font-size:7vw;padding-top:15vh;color:white">
                     Game With Confidence</p>
-                    <p class="text-center fade"
-                    style="font-family:'Questrial'; font-size:2vw;color:white">
+                <p class="text-center fade" style="font-family:'Questrial'; font-size:2vw;color:white">
                     A frame matters, don't lose it</p>
-                <p class="text-center"
-                    style="font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif; font-size:1.5vw;color:white">
+                <p class="text-center" style="font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif; font-size:1.5vw;color:white">
                     _________</p>
             </div>
 
@@ -528,41 +431,30 @@
                         <tr>
                             <td class="productTD" style="width:25vw">
                                 <img class="img_img" src="Product Photo/20190316104702_53156_adobespark.png" alt="Colourful Kudan">
-                                <p class="img__descriptionG text-center"
-                                    style="padding-top:20vh;height:50.2vh;width:25.1vw;color:white;font-weight:700;font-size: 1vw;">
+                                <p class="img__descriptionG text-center" style="padding-top:20vh;height:50.2vh;width:25.1vw;color:white;font-weight:700;font-size: 1vw;">
                                     Colourful Kudan<br /><br />RM 9999.00<br /><br />
-                                    <a href="ProductPage.aspx?ID=&Category=" class="btn"
-                                        role="button" style="background-color: rgb(243,7,25);font-size: 0.75vw;">Detail</a>
+                                    <a href="ProductPage.aspx?ID=&Category=" class="btn" role="button" style="background-color: rgb(243,7,25);font-size: 0.75vw;">Detail</a>
                                 </p>
                             </td>
                             <td class="productTD" style="width:25vw">
-                                <img class="img_img" src="Product Photo/20-236-551-V01_1024x1024_adobespark.png" alt="Corsair Vengeance RGB PRO"
-                                    width="25vw">
-                                <p class="img__descriptionG text-center"
-                                    style="padding-top:20vh;height:50.2vh;width:25.1vw;color:white;font-weight:700;font-size: 1vw;">
+                                <img class="img_img" src="Product Photo/20-236-551-V01_1024x1024_adobespark.png" alt="Corsair Vengeance RGB PRO" width="25vw">
+                                <p class="img__descriptionG text-center" style="padding-top:20vh;height:50.2vh;width:25.1vw;color:white;font-weight:700;font-size: 1vw;">
                                     Corsair Vengeance RGB PRO<br /><br />RM 799.00<br /><br />
-                                    <a href="ProductPage.aspx?ID=&Category=" class="btn"
-                                        role="button"  style="background-color: rgb(243,7,25);font-size: 0.75vw;">Detail</a>
+                                    <a href="ProductPage.aspx?ID=&Category=" class="btn" role="button" style="background-color: rgb(243,7,25);font-size: 0.75vw;">Detail</a>
                                 </p>
                             </td>
                             <td class="productTD" style="width:25vw">
-                                <img class="img_img" src="Product Photo/DIY-CAS-SEGOTEP-LUX2-BLK-1-1_1024x1024-removebg.png"
-                                    alt="Segotep Lux II PC Casing">
-                                <p class="img__descriptionG text-center"
-                                    style="padding-top:20vh;height:50.2vh;width:25.1vw;color:white;font-weight:700;font-size: 1vw;">
+                                <img class="img_img" src="Product Photo/DIY-CAS-SEGOTEP-LUX2-BLK-1-1_1024x1024-removebg.png" alt="Segotep Lux II PC Casing">
+                                <p class="img__descriptionG text-center" style="padding-top:20vh;height:50.2vh;width:25.1vw;color:white;font-weight:700;font-size: 1vw;">
                                     Segotep Lux II PC Casing<br /><br />RM 178.00<br /><br />
-                                    <a href="ProductPage.aspx?ID=&Category=" class="btn"
-                                        role="button"  style="background-color: rgb(243,7,25);font-size: 0.75vw;">Detail</a>
+                                    <a href="ProductPage.aspx?ID=&Category=" class="btn" role="button" style="background-color: rgb(243,7,25);font-size: 0.75vw;">Detail</a>
                                 </p>
                             </td>
                             <td class="productTD" style="width:25vw">
-                                <img class="img_img" src="Product Photo/107451fcf9f5193bd8ec16daa91b75ea_adobespark.png"
-                                    alt="sus ROG Strix B460-F ATX Gaming Motherboard">
-                                <p class="img__descriptionG text-center"
-                                    style="padding-top:20vh;height:50.2vh;width:25.1vw;color:white;font-weight:700;font-size: 1vw;">
+                                <img class="img_img" src="Product Photo/107451fcf9f5193bd8ec16daa91b75ea_adobespark.png" alt="sus ROG Strix B460-F ATX Gaming Motherboard">
+                                <p class="img__descriptionG text-center" style="padding-top:20vh;height:50.2vh;width:25.1vw;color:white;font-weight:700;font-size: 1vw;">
                                     Asus ROG Strix B460-F ATX Gaming Motherboard<br /><br />RM 849.00<br /><br />
-                                    <a href="ProductPage.aspx?ID=&Category=" class="btn"
-                                        role="button"  style="background-color: rgb(243,7,25);font-size: 0.75vw;">Detail</a>
+                                    <a href="ProductPage.aspx?ID=&Category=" class="btn" role="button" style="background-color: rgb(243,7,25);font-size: 0.75vw;">Detail</a>
                                 </p>
                             </td>
 
@@ -583,88 +475,48 @@
 
         <div class="col-12" style="font-family:'Questrial';height:50vh">
             <p class="text-center" style=" font-size:3.5vw;padding-top:20vh;color:black">Why should you buy from us?</p>
-            <p
-                style="font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif; font-size:1vw;color:grey;text-align:center">
+            <p style="font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif; font-size:1vw;color:grey;text-align:center">
                 _________</p>
-            <p class="fade"
-                style="font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif; font-size:1vw;color:#5c5a5a;text-align:center">
+            <p class="fade" style="font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif; font-size:1vw;color:#5c5a5a;text-align:center">
                 ComputerArc, An online all-in-one PC platfrom for those who need knowledge on PC or simple finding the
                 PC they need. We offer a wide range of
                 PC just for our customers to fulfilled their needs. </p>
 
         </div>
 
+        <!--footer-->
+        <?php include 'includes/footer.php'; ?>
 
-
-        <div class="row" style="background-color:black;height:40vh">
-            <div class="col-3 border-right border-info" style="text-align:right;padding-top:8vh;">
-                <img src="Logo stuff\image-removebg-preview.png" alt="logo" style="max-height:6vh;width:10vw">
-            </div>
-            <div class="col-6 border-right border-info" style="padding-top:5vh;">
-                <table class="table table-borderless text-center" style="color:white;font-family:'Questrial'">
-                    <thead>
-                        <tr>
-
-                            <th style="font-size:1vw;width:50%"><u>Main Menu</u></th>
-                            <th style="font-size:1vw;width:50%"><u>Social</u></th>
-
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td><a class="text-decoration-none text-white" style="font-size:1vw;" href="#">Forum</a></td>
-                            <td><a class="text-decoration-none text-white" style="font-size:1vw;" href="https://www.facebook.com">Facebook</a>
-                            </td>
-
-                        </tr>
-                        <tr>
-                            <td><a class="text-decoration-none text-white" style="font-size:1vw;" href="#">Products</a></td>
-                            <td><a class="text-decoration-none text-white" style="font-size:1vw;" href="https://www.instagram.com">Instagram</a></td>
-
-                        </tr>
-                        <tr>
-                            <td><a class="text-decoration-none text-white" style="font-size:1vw;" href="#">About Us</a></td>
-                            <td><a class="text-decoration-none text-white" style="font-size:1vw;" href="https://www.https://twitter.com">Twitter</a></td>
-
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-            <div class="col-3"
-                style="text-align:left;padding-top:7vh;color:white;font-size:0.75vw;font-family:Noto Sans,sans-serif">
-                Copyright © 2021 by ComputerArc.Co
-                All rights reserved. All PC part or any portion thereof
-                may not be reproduced or used in any manner whatsoever
-                without the express written permission of the publisher
-                except for the use of brief quotations in an product review.
-            </div>
-        </div>
 
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
         <script>
-        $(window).on("load",function() {
-            $(window).scroll(function() {
-              var windowBottom = $(this).scrollTop() + $(this).innerHeight();
-              $(".fade").each(function() {
-                /* Check the location of each desired element */
-                var objectBottom = $(this).offset().top + $(this).outerHeight();
-                
-                /* If the element is completely within bounds of the window, fade it in */
-                if (objectBottom < windowBottom) { //object comes into view (scrolling down)
-                  if ($(this).css("opacity")==0) {$(this).fadeTo(300,1);}
-                } else { //object goes out of view (scrolling up)
-                  if ($(this).css("opacity")==1) {$(this).fadeTo(300,0);}
-                }
-              });
-            }).scroll(); //invoke scroll-handler on page-load
-          });
+            $(window).on("load", function() {
+                $(window).scroll(function() {
+                    var windowBottom = $(this).scrollTop() + $(this).innerHeight();
+                    $(".fade").each(function() {
+                        /* Check the location of each desired element */
+                        var objectBottom = $(this).offset().top + $(this).outerHeight();
+
+                        /* If the element is completely within bounds of the window, fade it in */
+                        if (objectBottom < windowBottom) { //object comes into view (scrolling down)
+                            if ($(this).css("opacity") == 0) {
+                                $(this).fadeTo(300, 1);
+                            }
+                        } else { //object goes out of view (scrolling up)
+                            if ($(this).css("opacity") == 1) {
+                                $(this).fadeTo(300, 0);
+                            }
+                        }
+                    });
+                }).scroll(); //invoke scroll-handler on page-load
+            });
         </script>
         <script>
-        window.onbeforeunload = function () {
-            window.scrollTo(0, 0);
-          }
+            window.onbeforeunload = function() {
+                window.scrollTo(0, 0);
+            }
         </script>
     </form>
 </body>
