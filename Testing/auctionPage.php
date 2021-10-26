@@ -65,6 +65,8 @@
 
 <body>
 
+    <!--header-->
+    <?php require "includes/header.php"; ?>
 
     <div class="row" style="padding-top: 1vh;">
         <div class="col-2">
@@ -98,6 +100,9 @@
 
         </div>
     </div>
+
+    <!--footer-->
+    <?php include 'includes/footer.php'; ?>
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>

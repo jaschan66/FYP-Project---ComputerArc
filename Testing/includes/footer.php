@@ -35,7 +35,7 @@ echo '
                 </table>
             </div>
             <div class="col-3" style="text-align:left;padding-top:7vh;color:white;font-size:0.75vw;font-family:\'Questrial\'">
-                Copyright © . date("Y") . by ComputerArc.Co
+                Copyright © '. date("Y") .' by ComputerArc.Co
                 All rights reserved. All PC part or any portion thereof
                 may not be reproduced or used in any manner whatsoever
                 without the express written permission of the publisher
