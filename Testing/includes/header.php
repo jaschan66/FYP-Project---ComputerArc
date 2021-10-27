@@ -46,16 +46,16 @@ echo '<nav class="navbar navbar-expand-sm bg-white navbar-light" style="max-heig
                         </div>
                     </li>
                     <li class="nav-item" style="padding-right:1vw">
-                        <a class="nav-link" style="font-size: 1vw;" href="Category.aspx">Build A Desktop</a>
+                    <a class="nav-link" style="font-size: 1vw;" href="Category.php">Build A Desktop</a>
                     </li>
                     <li class="nav-item" style="padding-right:1vw">
-                        <a class="nav-link" style="font-size: 1vw;" href="Category.aspx">Forum</a>
+                        <a class="nav-link" style="font-size: 1vw;" href="forumTopic.php">Forum</a>
                     </li>
                     <li class="nav-item" style="padding-right:1vw">
-                        <a class="nav-link" style="font-size: 1vw;" href="Category.aspx">Raffle</a>
+                        <a class="nav-link" style="font-size: 1vw;" href="raffle.php">Raffle</a>
                     </li>
                     <li class="nav-item" style="padding-right:1vw">
-                        <a class="nav-link" style="font-size: 1vw;" href="Category.aspx">Auction</a>
+                        <a class="nav-link" style="font-size: 1vw;" href="auctionPage.php">Auction</a>
                     </li>
                     <li class="nav-item" style="padding-right:1vw">
                         <a class="nav-link" style="font-size: 1vw;" href="AboutUs.php">About Us</a>

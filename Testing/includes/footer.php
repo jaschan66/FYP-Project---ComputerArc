@@ -1,7 +1,7 @@
 <?php
 echo '
-<div class="row" style="background-color:black;height:40vh">
-            <div class="col-3 border-right border-info" style="text-align:right;padding-top:8vh;">
+<div class="row" style="background-color:black;height:30vh">
+            <div class="col-3 border-right border-info" style="text-align:right;padding-top:7vh;">
                 <img src="Logo stuff\image-removebg-preview.png" alt="logo" style="max-height:6vh;width:10vw">
             </div>
             <div class="col-6 border-right border-info" style="padding-top:5vh;">
@@ -16,7 +16,7 @@ echo '
                     </thead>
                     <tbody>
                         <tr>
-                            <td><a class="text-decoration-none text-white" style="font-size:1vw;" href="#">Forum</a></td>
+                            <td><a class="text-decoration-none text-white" style="font-size:1vw;" href="forumTopic.php">Forum</a></td>
                             <td><a class="text-decoration-none text-white" style="font-size:1vw;" href="https://www.facebook.com">Facebook</a>
                             </td>
 
