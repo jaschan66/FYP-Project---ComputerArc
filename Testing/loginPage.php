@@ -1,3 +1,7 @@
+<?php
+  session_start();
+?>
+
 <!DOCTYPE html>
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <meta charset=" utf-8" />
@@ -71,29 +75,45 @@ if (isset($_POST) && isset($_POST["btnSubmitLogin"])) {
       
            $sqlcheckdupnameonmember = mysqli_query($conn,"SELECT * FROM `member` WHERE email ='$loginEmail'");
            $sqlcheckdupnameonpartner = mysqli_query($conn,"SELECT * FROM `partner` WHERE email ='$loginEmail'");
-           if (mysqli_num_rows($sqlcheckdupnameonmember) == 1 || mysqli_num_rows($sqlcheckdupnameonpartner) == 1) {
-           if (mysqli_num_rows($sqlcheckdupnameonmember) > mysqli_num_rows($sqlcheckdupnameonpartner)){
+           $sqlcheckdupnameonadmin = mysqli_query($conn,"SELECT * FROM `admin` WHERE email ='$loginEmail'");
+           if (mysqli_num_rows($sqlcheckdupnameonmember) == 1 || mysqli_num_rows($sqlcheckdupnameonpartner) == 1 || mysqli_num_rows($sqlcheckdupnameonadmin) == 1) {
+           if (mysqli_num_rows($sqlcheckdupnameonmember) > mysqli_num_rows($sqlcheckdupnameonpartner) && mysqli_num_rows($sqlcheckdupnameonmember) > mysqli_num_rows($sqlcheckdupnameonadmin)) {
                $passwordindb = mysqli_query($conn, "SELECT pass FROM `member` WHERE email ='$loginEmail'");
                $result = mysqli_fetch_assoc($passwordindb);
                if( $result['pass'] == $loginPass){
                 header("Location: homePage.php");
                 //Create session for member
+                $_SESSION['email'] = $loginEmail;
+                 $_SESSION['role'] = "member";
                }
                else{
                    echo 'Email or password entered might be wrong.';
                }
               
            }
-           else{
+           else if (mysqli_num_rows($sqlcheckdupnameonpartner) > mysqli_num_rows($sqlcheckdupnameonmember) && mysqli_num_rows($sqlcheckdupnameonpartner) > mysqli_num_rows($sqlcheckdupnameonadmin)){
             $passwordindb = mysqli_query($conn, "SELECT pass FROM `partner` WHERE email ='$loginEmail'");
            $result = mysqli_fetch_assoc($passwordindb);
             if( $result['pass'] == $loginPass){
                 header("Location: homePage.php");
                 //Create session for partner
+                $_SESSION['email'] = $loginEmail;
+                 $_SESSION['role'] = "partner";
             }
             else{
                 echo 'Email or password entered might be wrong.';
             }
+           }
+           else{
+            $passwordindb = mysqli_query($conn, "SELECT pass FROM `admin` WHERE email ='$loginEmail'");
+            $result = mysqli_fetch_assoc($passwordindb);
+             if( $result['pass'] == $loginPass){
+                 header("Location: homePage.php");
+                 //Create session for admin
+                 $_SESSION['email'] = $loginEmail;
+                 $_SESSION['role'] = "admin";
+             }
+
            }
 
         }

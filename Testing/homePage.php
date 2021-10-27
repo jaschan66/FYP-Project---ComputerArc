@@ -1,3 +1,6 @@
+<?php
+    session_start();
+  ?>
 <!DOCTYPE html>
 <meta name="viewport" content="width=device-width, initial-scale= 1, shrink-to-fit=no">
 <meta charset=" utf-8" />
@@ -176,11 +179,11 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
 
 <body>
-    <form id="form1" runat="server">
+
 
         <!--header-->
         <?php
-        require "includes/header.php";?>
+        include ("includes/header.php");?>
 
 
         <div class="row" style="height:70vh">
@@ -518,7 +521,7 @@
                 window.scrollTo(0, 0);
             }
         </script>
-    </form>
+    
 </body>
 
 </html>

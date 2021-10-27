@@ -1,4 +1,29 @@
 <?php
+error_reporting(E_ALL & ~E_NOTICE);
+    session_start();
+if(empty($_SESSION['email'])){
+    $button = "<a href='header.php?profile=true' id='profileBtn' class='btn' type='button' onclick='profile()' style='text-align:right;padding-right:1vw; display:none'><i class='far fa-address-card'></i></a>
+    <a href='../Testing/includes/header.php?logout=true' id='logoutBtn' class='btn' type='button' onclick='logout()' style='text-align:right;padding-right:1vw; display:none'><i class='fas fa-sign-out-alt'></i></a>";
+    $signin = "display:block";
+}else{
+    $button = "<a href='header.php?profile=true' id='profileBtn' class='btn' type='button' onclick='profile()' style='text-align:right;padding-right:1vw'><i class='far fa-address-card'></i></a>
+    <a href='../Testing/includes/header.php?logout=true' id='logoutBtn' class='btn' type='button' onclick='logout()' style='text-align:right;padding-right:1vw'><i class='fas fa-sign-out-alt'></i></a>";
+
+    $signin = "display:none";
+}
+
+if (isset($_GET['logout'])){
+    unset($_SESSION['email']);
+    unset($_SESSION['role']);
+    header("Location: ../homePage.php");
+}
+
+
+
+
+
+
+
 echo '<nav class="navbar navbar-expand-sm bg-white navbar-light" style="max-height: 3vh;margin-top: 3vh;">
             <!-- Brand/logo -->
             <a class="navbar-brand" href="homePage.html">
@@ -35,10 +60,7 @@ echo '<nav class="navbar navbar-expand-sm bg-white navbar-light" style="max-heig
                     <li class="nav-item" style="padding-right:1vw">
                         <a class="nav-link" style="font-size: 1vw;" href="AboutUs.php">About Us</a>
                     </li>
-                </ul>
-
-                <button id="profileBtn" class="btn" OnServerClick="Account_Click" type="button" runat="server" style="text-align:right;padding-right:1vw"><i class=\'far fa-address-card\'></i></button>
-                <button id="logoutBtn" class="btn" OnServerClick="Logout_Click" type="button" runat="server" style="text-align:right;padding-right:1vw;display: none;"><i class=\'fas fa-sign-out-alt\'></i></button>
+                </ul>'. $button .' 
                 <ul class="navbar-nav" style="font-family:\'Questrial\'">
 
 
@@ -46,7 +68,7 @@ echo '<nav class="navbar navbar-expand-sm bg-white navbar-light" style="max-heig
 
                     <li class="nav-item" style="padding-right:1vw">
 
-                        <a class="nav-link" href="loginPage.php" style="font-size: 1vw;">
+                        <a class="nav-link" href="loginPage.php" style="font-size: 1vw;'.$signin.'">
                             Get Started
                         </a>
 
@@ -58,3 +80,6 @@ echo '<nav class="navbar navbar-expand-sm bg-white navbar-light" style="max-heig
             </div>
         </nav>
         <hr />';
+
+
+
