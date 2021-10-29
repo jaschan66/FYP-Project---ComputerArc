@@ -478,9 +478,9 @@
 
         <div class="col-12" style="font-family:'Questrial';height:50vh">
             <p class="text-center" style=" font-size:3.5vw;padding-top:20vh;color:black">Why should you buy from us?</p>
-            <p style="font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif; font-size:1vw;color:grey;text-align:center">
-                _________</p>
-            <p class="fade" style="font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif; font-size:1vw;color:#5c5a5a;text-align:center">
+            <p class="text-center" style="font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif; font-size:1.5vw;color:grey">
+                    _________</p>
+            <p class="fade" style="font-size:1vw;color:#5c5a5a;text-align:center">
                 ComputerArc, An online all-in-one PC platfrom for those who need knowledge on PC or simple finding the
                 PC they need. We offer a wide range of
                 PC just for our customers to fulfilled their needs. </p>
