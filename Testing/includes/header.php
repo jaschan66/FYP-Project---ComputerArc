@@ -2,11 +2,11 @@
 error_reporting(E_ALL & ~E_NOTICE);
     session_start();
 if(empty($_SESSION['email'])){
-    $button = "<a href='header.php?profile=true' id='profileBtn' class='btn' type='button' style='text-align:right;padding-right:1vw; display:none'><i class='far fa-address-card'></i></a>
+    $button = "<a href='#' id='profileBtn' class='btn' type='button' style='text-align:right;padding-right:1vw; display:none'><i class='far fa-address-card'></i></a>
     <a href='../Testing/includes/header.php?logout=true' id='logoutBtn' class='btn' type='button' onclick='logout()' style='text-align:right;padding-right:1vw; display:none'><i class='fas fa-sign-out-alt'></i></a>";
     $signin = "display:block";
 }else{
-    $button = "<a href='header.php?profile=true' id='profileBtn' class='btn' type='button' style='text-align:right;padding-right:1vw; display:block'><i class='far fa-address-card'></i></a>
+    $button = "<a href='../Testing/profilePage.php' id='profileBtn' class='btn' type='button' style='text-align:right;padding-right:1vw; display:block'><i class='far fa-address-card'></i></a>
     <a href='../Testing/includes/header.php?logout=true' id='logoutBtn' class='btn' type='button' onclick='logout()' style='text-align:right;padding-right:1vw'><i class='fas fa-sign-out-alt'></i></a>";
 
     $signin = "display:none";
@@ -26,7 +26,7 @@ if (isset($_GET['logout'])){
 
 echo '<nav class="navbar navbar-expand-sm bg-white navbar-light" style="max-height: 3vh;margin-top: 3vh;">
             <!-- Brand/logo -->
-            <a class="navbar-brand" href="homePage.html">
+            <a class="navbar-brand" href="homePage.php">
                 <img src="Logo stuff\arc-logo-removebg-preview.png" alt="logo" style="width:7vh;height:2.5vh;padding-bottom:0.3vh;background-repeat: no-repeat; background-size: cover;">
             </a>
 

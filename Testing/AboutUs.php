@@ -15,7 +15,7 @@
 
         body {
             overflow-x: hidden;
-            overflow-y: scroll;
+            overflow-y: hidden;
             /* Add the ability to scroll */
         }
 
@@ -73,73 +73,11 @@
     </style>
 
 <body>
-    <form id="form1" runat="server">
+        <?php require "includes/header.php"; ?>
 
-    <nav class="navbar navbar-expand-sm bg-white navbar-light" style="max-height: 3vh;margin-top: 3vh;">
-            <!-- Brand/logo -->
-            <a class="navbar-brand" href="homePage.html">
-                <img src="Logo stuff\arc-logo-removebg-preview.png" alt="logo"
-                    style="width:7vh;height:2.5vh;padding-bottom:0.3vh;background-repeat: no-repeat; background-size: cover;">
-            </a>
-
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <!-- Links -->
-            <div class="collapse navbar-collapse" id="collapsibleNavbar">
-            <ul class="navbar-nav mr-auto"
-                style="font-family:'Questrial">
-                <li class="nav-item dropdown" style="padding-right:1vw">
-                    <a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown" style="font-size: 1vw;">
-                        Products
-                    </a>
-                    <div class="dropdown-menu">
-                        <a class="dropdown-item" style="font-size: 1vw;" href="Category.aspx?category=popurbanart">PC Part</a>
-                        <a class="dropdown-item" style="font-size: 1vw;" href="Category.aspx?category=fashionicons">Pre-build PC</a>
-                    </div>
-                </li>
-                <li class="nav-item" style="padding-right:1vw">
-                    <a class="nav-link" style="font-size: 1vw;" href="Category.aspx">Build A Desktop</a>
-                </li>
-                <li class="nav-item" style="padding-right:1vw">
-                    <a class="nav-link" style="font-size: 1vw;" href="Category.aspx">Forum</a>
-                </li>
-                <li class="nav-item" style="padding-right:1vw">
-                    <a class="nav-link" style="font-size: 1vw;" href="Category.aspx">Raffle</a>
-                </li>
-                <li class="nav-item" style="padding-right:1vw">
-                    <a class="nav-link" style="font-size: 1vw;" href="Category.aspx">Auction</a>
-                </li>
-                <li class="nav-item" style="padding-right:1vw">
-                    <a class="nav-link" style="font-size: 1vw;" href="AboutUs.php">About Us</a>
-                </li>
-            </ul>
-        
-            <button id="profileBtn" class="btn" OnServerClick="Account_Click" type="button" runat="server"
-                style="text-align:right;padding-right:1vw"><i class="far fa-address-card"></i></button>
-            <button id="logoutBtn" class="btn" OnServerClick="Logout_Click" type="button" runat="server"
-                style="text-align:right;padding-right:1vw;display: none;"><i class='fas fa-sign-out-alt'></i></button>
-            <ul class="navbar-nav" style="font-family:'Questrial'">
-
-
-
-
-                <li class="nav-item" style="padding-right:1vw" >
-
-                    <a class="nav-link" href="loginPage.php" style="font-size: 1vw;" >
-                        Get Started
-                    </a>
-
-                    
-                </li>
-
-
-            </ul>
-        </div>
-        </nav>
-        <hr />
+    
         <!--Content after here-->
-        <div class="row" style="height:60vh;background-color:#ffffff">
+        <div class="row" style="height:61vh;background-color:#ffffff">
             <div class="col-12 text-center" style="padding-top:5vh">
                 <img  src="Logo stuff\arc-logo-removebg-preview.png"  alt="Logo" style="width:20vw;height:10vh;"/>
                   <p  style="font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif; font-size:0.9em;color:grey">________________________________________</p>
@@ -152,58 +90,11 @@
            
         </div>
         <!--Content ends here-->
-        <div class="row" style="background-color:black;height:40vh">
-            <div class="col-3 border-right border-info" style="text-align:right;padding-top:8vh;">
-                <img src="Logo stuff\image-removebg-preview.png" alt="logo" style="width:20vh;height:6vh">
-            </div>
-            <div class="col-6 border-right border-info" style="padding-top:5vh;">
-                <table class="table table-borderless text-center" style="color:white;font-family:Noto Sans,sans-serif">
-                    <thead>
-                        <tr>
-
-                            <th style="font-size:1.5em;width:50%"><u>Main Menu</u></th>
-                            <th style="font-size:1.5em;width:50%"><u>Social</u></th>
-
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td><a class="text-decoration-none text-white" href="#">Forum</a></td>
-                            <td><a class="text-decoration-none text-white" href="https://www.facebook.com">Facebook</a>
-                            </td>
-
-                        </tr>
-                        <tr>
-                            <td><a class="text-decoration-none text-white" href="#">Products</a></td>
-                            <td><a class="text-decoration-none text-white"
-                                    href="https://www.instagram.com">Instagram</a></td>
-
-                        </tr>
-                        <tr>
-                            <td><a class="text-decoration-none text-white" href="#">About Us</a></td>
-                            <td><a class="text-decoration-none text-white"
-                                    href="https://www.https://twitter.com">Twitter</a></td>
-
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-            <div class="col-3"
-                style="text-align:left;padding-top:7vh;color:white;font-size:0.7em;font-family:Noto Sans,sans-serif">
-                Copyright © 2021 by ComputerArc.Co
-                All rights reserved. All PC part or any portion thereof
-                may not be reproduced or used in any manner whatsoever
-                without the express written permission of the publisher
-                except for the use of brief quotations in an product review.
-            </div>
-        </div>
+        <?php require "includes/footer.php"; ?>
 
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
-
-
-    </form>
 </body>
 
 </html>

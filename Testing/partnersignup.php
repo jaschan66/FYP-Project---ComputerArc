@@ -57,6 +57,7 @@
          $secretKey = '6LcrZPEcAAAAADHir9dVmYUYIDN2HedLkrlqo6Fv';
          $token = $_POST["g-toekn"];
          $ip = $_SERVER['REMOTE_ADDR'];
+
  
          $url = "https://www.google.com/recaptcha/api/siteverify?secret=" . $secretKey . "&response=" . $token . "&remoteip=" . $ip;
          $request = file_get_contents($url);
@@ -96,6 +97,7 @@
 </head>
 
 <body>
+<div class="container-fluid" style="padding:0; max-height:100vh">
     <div class="row">
         <div class="col-6 " style="height: 100vh; background-image: linear-gradient(to right, #1f2428 80%, #2c3037 )">
             <div class="row">
@@ -126,6 +128,7 @@
                             <input class="custom-file-input" id="partnerprofilepic" name="partnerprofilepic" type="file" style="background-image: linear-gradient(to right, #2c3037, #1f2428); color: white;">
                             <label class="custom-file-label" for="customFile">Choose file</label>
                         </div>
+
                         <input type="submit" name="btnSubmitPartner" class="btn btn-primary" style="font-size: 0.75vw; font-family: 'Questrial'; width:22.4vw; margin-bottom: 2vh;" value="Sign Up">
                         <a href="chooseSignUp.php" class="btn btn-dark" style="font-size: 0.75vw; font-family: 'Questrial'; width: 8vw;  margin-bottom: 2vh;">Back</a>
 
@@ -138,14 +141,14 @@
 
         </div>
         <div class="col-6" style="height: 100vh; background-image: linear-gradient(to left ,#1f2428 80%,#2c3037);">
-            <div class="row" style="padding-top: 30vh;">
+            <div class="row" >
                 <div class="col-3">
 
                 </div>
-                <div class="col-6" style="text-align: center;">
-                    <p style="color:#b5b0aa; font-family: 'Questrial'; padding-bottom: 5vh; text-align: center; font-size: 3em;">
+                <div class="col-6" style="text-align: center; margin-top:30vh;">
+                    <p style="color:#b5b0aa; font-family: 'Questrial'; padding-bottom: 5vh; text-align: center; font-size: 2.5vw;">
                         Signing up as</p>
-                    <p style="color:#ffffff; font-family: 'Questrial'; padding-bottom: 5vh; text-align: center; font-size: 5em;">
+                    <p style="color:#ffffff; font-family: 'Questrial'; padding-bottom: 5vh; text-align: center; font-size: 4vw;">
                         Partner</p>
                 </div>
                 <div class="col-3">
@@ -155,12 +158,14 @@
 
         </div>
     </div>
+</div>
 
 
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
+
 </body>
 <script>
     $(document).ready(function() {
@@ -185,5 +190,6 @@
         });
     });
 </script>
+
 
 </html>
