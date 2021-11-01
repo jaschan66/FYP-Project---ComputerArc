@@ -9,10 +9,13 @@
     <link rel="icon" href="Logo stuff\favicon-32x32.png" type="image/x-icon">
     <link href='https://fonts.googleapis.com/css?family=Questrial' rel='stylesheet'>
     <script src="https://www.google.com/recaptcha/api.js?render=6LcrZPEcAAAAAOD-gL2ox-rjslwDMlTfFn8xarIM"></script>
+
+    <link href='filepond/filepond.min.css' rel='stylesheet'>
+    <link href='filepond/plugins/preview/filepond-plugin-image-preview.min.css' rel='stylesheet'>
     <style>
         body {
             overflow-x: hidden;
-            overflow-y: hidden;
+            overflow-y: auto;
         }
 
         ::-webkit-scrollbar {
@@ -52,7 +55,7 @@
 
     <?php
      
-     include "includes/dbh.inc.php";
+     include "includes/dbh.local.inc.php";
      if (isset($_POST) && isset($_POST["btnSubmitPartner"]) && !empty($_FILES['partnerprofilepic']['tmp_name'])) {
          $secretKey = '6LcrZPEcAAAAADHir9dVmYUYIDN2HedLkrlqo6Fv';
          $token = $_POST["g-toekn"];
@@ -96,16 +99,16 @@
      ?>
 </head>
 
-<body>
-<div class="container-fluid" style="padding:0; max-height:100vh">
+<body style="min-height:100vh">
+<div class="container-fluid" style="padding:0;min-height:100vh">
     <div class="row">
-        <div class="col-6 " style="height: 100vh; background-image: linear-gradient(to right, #1f2428 80%, #2c3037 )">
+        <div class="col-6 " style="min-height:100vh; background-image: linear-gradient(to right, #1f2428 80%, #2c3037 )">
             <div class="row">
                 <div class="col-2">
 
                 </div>
                 <div class="col-8">
-                    <form style="padding-top: 15vh;" class="form-group" method="POST" enctype="multipart/form-data">
+                    <form class="form-group" method="POST" enctype="multipart/form-data" style="padding-top:10vh">
                         <input type="hidden" id="g-token" name="g-toekn" />
 
                         <p style="color: #b5b0aa; font-family: 'Questrial'; padding-right: 6vw;">E-mail &nbsp;<a href="#" data-toggle="tooltip" title="The email is used for sign-in and other purpose such as 2FA on our website"><i class='fas fa-question-circle'></i></a></p>
@@ -124,13 +127,16 @@
                         <input class="form-control" id="partnerfaxno" name="partnerfaxno" type="text" style="margin-bottom: 3vh;background-image: linear-gradient(to right, #2c3037, #1f2428); color: white;" pattern="[0-9]{10}"  placeholder="e.g. 0123456789">
 
                         <p style="color: #b5b0aa; font-family: 'Questrial'; padding-right: 6vw;">Profile Picture</p>
-                        <div class="custom-file" style="margin-bottom: 5vh;">
-                            <input class="custom-file-input" id="partnerprofilepic" name="partnerprofilepic" type="file" style="background-image: linear-gradient(to right, #2c3037, #1f2428); color: white;">
-                            <label class="custom-file-label" for="customFile">Choose file</label>
-                        </div>
+                        <input class="filepond" id="memberprofilepic" name="memberprofilepic" type="file">
 
-                        <input type="submit" name="btnSubmitPartner" class="btn btn-primary" style="font-size: 0.75vw; font-family: 'Questrial'; width:22.4vw; margin-bottom: 2vh;" value="Sign Up">
-                        <a href="chooseSignUp.php" class="btn btn-dark" style="font-size: 0.75vw; font-family: 'Questrial'; width: 8vw;  margin-bottom: 2vh;">Back</a>
+                        <div class="row">
+                                <div class="col-8">
+                                    <input type="submit" name="btnSubmitPartner" class="btn btn-primary" style="font-size: 0.75vw; font-family: 'Questrial'; width:100%; margin-bottom: 2vh;" value="Sign Up">
+                                </div>
+                                <div class="col-4">
+                                    <a href="chooseSignUp.php" class="btn btn-dark" style="font-size: 0.75vw; font-family: 'Questrial'; width: 100%;  margin-bottom: 2vh;">Back</a>
+                                </div>
+                            </div>
 
                     </form>
                 </div>
@@ -140,7 +146,7 @@
             </div>
 
         </div>
-        <div class="col-6" style="height: 100vh; background-image: linear-gradient(to left ,#1f2428 80%,#2c3037);">
+        <div class="col-6" style="min-height:100vh; background-image: linear-gradient(to left ,#1f2428 80%,#2c3037);">
             <div class="row" >
                 <div class="col-3">
 
@@ -166,9 +172,25 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
 
+    <script src="filepond/filepond.min.js"></script>
+    <script src="filepond/filepond.jquery.js"></script>
+    <script src="filepond/plugins/preview/filepond-plugin-image-preview.min.js"></script>
 </body>
 <script>
     $(document).ready(function() {
+        $('[data-toggle="tooltip"]').tooltip();
+    });
+</script>
+
+<script>
+    $(document).ready(function() {
+        FilePond.registerPlugin(FilePondPluginImagePreview);
+        const inputElement = document.querySelector('#memberprofilepic');
+
+        const pond = FilePond.create(inputElement, {
+            storeAsFile: true
+        });
+
         $('[data-toggle="tooltip"]').tooltip();
     });
 </script>

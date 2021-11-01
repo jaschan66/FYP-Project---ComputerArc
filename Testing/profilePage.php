@@ -1,5 +1,5 @@
-<?php 
-    session_start();
+<?php
+session_start();
 ?>
 <!DOCTYPE html>
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -14,7 +14,7 @@
     <style>
         body {
             overflow-x: hidden;
-            overflow-y: hidden;
+            overflow-y: auto;
         }
 
         ::-webkit-scrollbar {
@@ -46,6 +46,14 @@
             height: 100%;
         }
 
+        a {
+            color: #b5b0aa;
+        }
+
+        a:hover {
+            color: #383735;
+        }
+
         .row {
             margin: 0;
             /*padding:0;*/
@@ -63,25 +71,22 @@
         h2 {
             font-family: "Questrial";
         }
-
-        
     </style>
     <?php
-            include "includes/dbh.inc.php";
+    include "includes/dbh.inc.php";
 
-            $email = $_SESSION['email'];
-            $role = $_SESSION['role'];
+    $email = $_SESSION['email'];
+    $role = $_SESSION['role'];
 
-            $result = mysqli_query($conn,"SELECT * FROM `$role` WHERE email ='$email'");
-            $resultimg = mysqli_query($conn,"SELECT profilepic FROM `$role` WHERE email ='$email'");
+    $result = mysqli_query($conn, "SELECT * FROM `$role` WHERE email ='$email'");
+    $resultimg = mysqli_query($conn, "SELECT profilepic FROM `$role` WHERE email ='$email'");
 
-            if (mysqli_num_rows($result) > 0) {
-                $name = mysqli_fetch_assoc($result);
-                
-            }
+    if (mysqli_num_rows($result) > 0) {
+        $name = mysqli_fetch_assoc($result);
+    }
 
 
-        ?>
+    ?>
 </head>
 
 <body>
@@ -91,21 +96,52 @@
 
     <div class="container-fluid">
         <!--top of profile page-->
-        <div class="row" style="height: 20vh;">
+        <div class="row" style="height: auto; border-bottom-style: solid;">
             <!--profile picture-->
-            <div class="col-4">
+            <div class="col-2" style="padding-left: 10vw">
                 <?php
-            while ($img = mysqli_fetch_array($resultimg)) {
-                   echo '<img src="data:image/jpg;base64,' . base64_encode($img['profilepic']) . '" height="512px" width="512px"/>';
+                while ($img = mysqli_fetch_array($resultimg)) {
+                    echo '<img src="data:image/jpg;base64,' . base64_encode($img['profilepic']) . '" height="180px" width="180px" alt="Profile Picture" class="img-thumbnail img-responsive"/>';
                 }
                 ?>
             </div>
 
             <!--name and etc-->
-            <div class="col-8">
-            <p style="color:#b5b0aa; font-family: 'Questrial'; padding-bottom: 5vh; text-align: left; font-size: 2.5vw;"><?php echo $name['name']; ?></p>
-            
+            <div class="col-10">
+                <p style="color:#000000; font-family: 'Questrial'; text-align: left; font-size: 2.5vw;"><?php echo $name['name']; ?></p>
+                <hr>
+                <p style="color:#b5b0aa; font-family: 'Questrial'; text-align: left; font-size: 1.5vw;">
+                    <?php
+                    if ($name['description'] == null) {
+                        echo "Tell us more about yourself <a href='#' style='font-size: 1.5vw; ' role='button'>here</a>";
+                    } else {
+                        echo $name['description'];
+                    } ?>
+                </p>
             </div>
+        </div>
+
+        <div class="row" style="height: 50vh; margin-top:1vh; margin-bottom:2vh;">
+            <div class="col-2" style=" border-right-style: solid;">
+                <!--Based on the role change the sidebar menu-->
+                <?php 
+                    if ($role == "member"){
+                        include "ProfilePage/memberSideBar.php";
+                    }
+                    else if ($role == "partner"){
+                        //include "ProfilePage/partnerSideBar.php";
+                    }
+                    else{
+                         //include "ProfilePage/adminSideBar.php";
+                    }
+                ?>
+
+            </div>
+
+            <div class="col-10">
+                <!--Based on side menu bar change its content-->
+            </div>
+
         </div>
 
 

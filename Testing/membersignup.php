@@ -17,7 +17,7 @@
     <style>
         body {
             overflow-x: hidden;
-            overflow-y: hidden;
+            overflow-y: auto;
         }
 
 
@@ -63,6 +63,7 @@
     <?php
 
     if (isset($_POST) && isset($_POST["btnSubmit"]) && !empty($_FILES['memberprofilepic']['tmp_name'])) {
+        include "includes/dbh.local.inc.php";
         $secretKey = '6LcrZPEcAAAAADHir9dVmYUYIDN2HedLkrlqo6Fv';
         $token = $_POST["g-toekn"];
         $ip = $_SERVER['REMOTE_ADDR'];
@@ -101,16 +102,16 @@
     ?>
 </head>
 
-<body style="height: 100vh">
-    <div class="container-fluid" style="padding:0;height:100vh ">
+<body style="min-height:100vh">
+    <div class="container-fluid" style="padding:0;min-height:100vh ">
         <div class="row">
-            <div class="col-6 " style="height:100vh; background-image: linear-gradient(to right, #1f2428 80%, #2c3037 )">
+            <div class="col-6 " style="min-height:100vh; background-image: linear-gradient(to right, #1f2428 80%, #2c3037 )">
                 <div class="row">
                     <div class="col-2">
 
                     </div>
                     <div class="col-8">
-                        <form style="margin-top: 8vh" class="form-group" method="POST" enctype="multipart/form-data">
+                        <form style="margin-top: 15vh" class="form-group" method="POST" enctype="multipart/form-data">
                             <input type="hidden" id="g-token" name="g-toekn" />
 
                             <p style="color: #b5b0aa; font-family: 'Questrial'; padding-right: 6vw;" class="formLabel">E-mail &nbsp;<a href="#" data-toggle="tooltip" title="The email is used for sign-in and other purpose such as 2FA on our website"><i class='fas fa-question-circle'></i></a></p>
@@ -145,7 +146,7 @@
                 </div>
 
             </div>
-            <div class="col-6" style="height:100vh; background-image: linear-gradient(to left ,#1f2428 80%,#2c3037);">
+            <div class="col-6" style="min-height:100vh; background-image: linear-gradient(to left ,#1f2428 80%,#2c3037);">
                 <div class="row">
                     <div class="col-3">
 
@@ -178,9 +179,7 @@
 
 
 
-    <script>
-
-    </script>
+  
     <script src="filepond/filepond.min.js"></script>
     <script src="filepond/filepond.jquery.js"></script>
     <script src="filepond/plugins/preview/filepond-plugin-image-preview.min.js"></script>
@@ -196,7 +195,7 @@
             storeAsFile: true
         });
 
-        $('[data-toggle="tooltip"]').tooltip();
+        
     });
 </script>
 

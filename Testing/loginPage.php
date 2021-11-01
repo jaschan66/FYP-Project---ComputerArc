@@ -124,6 +124,7 @@ if (isset($_POST) && isset($_POST["btnSubmitLogin"])) {
         
      }
     ?>
+    
 
 </head>
 
@@ -135,7 +136,23 @@ if (isset($_POST) && isset($_POST["btnSubmitLogin"])) {
 
                 </div>
                 <div class="col-6">
+
                     <form style="padding-top: 20vh;" class="form-group" method="POST" enctype="multipart/form-data">
+
+                    <?php
+                    
+                    if($_GET['resetPass'] == true){
+
+                        echo  "<div class='alert alert-dark alert-dismissible' role='alert'>
+                        <a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a>
+                        <strong>Success!</strong> You should try logging in with your new password now.
+                        <button type='button' class='close' data-dismiss='alert' aria-label='Close'>
+                          <span aria-hidden='true'>&times;</span>
+                        </button>
+                      </div>";
+
+                    }
+                    ?>
                     <input type="hidden" id="g-token" name="g-toekn" />
                         <p style="color:#ffffff; font-family: 'Questrial'; padding-bottom: 5vh; text-align: center; font-size: 2.5em;">
                             SIGN IN</p>
@@ -146,7 +163,7 @@ if (isset($_POST) && isset($_POST["btnSubmitLogin"])) {
                    
                     <input type="submit" name="btnSubmitLogin" id="btnSubmitLogin" class="btn btn-primary" style="font-size: 0.75vw; font-family: 'Questrial'; width:14vw;  margin-bottom: 2vh;" value="Sign In">
                     <a href="homePage.php" class="btn btn-dark" style="font-size: 0.75vw; font-family: 'Questrial'; width: 8vw;  margin-bottom: 2vh;">Back to home</a>
-                    <a href="#" style="font-size: 0.75vw; font-family: 'Questrial'; width: 20vw; margin-left: 7.3vw; color: #ffffff;">Forgot
+                    <a href="forgotYourPass.php" style="font-size: 0.75vw; font-family: 'Questrial'; width: 20vw; margin-left: 7.3vw; color: #ffffff;">Forgot
                         Your Password?</a>
                      </form>
                 </div>
