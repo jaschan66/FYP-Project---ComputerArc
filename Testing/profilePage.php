@@ -207,7 +207,7 @@ session_start();
 
                 <div class="col-10">
                     <?php 
-                        if($_GET['editProf'] == true){
+                        if($_GET['editProf'] == true && $_SESSION[''] == "partner"){
                             include "ProfilePage/editPartnerProf.php";
                         }
                     ?>
