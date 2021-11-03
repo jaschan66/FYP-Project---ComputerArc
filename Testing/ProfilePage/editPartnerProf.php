@@ -19,6 +19,6 @@
                             <input class='filepond' id='profilepic' name='profilepic' type='file'>
                         </div>
 
-                        <input type='submit' name='btnSubmitEditProf' class='btn btn-dark' style='font-size: 1vw; font-family: 'Questrial'; width:100%; margin-bottom: 2vh;' value='Edit'>
+                        <input type='submit' name='btnSubmitEditProf' class='btn btn-dark' style='font-size: 1vw; font-family: Questrial; width:100%; margin-bottom: 2vh;' value='Edit'>
                     </form>";
                     ?>
