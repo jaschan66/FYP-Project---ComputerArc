@@ -73,6 +73,8 @@
             $partnerTelno = $_POST['partnertelno'];
             $partnerFaxNo = $_POST['partnerfaxno'];
             $partnerProfilepic = addslashes(file_get_contents($_FILES['partnerprofilepic']['tmp_name']));
+            echo $partnerProfilepic;
+            die();
             $partnerStatus = 1;
             $partnerJoineddate = date("Y/m/d");
            
@@ -127,7 +129,7 @@
                         <input class="form-control" id="partnerfaxno" name="partnerfaxno" type="text" style="margin-bottom: 3vh;background-image: linear-gradient(to right, #2c3037, #1f2428); color: white;" pattern="[0-9]{10}"  placeholder="e.g. 0123456789">
 
                         <p style="color: #b5b0aa; font-family: 'Questrial'; padding-right: 6vw;">Profile Picture</p>
-                        <input class="filepond" id="memberprofilepic" name="memberprofilepic" type="file">
+                        <input class="filepond" id="partnerprofilepic" name="partnerprofilepic" type="file">
 
                         <div class="row">
                                 <div class="col-8">
@@ -185,7 +187,7 @@
 <script>
     $(document).ready(function() {
         FilePond.registerPlugin(FilePondPluginImagePreview);
-        const inputElement = document.querySelector('#memberprofilepic');
+        const inputElement = document.querySelector('#partnerprofilepic');
 
         const pond = FilePond.create(inputElement, {
             storeAsFile: true

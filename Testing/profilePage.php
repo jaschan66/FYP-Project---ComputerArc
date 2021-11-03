@@ -11,6 +11,9 @@ session_start();
     <script src='https://kit.fontawesome.com/a076d05399.js'></script>
     <link rel="icon" href="Logo stuff\favicon-32x32.png" type="image/x-icon">
     <link href='https://fonts.googleapis.com/css?family=Questrial' rel='stylesheet'>
+
+    <link href='filepond/filepond.min.css' rel='stylesheet'>
+    <link href='filepond/plugins/preview/filepond-plugin-image-preview.min.css' rel='stylesheet'>
     <style>
         body {
             overflow-x: hidden;
@@ -59,6 +62,15 @@ session_start();
             /*padding:0;*/
         }
 
+        .formlabel {
+            color: #b5b0aa;
+            font-size: 1.5vw;
+        }
+
+        .formspacing {
+            padding-bottom: 2.5vh;
+        }
+
         p {
             font-family: "Questrial";
         }
@@ -74,9 +86,51 @@ session_start();
     </style>
     <?php
     include "includes/dbh.inc.php";
-
+    $msg = "";
     $email = $_SESSION['email'];
     $role = $_SESSION['role'];
+
+
+    if (isset($_POST) && isset($_POST['btnSubmitEditProf'])) {
+
+        $description = $_POST['description'];
+        $telNo = $_POST['telNo'];
+        $faxNo = $_POST['faxNo'];
+        
+       
+
+        if ($_POST['telNo'] != "" && $_POST['faxNo'] != "") {
+
+            $queryWithPicture = "";
+            if ($_FILES['profilepic']['size'] > 0) {
+                $ProfilePic = addslashes(file_get_contents($_FILES['profilepic']['tmp_name']));
+                $queryWithPicture = ", profilepic = '$ProfilePic'";
+            }
+        
+            $query = "UPDATE $role SET description = '$description', telNo = '$telNo', faxNo = '$faxNo' $queryWithPicture WHERE email = '$email'";
+        
+            if (mysqli_query($conn, $query)) {
+                $msg = "<div class='alert alert-dark alert-dismissible' role='alert'>
+                <a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a>
+                <strong>Success!</strong> Your profile are looking fresh and good.
+                <button type='button' class='close' data-dismiss='alert' aria-label='Close'>
+                  <span aria-hidden='true'>&times;</span>
+                </button>
+              </div>";
+            } else {
+                $msg = "<div class='alert alert-danger alert-dismissible' role='alert'>
+                <a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a>
+                <strong>Oh No!</strong> Something went wrong when editing your profile, please try again later.
+                <button type='button' class='close' data-dismiss='alert' aria-label='Close'>
+                  <span aria-hidden='true'>&times;</span>
+                </button>
+              </div>";
+              echo mysqli_error($conn);
+            }
+        }
+
+        
+    }
 
     $result = mysqli_query($conn, "SELECT * FROM `$role` WHERE email ='$email'");
     $resultimg = mysqli_query($conn, "SELECT profilepic FROM `$role` WHERE email ='$email'");
@@ -97,12 +151,21 @@ session_start();
     <div class="container-fluid">
         <!--top of profile page-->
         <div class="row" style="height: auto; border-bottom-style: solid;">
+            <div class="col-12">
+            <?php
+                    
+                  echo $msg;
+                    ?>
+            </div>
             <!--profile picture-->
             <div class="col-2" style="padding-left: 10vw">
+
                 <?php
+
                 while ($img = mysqli_fetch_array($resultimg)) {
                     echo '<img src="data:image/jpg;base64,' . base64_encode($img['profilepic']) . '" height="180px" width="180px" alt="Profile Picture" class="img-thumbnail img-responsive"/>';
                 }
+
                 ?>
             </div>
 
@@ -113,7 +176,7 @@ session_start();
                 <p style="color:#b5b0aa; font-family: 'Questrial'; text-align: left; font-size: 1.5vw;">
                     <?php
                     if ($name['description'] == null) {
-                        echo "Tell us more about yourself <a href='#' style='font-size: 1.5vw; ' role='button'>here</a>";
+                        echo "Tell us more about yourself <a href='#' style='font-size: 1.5vw; color:#54524f' role='button'>here</a>";
                     } else {
                         echo $name['description'];
                     } ?>
@@ -121,41 +184,44 @@ session_start();
             </div>
         </div>
 
-        <div class="row" style="height: 50vh; margin-top:1vh; margin-bottom:2vh;">
+        <div class="row" style="min-height: 50vh; margin-top:1vh; margin-bottom:2vh;">
             <div class="col-2" style=" border-right-style: solid;">
                 <!--Based on the role change the sidebar menu-->
-                <?php 
-                    if ($role == "member"){
-                        include "ProfilePage/memberSideBar.php";
-                    }
-                    else if ($role == "partner"){
-                        //include "ProfilePage/partnerSideBar.php";
-                    }
-                    else{
-                         //include "ProfilePage/adminSideBar.php";
-                    }
+                <?php
+                if ($role == "member") {
+                    include "ProfilePage/memberSideBar.php";
+                } else if ($role == "partner") {
+                    include "ProfilePage/partnerSideBar.php";
+                } else {
+                    //include "ProfilePage/adminSideBar.php";
+                }
                 ?>
 
             </div>
 
             <div class="col-10">
                 <!--Based on side menu bar change its content-->
+                <div class="col-1">
+
+                </div>
+
+                <div class="col-10">
+                    <?php 
+                        if($_GET['editProf'] == true){
+                            include "ProfilePage/editPartnerProf.php";
+                        }
+                    ?>
+                   
+                </div>
+
+                <div class="col-1">
+
+                </div>
             </div>
 
         </div>
 
 
-        <div class="row">
-            <!--the side menu for profile page-->
-            <div class="col-4">
-
-            </div>
-
-            <!--the side menu for profile page-->
-            <div class="col-8">
-
-            </div>
-        </div>
 
 
     </div>
@@ -167,6 +233,29 @@ session_start();
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
 
+    <script src="filepond/filepond.min.js"></script>
+    <script src="filepond/filepond.jquery.js"></script>
+    <script src="filepond/plugins/preview/filepond-plugin-image-preview.min.js"></script>
+
+    <script>
+        $(document).ready(function() {
+            $('[data-toggle="tooltip"]').tooltip();
+        });
+    </script>
+
+    
 </body>
+<script>
+        $(document).ready(function() {
+            FilePond.registerPlugin(FilePondPluginImagePreview);
+            const inputElement = document.querySelector('#profilepic');
+
+            const pond = FilePond.create(inputElement, {
+                storeAsFile: true
+            });
+
+            $('[data-toggle="tooltip"]').tooltip();
+        });
+    </script>
 
 </html>
