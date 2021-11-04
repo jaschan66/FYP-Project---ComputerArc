@@ -83,6 +83,19 @@ session_start();
         h2 {
             font-family: "Questrial";
         }
+
+        .nav-item::after {
+            content: '';
+            display: block;
+            width: 0;
+            height: 2px;
+            background: #000000;
+            transition: 0.2s;
+        }
+
+        .nav-item:hover::after {
+            width: 100%;
+        }
     </style>
     <?php
     include "includes/dbh.inc.php";
@@ -90,14 +103,14 @@ session_start();
     $email = $_SESSION['email'];
     $role = $_SESSION['role'];
 
-
+    // For edit Profile (Partner Ver)
     if (isset($_POST) && isset($_POST['btnSubmitEditProf'])) {
 
         $description = $_POST['description'];
         $telNo = $_POST['telNo'];
         $faxNo = $_POST['faxNo'];
-        
-       
+
+
 
         if ($_POST['telNo'] != "" && $_POST['faxNo'] != "") {
 
@@ -106,9 +119,9 @@ session_start();
                 $ProfilePic = addslashes(file_get_contents($_FILES['profilepic']['tmp_name']));
                 $queryWithPicture = ", profilepic = '$ProfilePic'";
             }
-        
+
             $query = "UPDATE $role SET description = '$description', telNo = '$telNo', faxNo = '$faxNo' $queryWithPicture WHERE email = '$email'";
-        
+
             if (mysqli_query($conn, $query)) {
                 $msg = "<div class='alert alert-dark alert-dismissible' role='alert'>
                 <a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a>
@@ -125,11 +138,48 @@ session_start();
                   <span aria-hidden='true'>&times;</span>
                 </button>
               </div>";
-              echo mysqli_error($conn);
+                echo mysqli_error($conn);
             }
         }
+    }
 
-        
+    // For Create PRE
+    if (isset($_POST) && isset($_POST['btnSubmitCreatePRE'])) {
+        $PREPrice       = $_POST['PREprice'];
+        $PRECategory    = $_POST['PREcategory'];
+        $PREName        = $_POST['PREname'];
+        $PREDesc        = $_POST['PREdesc'];
+        $PREStock       = $_POST['PREstock'];
+        $PREImage       = addslashes(file_get_contents($_FILES['PREpic']['tmp_name']));
+        $PREStatus      = 2;
+
+        $resultPREID    = mysqli_query($conn, "SELECT * FROM `$role` WHERE email ='$email'");
+
+        if (mysqli_num_rows($resultPREID) > 0) {
+            $PREIDResult = mysqli_fetch_assoc($resultPREID);
+            $PREID = $PREIDResult['id'];
+        }
+
+
+        $InsertPRE = "INSERT INTO `prebuildpc` (`price`, `category`, `name`, `description`, `stock`, `image`, `status`, `seller`) VALUES ('$PREPrice', '$PRECategory', '$PREName', '$PREDesc', '$PREStock', '$PREImage', '$PREStatus', '$PREID')";
+
+        if (mysqli_query($conn, $InsertPRE)) {
+            $msg = "<div class='alert alert-dark alert-dismissible' role='alert'>
+                <a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a>
+                <strong>Success!</strong> Your submission are now pending approval from admin.
+                <button type='button' class='close' data-dismiss='alert' aria-label='Close'>
+                  <span aria-hidden='true'>&times;</span>
+                </button>
+              </div>";
+        } else {
+            $msg = "<div class='alert alert-danger alert-dismissible' role='alert'>
+            <a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a>
+            <strong>Oh No!</strong> Something went wrong when publishing the pre-build pc, please try again later.
+            <button type='button' class='close' data-dismiss='alert' aria-label='Close'>
+              <span aria-hidden='true'>&times;</span>
+            </button>
+          </div>";
+        }
     }
 
     $result = mysqli_query($conn, "SELECT * FROM `$role` WHERE email ='$email'");
@@ -152,10 +202,10 @@ session_start();
         <!--top of profile page-->
         <div class="row" style="height: auto; border-bottom-style: solid;">
             <div class="col-12">
-            <?php
-                    
-                  echo $msg;
-                    ?>
+                <?php
+
+                echo $msg;
+                ?>
             </div>
             <!--profile picture-->
             <div class="col-2" style="padding-left: 10vw">
@@ -206,12 +256,16 @@ session_start();
                 </div>
 
                 <div class="col-10">
-                    <?php 
-                        if($_GET['editProf'] == true && $_SESSION['role'] == "partner"){
-                            include "ProfilePage/editPartnerProf.php";
-                        }
+                    <?php
+                    if($_GET['editProf'] == 1 && $_SESSION['role'] == "partner"){
+                    include "ProfilePage/editPartnerProf.php";
+                    }
+                    else if($_GET['editPRE'] == 1 && $_SESSION['role'] == "partner"){
+                     include "ProfilePage/editPartnerPRE.php";
+                    }
                     ?>
-                   
+                    
+
                 </div>
 
                 <div class="col-1">
@@ -243,19 +297,51 @@ session_start();
         });
     </script>
 
-    
+
 </body>
-<script>
+<?php
+if($_GET['editProf'] == 1 && $_SESSION['role'] == "partner"){
+   echo "<script>
         $(document).ready(function() {
-            FilePond.registerPlugin(FilePondPluginImagePreview);
-            const inputElement = document.querySelector('#profilepic');
+           FilePond.registerPlugin(FilePondPluginImagePreview);
+           const inputElement = document.querySelector('#profilepic');
 
-            const pond = FilePond.create(inputElement, {
-                storeAsFile: true
-            });
+           const pond = FilePond.create(inputElement, {
+               storeAsFile: true
+           });
 
-            $('[data-toggle="tooltip"]').tooltip();
+          $('[data-toggle=\"tooltip\"]').tooltip();
+       });
+  </script>";
+}
+else if($_GET['editPRE'] == 1 && $_SESSION['role'] == "partner"){
+   echo "<script>
+   $(document).ready(function() {
+       FilePond.registerPlugin(FilePondPluginImagePreview);
+       const inputElement = document.querySelector('#PREpic');
+
+       const pond = FilePond.create(inputElement, {
+           storeAsFile: true
+       });
+
+      $('[data-toggle=\"tooltip\"]').tooltip();
+  });
+</script>";
+}
+
+
+?>
+<script>
+    $(document).ready(function() {
+        FilePond.registerPlugin(FilePondPluginImagePreview);
+        const inputElement = document.querySelector('#PREpic');
+
+        const pond = FilePond.create(inputElement, {
+            storeAsFile: true
         });
-    </script>
+
+        $('[data-toggle="tooltip"]').tooltip();
+    });
+</script>
 
 </html>
