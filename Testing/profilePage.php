@@ -96,7 +96,11 @@ session_start();
         .nav-item:hover::after {
             width: 100%;
         }
+
+       
     </style>
+   
+
     <?php
     include "includes/dbh.inc.php";
     $msg = "";
@@ -261,7 +265,7 @@ session_start();
                     include "ProfilePage/editPartnerProf.php";
                     }
                     else if($_GET['editPRE'] == 1 && $_SESSION['role'] == "partner"){
-                     include "ProfilePage/editPartnerPRE.php";
+                     include "ProfilePage/mainPartnerPRE.php";
                     }
                     ?>
                     
@@ -330,7 +334,9 @@ else if($_GET['editPRE'] == 1 && $_SESSION['role'] == "partner"){
 }
 
 
+
 ?>
+
 <script>
     $(document).ready(function() {
         FilePond.registerPlugin(FilePondPluginImagePreview);
