@@ -267,6 +267,12 @@ session_start();
                     else if($_GET['editPRE'] == 1 && $_SESSION['role'] == "partner"){
                      include "ProfilePage/mainPartnerPRE.php";
                     }
+                    else if($_GET['editPRE'] == 2 && $_SESSION['role'] == "partner"){
+                    include "ProfilePage/editPartnerPRE.php";
+                    }
+                    else if($_GET['editPRE'] == 3 && $_SESSION['role'] == "partner"){
+                        include "ProfilePage/updatePRE.php";
+                        }
                     ?>
                     
 
@@ -332,6 +338,20 @@ else if($_GET['editPRE'] == 1 && $_SESSION['role'] == "partner"){
   });
 </script>";
 }
+else if($_GET['editPRE'] == 3 && $_SESSION['role'] == "partner"){
+    echo "<script>
+    $(document).ready(function() {
+        FilePond.registerPlugin(FilePondPluginImagePreview);
+        const inputElement = document.querySelector('#updatePREpic');
+ 
+        const pond = FilePond.create(inputElement, {
+            storeAsFile: true
+        });
+ 
+       $('[data-toggle=\"tooltip\"]').tooltip();
+   });
+ </script>";
+ }
 
 
 

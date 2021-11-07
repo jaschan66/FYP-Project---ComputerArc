@@ -33,9 +33,10 @@ session_start();
     }
     window.onload = loadTable;
 </script>
+<a href='profilePage.php?editPRE=2&editProf=0' class="btn btn-success" style="font-size: 0.75vw; margin-bottom:2vh;" role="button">Add Pre-Build PC</a>
 
 
-<input type="text" class="form-control" size="50" placeholder="Enter Name or Category" onkeyup="PREfunction()" name="searchPRE" id="searchPRE" autofocus>
+<input type="text" class="form-control" size="50" placeholder="Enter Name or Category" onkeyup="PREfunction()" name="searchPRE" id="searchPRE" autofocus style="margin-bottom:2vh;">
 
 <div id="listRes">
 
