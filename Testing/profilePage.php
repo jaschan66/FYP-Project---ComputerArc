@@ -96,10 +96,8 @@ session_start();
         .nav-item:hover::after {
             width: 100%;
         }
-
-       
     </style>
-   
+
 
     <?php
     include "includes/dbh.inc.php";
@@ -261,20 +259,19 @@ session_start();
 
                 <div class="col-10">
                     <?php
-                    if($_GET['editProf'] == 1 && $_SESSION['role'] == "partner"){
-                    include "ProfilePage/editPartnerProf.php";
-                    }
-                    else if($_GET['editPRE'] == 1 && $_SESSION['role'] == "partner"){
-                     include "ProfilePage/mainPartnerPRE.php";
-                    }
-                    else if($_GET['editPRE'] == 2 && $_SESSION['role'] == "partner"){
-                    include "ProfilePage/editPartnerPRE.php";
-                    }
-                    else if($_GET['editPRE'] == 3 && $_SESSION['role'] == "partner"){
+                    if ($_GET['editProf'] == 1 && $_SESSION['role'] == "partner") {
+                        include "ProfilePage/editPartnerProf.php";
+                    } else if ($_GET['editPRE'] == 1 && $_SESSION['role'] == "partner") {
+                        include "ProfilePage/mainPartnerPRE.php";
+                    } else if ($_GET['editPRE'] == 2 && $_SESSION['role'] == "partner") {
+                        include "ProfilePage/editPartnerPRE.php";
+                    } else if ($_GET['editPRE'] == 3 && $_SESSION['role'] == "partner") {
                         include "ProfilePage/updatePRE.php";
-                        }
+                    } else if ($_GET['editPCP'] == 1 && $_SESSION['role'] == "partner") {
+                        include "ProfilePage/mainPartnerPart.php";
+                    }
                     ?>
-                    
+
 
                 </div>
 
@@ -310,8 +307,8 @@ session_start();
 
 </body>
 <?php
-if($_GET['editProf'] == 1 && $_SESSION['role'] == "partner"){
-   echo "<script>
+if ($_GET['editProf'] == 1 && $_SESSION['role'] == "partner") {
+    echo "<script>
         $(document).ready(function() {
            FilePond.registerPlugin(FilePondPluginImagePreview);
            const inputElement = document.querySelector('#profilepic');
@@ -323,9 +320,8 @@ if($_GET['editProf'] == 1 && $_SESSION['role'] == "partner"){
           $('[data-toggle=\"tooltip\"]').tooltip();
        });
   </script>";
-}
-else if($_GET['editPRE'] == 1 && $_SESSION['role'] == "partner"){
-   echo "<script>
+} else if ($_GET['editPRE'] == 1 && $_SESSION['role'] == "partner") {
+    echo "<script>
    $(document).ready(function() {
        FilePond.registerPlugin(FilePondPluginImagePreview);
        const inputElement = document.querySelector('#PREpic');
@@ -337,8 +333,7 @@ else if($_GET['editPRE'] == 1 && $_SESSION['role'] == "partner"){
       $('[data-toggle=\"tooltip\"]').tooltip();
   });
 </script>";
-}
-else if($_GET['editPRE'] == 3 && $_SESSION['role'] == "partner"){
+} else if ($_GET['editPRE'] == 3 && $_SESSION['role'] == "partner") {
     echo "<script>
     $(document).ready(function() {
         FilePond.registerPlugin(FilePondPluginImagePreview);
@@ -351,7 +346,7 @@ else if($_GET['editPRE'] == 3 && $_SESSION['role'] == "partner"){
        $('[data-toggle=\"tooltip\"]').tooltip();
    });
  </script>";
- }
+}
 
 
 
