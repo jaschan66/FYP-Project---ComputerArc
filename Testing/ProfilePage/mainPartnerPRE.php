@@ -1,5 +1,5 @@
 <?php
-include "E:\FYP\htdocs\FYP--ComputerArc\Testing\includes\dbh.inc.php";
+include "includes\dbh.inc.php";
 session_start();
 
 // print_r($_POST);
