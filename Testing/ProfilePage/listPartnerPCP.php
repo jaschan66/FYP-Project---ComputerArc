@@ -11,11 +11,11 @@ if (mysqli_num_rows($GetID) > 0) {
 }
 $table = '';
 
-$searchByName = "SELECT * FROM prebuildpc WHERE status = 1 AND seller = " . $GetIDRes . " AND name LIKE '%" . $_POST["search"] . "%'";
-$earchByCate = "SELECT * FROM prebuildpc WHERE status = 1 AND seller = " . $GetIDRes . " AND category LIKE '%" . $_POST["search"] . "%'";
+$searchByName = "SELECT * FROM pcpart WHERE status = 1 AND seller = " . $GetIDRes . " AND name LIKE '%" . $_POST["search"] . "%'";
+$searchByPart = "SELECT * FROM pcpart WHERE status = 1 AND seller = " . $GetIDRes . " AND part LIKE '%" . $_POST["search"] . "%'";
 
 $resultName  = mysqli_query($conn, $searchByName);
-$resulltCate = mysqli_query($conn, $earchByCate);
+$resultPart = mysqli_query($conn, $searchByPart);
 
 $rowNo = 1;
 
@@ -45,7 +45,7 @@ if (mysqli_num_rows($resultName) > 0) {
        <td>' . $row["id"] . '</td>
        <td><img src="data:image/jpg;base64,' . base64_encode($row['image']) . '" height="180px" width="180px" alt="Profile Picture" class="img-thumbnail img-responsive"/></td>
        <td>' . $row["name"] . '</td>
-       <td>' . $row["category"] . '</td>
+       <td>' . $row["part"] . '</td>
        <td>' . $row["stock"] . '</td>
        <td>' . $row["price"] . '</td>
        <td><a href="profilePage.php?editPRE=3&editProf=0&idUpdate='.$row["id"].'" class="btn btn-primary" >Update</a></td>
@@ -54,7 +54,7 @@ if (mysqli_num_rows($resultName) > 0) {
         $rowNo++;
     }
     echo $table .  "</tbody></table>";
-} else if (mysqli_num_rows($resulltCate) > 0) {
+} else if (mysqli_num_rows($resultPart) > 0) {
     $table .= '<div class="table-responsive">
     <table class="table">
     <thead>
@@ -73,16 +73,16 @@ if (mysqli_num_rows($resultName) > 0) {
     <tbody>';
 
 
-    while ($row = mysqli_fetch_array($resulltCate)) {
+    while ($row = mysqli_fetch_array($resultPart)) {
         $table .= '<tr id="' . $row["id"] . '">
        <td>' . $rowNo . '</td>
        <td>' . $row["id"] . '</td>
        <td><img src="data:image/jpg;base64,' . base64_encode($row['image']) . '" height="180px" width="180px" alt="Profile Picture" class="img-thumbnail img-responsive"/></td>
        <td>' . $row["name"] . '</td>
-       <td>' . $row["category"] . '</td>
+       <td>' . $row["part"] . '</td>
        <td>' . $row["stock"] . '</td>
        <td>' . $row["price"] . '</td>
-       <td><a href="profilePage.php?editPRE=3&editProf=0&editPCP=0&idUpdate='.$row["id"].'" class="btn btn-primary" >Update</a></td>
+       <td><a href="profilePage.php?editProf=0&editPRE=0&editPCP=3&editAuc=0&idUpdate='.$row["id"].'" class="btn btn-primary" >Update</a></td>
        <td><button type="button" class="btn btn-danger" onclick="deleteData(this)" id="' . $row["id"] . '">Delete</button></td>
        </tr>';
         $rowNo++;
@@ -107,7 +107,7 @@ if (mysqli_num_rows($resultName) > 0) {
     function deleteData(e) {
         var id = $(e).attr('id');
         $.ajax({
-            url: "ProfilePage/deletePRE.php",
+            url: "ProfilePage/deletePCP.php",
             type: "POST",
             data: {
                 idDelete: id
