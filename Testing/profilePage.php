@@ -49,6 +49,7 @@ session_start();
             height: 100%;
         }
 
+
         a {
             color: #b5b0aa;
         }
@@ -96,8 +97,13 @@ session_start();
         .nav-item:hover::after {
             width: 100%;
         }
-    </style>
 
+        
+
+        
+
+
+    </style>
 
     <?php
     include "includes/dbh.inc.php";
@@ -269,6 +275,8 @@ session_start();
                         include "ProfilePage/updatePRE.php";
                     } else if ($_GET['editPCP'] == 1 && $_SESSION['role'] == "partner") {
                         include "ProfilePage/mainPartnerPart.php";
+                    } else if ($_GET['editPCP'] == 2 && $_SESSION['role'] == "partner") {
+                        include "ProfilePage/editPartnerPCP.php";
                     } else if ($_GET['editAuc'] == 1 && $_SESSION['role'] == "partner") {
                         include "ProfilePage/mainPartnerAuction.php";
                     }
@@ -353,6 +361,20 @@ if ($_GET['editProf'] == 1 && $_SESSION['role'] == "partner") {
    $(document).ready(function() {
        FilePond.registerPlugin(FilePondPluginImagePreview);
        const inputElement = document.querySelector('#auctionImage');
+
+       const pond = FilePond.create(inputElement, {
+           storeAsFile: true
+       });
+
+      $('[data-toggle=\"tooltip\"]').tooltip();
+  });
+</script>";
+}
+else if ($_GET['editPCP'] == 2 && $_SESSION['role'] == "partner") {
+    echo "<script>
+   $(document).ready(function() {
+       FilePond.registerPlugin(FilePondPluginImagePreview);
+       const inputElement = document.querySelector('#PCPpic');
 
        const pond = FilePond.create(inputElement, {
            storeAsFile: true

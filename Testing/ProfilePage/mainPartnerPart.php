@@ -10,6 +10,8 @@ session_start();
 //     $deleteById = "DELETE FROM prebuildpc WHERE id = '$idDelete'";
 //     mysqli_query($conn, $deleteById);
 // }
+
+
 ?>
 
 <script>
@@ -33,53 +35,31 @@ session_start();
     }
     window.onload = loadTable;
 </script>
-<form>
-    <select class="form-control" id="PCPpart" name="PCPpart">
-        <option selected value="mobo">Motherboard</option>
-        <option value="processor">Processor</option>
-        <option value="ram">RAM</option>
-        <option value="psu">PSU</option>
-        <option value="adapter">Adapter</option>
-        <option value="casing">Casing</option>
-        <option value="cooler">Cooler</option>
-        <option value="gpu">GPU</option>
-        <option value="storage">Storage</option>
-    </select>
+
+<form method="POST" action="profilePage.php?editAuc=0&editPRE=0&editProf=0&editPCP=2">
+    <div class="row">
+        <div class="col-6" style="padding:0">
+            <select class="form-control" id="PCPpart" name="PCPpart" style="margin-bottom:2vh">
+                <option selected value="mobo">Motherboard</option>
+                <option value="processor">Processor</option>
+                <option value="ram">RAM</option>
+                <option value="psu">PSU</option>
+                <option value="adapter">Adapter</option>
+                <option value="casing">Casing</option>
+                <option value="cooler">Cooler</option>
+                <option value="gpu">GPU</option>
+                <option value="storage">Storage</option>
+            </select>
+        </div>
+
+        <div class="col-6">
+            <input type="submit" class="btn btn-success" style="font-size: 0.75vw; margin-bottom:5vh;" value="Add PC Part">
+        </div>
+    </div>
+
+
 </form>
 
-
-<?php 
-    if(isset($_REQUEST['PCPpart']) && $_REQUEST['PCPpart'] == 'mobo'){
-        $addPart = "mobo";
-    }
-    else if(isset($_REQUEST['PCPpart']) && $_REQUEST['PCPpart'] == 'processor'){
-        $addPart = "processor";
-    }
-    else if(isset($_REQUEST['PCPpart']) && $_REQUEST['PCPpart'] == 'ram'){
-        $addPart = "ram";
-    }
-    else if(isset($_REQUEST['PCPpart']) && $_REQUEST['PCPpart'] == 'psu'){
-        $addPart = "psu";
-    }
-    else if(isset($_REQUEST['PCPpart']) && $_REQUEST['PCPpart'] == 'adapter'){
-        $addPart = "adapter";
-    }
-    else if(isset($_REQUEST['PCPpart']) && $_REQUEST['PCPpart'] == 'casing'){
-        $addPart = "casing";
-    }
-    else if(isset($_REQUEST['PCPpart']) && $_REQUEST['PCPpart'] == 'cooler'){
-        $addPart = "cooler";
-    }
-    else if(isset($_REQUEST['PCPpart']) && $_REQUEST['PCPpart'] == 'gpu'){
-        $addPart = "gpu";
-    }
-    else{
-        $addPart = "storage";
-    }
-?>
-
-
-<a href='profilePage.php?editAuc=0&editPRE=0&editProf=0&editPCP=2&addPart=<?php echo $addPart ?>' class="btn btn-success" style="font-size: 0.75vw; margin-bottom:2vh;" role="button">Add PC Part</a>
 
 
 <input type="text" class="form-control" size="50" placeholder="Enter Name or Category" onkeyup="PCPfunction()" name="searchPCP" id="searchPCP" autofocus style="margin-bottom:2vh;">
@@ -92,24 +72,9 @@ session_start();
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 
 
-<script>
-    $(document).ready(function() { 
-    $('#PCPpart').on('change', getValue); 
-}); 
- 
-function getValue() { 
-    var selected = $('#PCPpart').val(); 
-    $.ajax({ 
-        url:        '/you/php/script.php', 
-        type:       'POST', 
-        dataType:   'json', 
-        data:       { value: selected }, 
-        success:    function(data) { 
-            $('#some_div').html(data); 
-        } 
-    }); 
-} 
-</script>
+
+
+
 <script>
     $(document).ready(function() {
         $('#searchPCP').keyup(function() {
