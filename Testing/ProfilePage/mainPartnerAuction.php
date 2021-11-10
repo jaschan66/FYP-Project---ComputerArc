@@ -1,30 +1,59 @@
-<?php include "includes/auction-upload.inc.php"; ?>
+<?php
+include "includes\dbh.inc.php";
+session_start();
+?>
 
-<form style='font-family: Questrial; text-align: left' method='POST' enctype='multipart/form-data'>
-    <div class='formspacing'>
-        <p class='formlabel'>Auction Title</p>
-        <input type='text' class='form-control' id='aucTitle' required placeholder='Auction Title...' name='aucTitle'>
-    </div>
+<script>
+    function loadTable() {
+        var txt = $('#searchAuc').val();
+        if (txt == '' || txt != '') {
+            $.ajax({
+                url: "ProfilePage/listPartnerAuc.php",
+                method: "post",
+                data: {
+                    search: txt
+                },
+                dataType: "text",
+                success: function(data) {
+                    $('#listResAuc').html(data);
+                }
+            })
+        } else {
+            $('#listResAuc').html('');
+        }
+    }
+    window.onload = loadTable;
+</script>
+<a href='profilePage.php?editAuc=2&editPRE=0&editProf=0&editPCP=0' class="btn btn-success" style="font-size: 0.75vw; margin-bottom:2vh;" role="button">Create A New Auction</a>
 
-    <div class='formspacing'>
-        <p class='formlabel'>Starting Bid</p>
-        <input type='text' pattern='^\d+(\.|\,)\d{2}$' required placeholder='e.g. 999.99' class='form-control' name='bidPrice'>
-    </div>
+<input type="text" class="form-control" size="50" placeholder="Enter Name or Category" onkeyup="Aucfunction()" name="searchAuc" id="searchAuc" autofocus style="margin-bottom:2vh;">
 
-    <div class='formspacing'>
-        <p class='formlabel'>Start Date</p>
-        <input type="date" placeholder="21/10/2021" required class="form-control" name="startDate">
-    </div>
+<div id="listResAuc">
 
-    <div class='formspacing'>
-        <p class='formlabel'>End Date</p>
-        <input type="date" placeholder="21/10/2021" required class="form-control" name="endDate">
-    </div>
+</div>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 
-    <div class='formspacing'>
-        <p class='formlabel'>Product Picture</p>
-        <input class='filepond' id='auctionImage' name='auctionImage' type='file'>
-    </div>
-
-    <input type='submit' name='btnCreateAuction' class='btn btn-dark' style='font-size: 1vw; font-family: Questrial; width:100%; margin-bottom: 2vh;' value='Create'>
-</form>
+<script>
+    $(document).ready(function() {
+        $('#searchAuc').keyup(function() {
+            var txt = $(this).val();
+            if (txt == '' || txt != '') {
+                $.ajax({
+                    url: "ProfilePage/listPartnerAuction.php",
+                    method: "post",
+                    data: {
+                        search: txt
+                    },
+                    dataType: "text",
+                    success: function(data) {
+                        $('#listResAuc').html(data);
+                    }
+                })
+            } else {
+                $('#listResAuc').html('');
+            }
+        });
+    });
+</script>
