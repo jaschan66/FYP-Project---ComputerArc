@@ -278,11 +278,11 @@ session_start();
                     } else if ($_GET['editPCP'] == 2 && $_SESSION['role'] == "partner") {
                         include "ProfilePage/editPartnerPCP.php";
                     } else if ($_GET['editAuc'] == 1 && $_SESSION['role'] == "partner") {
-                        include "ProfilePage/mainPartnerAuction.php";
+                        include "auction/mainPartnerAuction.php";
                     } else if ($_GET['editAuc'] == 2 && $_SESSION['role'] == "partner") {
-                        include "ProfilePage/editPartnerAuction.php";
+                        include "auction/editPartnerAuction.php";
                     } else if ($_GET['editAuc'] == 3 && $_SESSION['role'] == "partner") {
-                        include "ProfilePage/updateAuction.php";
+                        include "auction/updateAuction.php";
                     }
                     ?>
 

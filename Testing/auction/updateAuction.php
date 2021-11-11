@@ -26,7 +26,7 @@ if (isset($_POST['btnSubmitUpdateAuc'])) {
 
         if (mysqli_query($conn, $updateQuery)) {
             echo "<script>
-            window.location.href = \"profilePage.php?editPRE=1&editProf=0\";
+            window.location.href = \"profilePage.php?editAuc=1&editPRE=0&editProf=0&editPCP=0\";
             </script>";
         } else {
             $msg = "<div class='alert alert-danger alert-dismissible' role='alert'>

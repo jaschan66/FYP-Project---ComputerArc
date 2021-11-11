@@ -8,7 +8,7 @@ session_start();
         var txt = $('#searchAuc').val();
         if (txt == '' || txt != '') {
             $.ajax({
-                url: "ProfilePage/listPartnerAuc.php",
+                url: "auction/listPartnerAuc.php",
                 method: "post",
                 data: {
                     search: txt
@@ -41,7 +41,7 @@ session_start();
             var txt = $(this).val();
             if (txt == '' || txt != '') {
                 $.ajax({
-                    url: "ProfilePage/listPartnerAuction.php",
+                    url: "auction/listPartnerAuction.php",
                     method: "post",
                     data: {
                         search: txt
