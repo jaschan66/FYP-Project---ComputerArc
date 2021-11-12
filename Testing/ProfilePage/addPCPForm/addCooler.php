@@ -24,28 +24,19 @@
         <p class='formlabel'>Product Picture</p>
         <input class='filepond' id='PCPpic' name='PCPpic' type='file'>
     </div>
-    
+
     <div class='formspacing'>
-        <p class='formlabel'>Memory speed (MHz)</p>
-        <input class='form-control' id='PCPRAMmemoryspeed' name='PCPRAMmemoryspeed' type='text'  placeholder='e.g. 2444'>
+        <p class='formlabel'>Cooler type</p>
+        <select class="form-control" id="PCPCoolertype" name="PCPCoolertype" style="margin-bottom:2vh">
+                <option selected value="aircooler">Air Cooler</option>
+                <option value="aiocooler">AIO Cooler</option>
+            </select>
     </div>
 
     <div class='formspacing'>
-        <p class='formlabel'>Memory size</p>
-        <input class='form-control' id='PCPRAMmemorysize' name='PCPRAMmemorysize' type='text'  placeholder='e.g. 1X16GB'>
+        <p class='formlabel'>Supported socket&nbsp; <a href="#" data-toggle="tooltip" title="If multiple socket is supported, just add comma sign behind the consecutive type (no spacing)"><i class='fas fa-question-circle'></i></a></p>
+        <input class='form-control' id='PCPCoolersupportedsocket' name='PCPCoolersupportedsocket' type='text' placeholder="e.g. LGA1151,LGA1150,LGA1366...">
     </div>
 
-    <div class='formspacing'>
-        <p class='formlabel'>DDR generation</p>
-        <input class='form-control' id='PCPRAMddrgeneration' name='PCPRAMddrgeneration' type='text' placeholder='e.g. DDR4'>
-    </div>
-
-    <div class='formspacing'>
-        <p class='formlabel'>Voltage (V)</p>
-        <input class='form-control' id='PCPRAMvoltage' name='PCPRAMvoltage' type='text' pattern="[0-9]+" placeholder='e.g. 1.2'>
-    </div>
-
-
-
-    <input type='submit' name='btnSubmitCreateRAM' class='btn btn-dark' style='font-size: 1vw; font-family: Questrial; width:100%; margin-bottom: 2vh;' value='Create'>
+    <input type='submit' name='btnSubmitCreateCooler' class='btn btn-dark' style='font-size: 1vw; font-family: Questrial; width:100%; margin-bottom: 2vh;' value='Create'>
 </form>

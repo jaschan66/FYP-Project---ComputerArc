@@ -24,28 +24,18 @@
         <p class='formlabel'>Product Picture</p>
         <input class='filepond' id='PCPpic' name='PCPpic' type='file'>
     </div>
-    
+
     <div class='formspacing'>
-        <p class='formlabel'>Memory speed (MHz)</p>
-        <input class='form-control' id='PCPRAMmemoryspeed' name='PCPRAMmemoryspeed' type='text'  placeholder='e.g. 2444'>
+        <p class='formlabel'>Clock speed (GHz)</p>
+        <input class='form-control' id='PCPMOBOmemoryspeed' name='PCPMOBOmemoryspeed' type='text' placeholder='e.g. 3.5'>
     </div>
 
     <div class='formspacing'>
-        <p class='formlabel'>Memory size</p>
-        <input class='form-control' id='PCPRAMmemorysize' name='PCPRAMmemorysize' type='text'  placeholder='e.g. 1X16GB'>
-    </div>
-
-    <div class='formspacing'>
-        <p class='formlabel'>DDR generation</p>
-        <input class='form-control' id='PCPRAMddrgeneration' name='PCPRAMddrgeneration' type='text' placeholder='e.g. DDR4'>
-    </div>
-
-    <div class='formspacing'>
-        <p class='formlabel'>Voltage (V)</p>
-        <input class='form-control' id='PCPRAMvoltage' name='PCPRAMvoltage' type='text' pattern="[0-9]+" placeholder='e.g. 1.2'>
+        <p class='formlabel'>Wattage (watt)</p>
+        <input class='form-control' id='PCPPSUwattage' name='PCPPSUwattage' type='text'  placeholder='e.g. 650' pattern="[0-9]+">
     </div>
 
 
+    <input type='submit' name='btnSubmitCreateGPU' class='btn btn-dark' style='font-size: 1vw; font-family: Questrial; width:100%; margin-bottom: 2vh;' value='Create'>
 
-    <input type='submit' name='btnSubmitCreateRAM' class='btn btn-dark' style='font-size: 1vw; font-family: Questrial; width:100%; margin-bottom: 2vh;' value='Create'>
 </form>

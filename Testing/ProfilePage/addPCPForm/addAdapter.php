@@ -1,3 +1,8 @@
+<?php
+  
+
+?>
+
 <form style='font-family: Questrial; text-align: left' method='POST' enctype='multipart/form-data'>
     <div class='formspacing'>
         <p class='formlabel'>Name</p>
@@ -26,26 +31,12 @@
     </div>
     
     <div class='formspacing'>
-        <p class='formlabel'>Memory speed (MHz)</p>
-        <input class='form-control' id='PCPRAMmemoryspeed' name='PCPRAMmemoryspeed' type='text'  placeholder='e.g. 2444'>
+        <p class='formlabel'>Socket</p>
+        <select class="form-control" id="PCPAdaptersocket" name="PCPAdaptersocket" style="margin-bottom:2vh">
+                <option selected value="pci">PCI</option>
+                <option value="PCIex4">PCIe x4</option>
+            </select>
     </div>
 
-    <div class='formspacing'>
-        <p class='formlabel'>Memory size</p>
-        <input class='form-control' id='PCPRAMmemorysize' name='PCPRAMmemorysize' type='text'  placeholder='e.g. 1X16GB'>
-    </div>
-
-    <div class='formspacing'>
-        <p class='formlabel'>DDR generation</p>
-        <input class='form-control' id='PCPRAMddrgeneration' name='PCPRAMddrgeneration' type='text' placeholder='e.g. DDR4'>
-    </div>
-
-    <div class='formspacing'>
-        <p class='formlabel'>Voltage (V)</p>
-        <input class='form-control' id='PCPRAMvoltage' name='PCPRAMvoltage' type='text' pattern="[0-9]+" placeholder='e.g. 1.2'>
-    </div>
-
-
-
-    <input type='submit' name='btnSubmitCreateRAM' class='btn btn-dark' style='font-size: 1vw; font-family: Questrial; width:100%; margin-bottom: 2vh;' value='Create'>
+    <input type='submit' name='btnSubmitCreateAdapter' class='btn btn-dark' style='font-size: 1vw; font-family: Questrial; width:100%; margin-bottom: 2vh;' value='Create'>
 </form>

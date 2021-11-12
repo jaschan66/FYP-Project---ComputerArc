@@ -26,26 +26,20 @@
     </div>
     
     <div class='formspacing'>
-        <p class='formlabel'>Memory speed (MHz)</p>
-        <input class='form-control' id='PCPRAMmemoryspeed' name='PCPRAMmemoryspeed' type='text'  placeholder='e.g. 2444'>
+        <p class='formlabel'>Size</p>
+        <select class="form-control" id="PCPCasingsize" name="PCPCasingsize" style="margin-bottom:2vh">
+                <option selected value="fulltower">Full Tower</option>
+                <option value="midtower">Mid Tower</option>
+                <option value="miniitx">mini-ITX</option>
+            </select>
     </div>
 
     <div class='formspacing'>
-        <p class='formlabel'>Memory size</p>
-        <input class='form-control' id='PCPRAMmemorysize' name='PCPRAMmemorysize' type='text'  placeholder='e.g. 1X16GB'>
-    </div>
-
-    <div class='formspacing'>
-        <p class='formlabel'>DDR generation</p>
-        <input class='form-control' id='PCPRAMddrgeneration' name='PCPRAMddrgeneration' type='text' placeholder='e.g. DDR4'>
-    </div>
-
-    <div class='formspacing'>
-        <p class='formlabel'>Voltage (V)</p>
-        <input class='form-control' id='PCPRAMvoltage' name='PCPRAMvoltage' type='text' pattern="[0-9]+" placeholder='e.g. 1.2'>
+        <p class='formlabel'>Side Panel</p>
+        <input type='text' placeholder='e.g. Tempered glass on the left side panel.' class='form-control' name='PCPCasingsidepanel'>
     </div>
 
 
 
-    <input type='submit' name='btnSubmitCreateRAM' class='btn btn-dark' style='font-size: 1vw; font-family: Questrial; width:100%; margin-bottom: 2vh;' value='Create'>
+    <input type='submit' name='btnSubmitCreateCasing' class='btn btn-dark' style='font-size: 1vw; font-family: Questrial; width:100%; margin-bottom: 2vh;' value='Create'>
 </form>

@@ -26,26 +26,19 @@
     </div>
     
     <div class='formspacing'>
-        <p class='formlabel'>Memory speed (MHz)</p>
-        <input class='form-control' id='PCPRAMmemoryspeed' name='PCPRAMmemoryspeed' type='text'  placeholder='e.g. 2444'>
+        <p class='formlabel'>Clock speed (GHz)</p>
+        <input class='form-control' id='PCPProcessorclockspeed' name='Processorclockspeed' type='text'  pattern="[0-9]+" placeholder='e.g. 3.0'>
     </div>
 
     <div class='formspacing'>
-        <p class='formlabel'>Memory size</p>
-        <input class='form-control' id='PCPRAMmemorysize' name='PCPRAMmemorysize' type='text'  placeholder='e.g. 1X16GB'>
+        <p class='formlabel'>Socket</p>
+        <input class='form-control' id='PCPProcessorsocket' name='PCPProcessorsocket' type='text' placeholder='e.g. LGA1151'>
     </div>
 
     <div class='formspacing'>
-        <p class='formlabel'>DDR generation</p>
-        <input class='form-control' id='PCPRAMddrgeneration' name='PCPRAMddrgeneration' type='text' placeholder='e.g. DDR4'>
+        <p class='formlabel'>Power consumption (Watts)</p>
+        <input class='form-control' id='PCPProcessorpowerconsumption' name='PCPProcessorpowerconsumption' type='text' pattern="[0-9]+" placeholder='e.g. 85'>
     </div>
 
-    <div class='formspacing'>
-        <p class='formlabel'>Voltage (V)</p>
-        <input class='form-control' id='PCPRAMvoltage' name='PCPRAMvoltage' type='text' pattern="[0-9]+" placeholder='e.g. 1.2'>
-    </div>
-
-
-
-    <input type='submit' name='btnSubmitCreateRAM' class='btn btn-dark' style='font-size: 1vw; font-family: Questrial; width:100%; margin-bottom: 2vh;' value='Create'>
+    <input type='submit' name='btnSubmitCreateProcessor' class='btn btn-dark' style='font-size: 1vw; font-family: Questrial; width:100%; margin-bottom: 2vh;' value='Create'>
 </form>

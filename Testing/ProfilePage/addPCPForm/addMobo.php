@@ -27,22 +27,22 @@
     
     <div class='formspacing'>
         <p class='formlabel'>Chipset</p>
-        <input class='form-control' id='PCPMOBOchipset' name='PCPMOBOchipset' type='text' placeholder='B460'>
+        <input class='form-control' id='PCPMOBOchipset' name='PCPMOBOchipset' type='text' placeholder='e.g. B460'>
     </div>
 
     <div class='formspacing'>
         <p class='formlabel'>Max Memory Size</p>
-        <input class='form-control' id='PCPMOBOmemorysize' name='PCPMOBOmemorysize' type='text' placeholder='32GB'>
+        <input class='form-control' id='PCPMOBOmemorysize' name='PCPMOBOmemorysize' type='text' placeholder='e.g. 32GB'>
     </div>
 
     <div class='formspacing'>
         <p class='formlabel'>Max Memory Speed</p>
-        <input class='form-control' id='PCPMOBOmemoryspeed' name='PCPMOBOmemoryspeed' type='text' placeholder='2666'>
+        <input class='form-control' id='PCPMOBOmemoryspeed' name='PCPMOBOmemoryspeed' type='text' placeholder='e.g. 2666'>
     </div>
 
     <div class='formspacing'>
         <p class='formlabel'>DIMM slot</p>
-        <input class='form-control' id='PCPMOBOdimmslot' name='PCPMOBOdimmslot' type='text' pattern="[0-9]+" placeholder='2'>
+        <input class='form-control' id='PCPMOBOdimmslot' name='PCPMOBOdimmslot' type='text' pattern="[0-9]+" placeholder='e.g. 2'>
     </div>
 
     <div class='formspacing'>
@@ -55,7 +55,7 @@
 
     <div class='formspacing'>
         <p class='formlabel'>PCIE slot</p>
-        <input class='form-control' id='PCPMOBOpcieslot' name='PCPMOBOpcieslot' type='text' pattern="[0-9]+" placeholder='2'>
+        <input class='form-control' id='PCPMOBOpcieslot' name='PCPMOBOpcieslot' type='text' pattern="[0-9]+" placeholder='e.g. 2'>
     </div>
 
     <div class='formspacing'>
