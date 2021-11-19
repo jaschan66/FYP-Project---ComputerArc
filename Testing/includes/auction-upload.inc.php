@@ -21,7 +21,7 @@ if (isset($_POST['btnCreateAuction'])) {
     $insert = "INSERT INTO auction (`title`, `starting_bid`, `image`, `start_date`, `end_date`, `owner_id`) VALUES ('$auctionTittle', '$biddingPrice', '$image', '$auctionStartDt', '$auctionEndDt', '$GetOwnerID')";
 
     if (mysqli_query($conn, $insert)) {
-        //header("Location: auctionPage.php");
+        header("Location: profilePage.php?editAuc=1&editPRE=0&editProf=0&editPCP=0");
     } else {
         echo "Error occured: " . mysqli_error($conn);
     }

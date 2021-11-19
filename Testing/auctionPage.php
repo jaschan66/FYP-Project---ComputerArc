@@ -1,7 +1,3 @@
-<?php
-    $session['username'] = "Admin";
-?>
-
 <!DOCTYPE html>
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <meta charset=" utf-8" />
@@ -93,7 +89,7 @@
             height: 420px;
             width: 360px;
             margin: 20px 10px 0;
-            background-color:rgba(161, 161, 161, 0.5);
+            background-color: rgba(161, 161, 161, 0.5);
         }
 
         .auction-container {
@@ -106,7 +102,6 @@
         }
     </style>
 
-    <?php include "includes/auction-upload.inc.php"; ?>
 </head>
 
 <body>
@@ -135,7 +130,7 @@
 
                 $sql = "SELECT * FROM auction ORDER BY 'start_date'";
                 $stmt = mysqli_stmt_init($conn);
-                
+
                 if (!mysqli_stmt_prepare($stmt, $sql)) {
                     echo "SQL statement failed!";
                 } else {
@@ -143,37 +138,15 @@
                     $result = mysqli_stmt_get_result($stmt);
 
                     while ($row = mysqli_fetch_array($result)) {
-                        echo '<a href="#">
+                        echo '<a href="auctionDetailPage.php?idRetrieve='.$row["id"].'">
                         <img src="data:image/jpg;base64,' . base64_encode($row["image"]) . '"/>
-                        <h4 style="margin: 12px 0px 10px 30px;">'.$row["title"].'</h4>
-                        <p style="margin: 12px 0px 10px 30px;">Starting Bid: RM '.$row["starting_bid"].'</p>
-                        <p style="margin: 12px 0px 10px 30px;">'.date("j/n/Y",strtotime($row["start_date"])).' - '.date("j/n/Y",strtotime($row["end_date"])).'</p>
+                        <h4 style="margin: 12px 0px 10px 30px;">' . $row["title"] . '</h4>
+                        <p style="margin: 12px 0px 10px 30px;">Starting Bid: RM ' . number_format($row["starting_bid"], 2) . '</p>
+                        <p style="margin: 12px 0px 10px 30px;">' . date("j/n/Y", strtotime($row["start_date"])) . ' - ' . date("j/n/Y", strtotime($row["end_date"])) . '</p>
                     </a>';
                     }
                 }
                 ?>
-            </div>
-
-            <div class="auction-upload">
-                <form class="form-group" method="post" enctype="multipart/form-data">
-
-                    <p style="padding-right: 6vw;" class="formLabel">Auction Title</p>
-                    <input type="text" name="aucTitle" placeholder="Auction Title...">
-
-                    <p style="padding-right: 6vw;" class="formLabel">Starting Bid</p>
-                    <input type="text" name="bidPrice" placeholder="RM100">
-
-                    <p style="padding-right: 6vw;" class="formLabel">Start Date</p>
-                    <input type="date" name="startDate" placeholder="21/10/2021">
-
-                    <p style="padding-right: 6vw;" class="formLabel">End Date</p>
-                    <input type="date" name="endDate" placeholder="21/10/2021">
-
-                    <p style="padding-right: 6vw;" class="formLabel">Auction Image</p>
-                    <input class="filepond" id="auctionImage" name="memberprofilepic" type="file">
-
-                    <button type="submit" name="btnSubmit">UPLOAD</button>
-                </form>
             </div>
 
         </div>
@@ -182,38 +155,22 @@
         </div>
     </div>
 
-    <!--footer-->
-    <?php require "includes/footer.php"; ?>
-
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
-    <script>
-        $(document).ready(function() {
-            $("#searchAuction").on("keyup", function() {
-                var value = $(this).val().toLowerCase();
-                $("#auctionList *").filter(function() {
-                    $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
-                });
-            });
-        });
-    </script>
-
-    <script src="filepond/filepond.min.js"></script>
-    <script src="filepond/filepond.jquery.js"></script>
-    <script src="filepond/plugins/preview/filepond-plugin-image-preview.min.js"></script>
 </body>
 
+<!--footer-->
+<?php require "includes/footer.php"; ?>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
 <script>
     $(document).ready(function() {
-        FilePond.registerPlugin(FilePondPluginImagePreview);
-        const inputElement = document.querySelector('#auctionImage');
-
-        const pond = FilePond.create(inputElement, {
-            storeAsFile: true
+        $("#searchAuction").on("keyup", function() {
+            var value = $(this).val().toLowerCase();
+            $("#auctionList *").filter(function() {
+                $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+            });
         });
-
-        $('[data-toggle="tooltip"]').tooltip();
     });
 </script>
 

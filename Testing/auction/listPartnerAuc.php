@@ -30,7 +30,6 @@ if (mysqli_num_rows($resultName) > 0) {
             <th>Image</th>
             <th>Title</th>
             <th>Starting Bid</th>
-            <th>Current Bid</th>
             <th>Winner</th>
             <th>Start Date</th>
             <th>End Date</th>
@@ -43,15 +42,16 @@ if (mysqli_num_rows($resultName) > 0) {
     while ($row = mysqli_fetch_array($resultName)) {
 
        $table .= '<tr id="' . $row["id"] . '">
+       <a href="auctionDetailPage.php?idRetrieve='.$row["id"].'">
        <td>' . $rowNo . '</td>
        <td>' . $row["id"] . '</td>
        <td><img src="data:image/jpg;base64,' . base64_encode($row['image']) . '" height="180px" width="180px" alt="Profile Picture" class="img-thumbnail img-responsive"/></td>
        <td>' . $row["title"] . '</td>
-       <td>RM ' . $row["starting_bid"] . '</td>
-       <td>RM ' . $row["current_bid"] . '</td>
+       <td>RM ' . number_format($row["starting_bid"], 2) . '</td>
        <td>' . $row["winner"] . '</td>
        <td>'.date("j/n/Y",strtotime($row["start_date"])).'</td>
        <td>'.date("j/n/Y",strtotime($row["end_date"])).'</td>
+       </a>
        <td><a href="profilePage.php?editAuc=3&editPRE=0&editProf=0&editPCP=0&idUpdate='.$row["id"].'" class="btn btn-primary" >Update</a></td>
        <td><button type="button" class="btn btn-danger" onclick="deleteData(this)" id="' . $row["id"] . '">Delete</button></td>
        </tr>';
@@ -68,7 +68,6 @@ if (mysqli_num_rows($resultName) > 0) {
             <th>Image</th>
             <th>Title</th>
             <th>Starting bid</th>
-            <th>Current Bid</th>
             <th>Winner</th>
             <th>Start Date</th>
             <th>End Date</th>
@@ -79,16 +78,17 @@ if (mysqli_num_rows($resultName) > 0) {
 
 
     while ($row = mysqli_fetch_array($resulltDate)) {
-        $table .= '<tr id="' . $row["id"] . '">
+        $table .= '<tr id="' . $row["id"] . '"> 
+        <a href="#">
         <td>' . $rowNo . '</td>
         <td>' . $row["id"] . '</td>
         <td><img src="data:image/jpg;base64,' . base64_encode($row['image']) . '" height="180px" width="180px" alt="Profile Picture" class="img-thumbnail img-responsive"/></td>
         <td>' . $row["title"] . '</td>
-        <td>RM ' . $row["starting_bid"] . '</td>
-        <td>RM ' . $row["current_bid"] . '</td>
+        <td>RM ' . number_format($row["starting_bid"], 2) . '</td>
         <td>' . $row["winner"] . '</td> 
         <td>'.date("j/n/Y",strtotime($row["start_date"])).'</td>
         <td>'.date("j/n/Y",strtotime($row["end_date"])).'</td>
+        </a>
         <td><a href="profilePage.php?editAuc=3&editPRE=0&editProf=0&editPCP=0&idUpdate='.$row["id"].'" class="btn btn-primary" >Update</a></td>
         <td><button type="button" class="btn btn-danger" onclick="deleteData(this)" id="' . $row["id"] . '">Delete</button></td>
        </tr>';
