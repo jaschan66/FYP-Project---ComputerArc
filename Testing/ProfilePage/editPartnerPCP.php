@@ -5,31 +5,31 @@
 
 <?php 
         if($PCPtype == "mobo"){
-            echo "";
+            include "addPCPForm/addMobo.php";
         }
         else if($PCPtype == "ram"){
-            echo "";
+            include "addPCPForm/addRam.php";
         }
         else if($PCPtype == "psu"){
-            echo "";
+            include "addPCPForm/addPsu.php";
         }
         else if($PCPtype == "adapter"){
-            echo "";
+            include "addPCPForm/addAdapter.php";
         }
         else if($PCPtype == "casing"){
-            echo "";
+            include "addPCPForm/addCasing.php";
         }
         else if($PCPtype == "cooler"){
-            echo "";
+            include "addPCPForm/addCooler.php";
         }
         else if($PCPtype == "gpu"){
-            echo "";
+            include "addPCPForm/addGpu.php";
         }
         else if($PCPtype == "storage"){
-            echo "";
+            include "addPCPForm/addStorage.php";
         }
         else if($PCPtype == "processor"){
-            echo "";
+            include "addPCPForm/addProcessor.php";
         }
 
     

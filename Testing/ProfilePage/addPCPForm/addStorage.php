@@ -1,4 +1,62 @@
+<?php
+
+$msgPCP ="";
+  if(isset($_POST) && isset($_POST['btnSubmitCreateStorage'])){
+    include "includes/dbh.inc.php";
+    session_start();
+
+      $pcpname = $_POST['PCPname'];
+      $pcpprice = $_POST['PCPprice'];
+      $pcpstock = $_POST['PCPstock'];
+      $pcpdesc = $_POST['PCPdesc'];
+      $pcpstatus = 2;
+      $pcppart = "storage";
+      $pcppic = addslashes(file_get_contents($_FILES['PCPpic']['tmp_name']));
+      $pcpStoragetype = $_POST['PCPStoragetype'];
+
+
+      $selleremail = $_SESSION['email'];
+      $getIDquery = mysqli_query($conn,"SELECT id FROM partner where email ='$selleremail'");
+      $getID = mysqli_fetch_assoc($getIDquery);
+      $id = $getID['id'];
+
+      $insertPCPQuery = "INSERT INTO `pcpart` (`price`, `name`, `description`, `stock`, `image`, `status`, `seller`, `part`) VALUES ('$pcpprice', '$pcpname', '$pcpdesc', '$pcpstock', '$pcppic', '$pcpstatus', '$id', '$pcppart')";
+      if(mysqli_query($conn, $insertPCPQuery)){
+          $selectpcpartIDquery = "SELECT * FROM pcpart where name ='$pcpname'";
+          $executepcpartID = mysqli_query($conn, $selectpcpartIDquery);
+          $resultpcpID = mysqli_fetch_assoc($executepcpartID);
+          $pcpID = $resultpcpID['id'];
+          $insertStorageQuery = "INSERT INTO `storage` (`type`, `pcpno`) VALUES ('$pcpStoragetype', '$pcpID')";
+          if(mysqli_query($conn, $insertStorageQuery)){
+            $msgPCP = "<div class='alert alert-dark alert-dismissible' role='alert'>
+            <a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a>
+            <strong>Success!</strong> Your PC part has been sent to admin for approval.
+            <button type='button' class='close' data-dismiss='alert' aria-label='Close'>
+              <span aria-hidden='true'>&times;</span>
+            </button>
+          </div>";
+          }
+          else{
+            $msgPCP = "<div class='alert alert-danger alert-dismissible' role='alert'>
+            <a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a>
+            <strong>Oh No!</strong> Something went wrong when creating PC part, please try again later.
+            <button type='button' class='close' data-dismiss='alert' aria-label='Close'>
+              <span aria-hidden='true'>&times;</span>
+            </button>
+          </div>";
+          }
+      }
+  }
+
+?>
+
 <form style='font-family: Questrial; text-align: left' method='POST' enctype='multipart/form-data'>
+<?php
+
+echo $msgPCP;
+?>
+<input type="hidden" value="<?=$PCPtype ?>" name="PCPpart" >
+
     <div class='formspacing'>
         <p class='formlabel'>Name</p>
         <input type='text' class='form-control' id='PCPname' placeholder='PC Part Name' name='PCPname'>
@@ -27,7 +85,7 @@
 
     <div class='formspacing'>
         <p class='formlabel'>Storage type</p>
-        <select class="form-control" id="PCPStoragetype" name="PCPStoragetype" style="margin-bottom:2vh">
+        <select class="form-control" id="PCPStoragetype" name="PCPStoragetype">
                 <option selected value="HDD500GB5400RPM">HDD(5400RPM) - 500GB</option>
                 <option value="HDD1TB5400RPM">HDD(5400RPM) - 1TB</option>
                 <option value="HDD2TB5400RPM">HDD(5400RPM) - 2TB</option>

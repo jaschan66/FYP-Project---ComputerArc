@@ -1,4 +1,68 @@
+<?php
+
+$msgPCP ="";
+  if(isset($_POST) && isset($_POST['btnSubmitCreateMOBO'])){
+    include "includes/dbh.inc.php";
+    session_start();
+
+      $pcpname = $_POST['PCPname'];
+      $pcpprice = $_POST['PCPprice'];
+      $pcpstock = $_POST['PCPstock'];
+      $pcpdesc = $_POST['PCPdesc'];
+      $pcpstatus = 2;
+      $pcppart = "mobo";
+      $pcppic = addslashes(file_get_contents($_FILES['PCPpic']['tmp_name']));
+      $pcpmobochipset = $_POST['PCPMOBOchipset'];
+      $pcpmobomaxmemorysize = $_POST['PCPMOBOmemorysize']; 
+      $pcpmobomaxmemoryspeed = $_POST['PCPMOBOmemoryspeed']; 
+      $pcpmobodimmslot = $_POST['PCPMOBOdimmslot']; 
+      $pcpmobowifibuiltin = $_POST['PCPMOBOwifibuiltin']; 
+      $pcpmobopcieslot = $_POST['PCPMOBOpcieslot']; 
+      $pcpmobosize = $_POST['PCPMOBOsizeofboard'];
+      $pcpmobosupportsocket = $_POST['PCPMOBOsupportedsocket'];
+
+      $selleremail = $_SESSION['email'];
+      $getIDquery = mysqli_query($conn,"SELECT id FROM partner where email ='$selleremail'");
+      $getID = mysqli_fetch_assoc($getIDquery);
+      $id = $getID['id'];
+
+      $insertPCPQuery = "INSERT INTO `pcpart` (`price`, `name`, `description`, `stock`, `image`, `status`, `seller`, `part`) VALUES ('$pcpprice', '$pcpname', '$pcpdesc', '$pcpstock', '$pcppic', '$pcpstatus', '$id', '$pcppart')";
+      if(mysqli_query($conn, $insertPCPQuery)){
+          $selectpcpartIDquery = "SELECT * FROM pcpart where name ='$pcpname'";
+          $executepcpartID = mysqli_query($conn, $selectpcpartIDquery);
+          $resultpcpID = mysqli_fetch_assoc($executepcpartID);
+          $pcpID = $resultpcpID['id'];
+          $insertMOBOQuery = "INSERT INTO `mobo` (`socket`, `chipset`, `maxmemory`, `maxmemoryspeed`, `dimmslot`, `wifiadap`, `pcieslot`, `size`, `pcpno`) VALUES ('$pcpmobosupportsocket', '$pcpmobochipset', '$pcpmobomaxmemorysize', '$pcpmobomaxmemoryspeed', '$pcpmobodimmslot', '$pcpmobowifibuiltin', '$pcpmobopcieslot', '$pcpmobosize', '$pcpID')";
+          if(mysqli_query($conn, $insertMOBOQuery)){
+            $msgPCP = "<div class='alert alert-dark alert-dismissible' role='alert'>
+            <a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a>
+            <strong>Success!</strong> Your PC part has been sent to admin for approval.
+            <button type='button' class='close' data-dismiss='alert' aria-label='Close'>
+              <span aria-hidden='true'>&times;</span>
+            </button>
+          </div>";
+          }
+          else{
+            $msgPCP = "<div class='alert alert-danger alert-dismissible' role='alert'>
+            <a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a>
+            <strong>Oh No!</strong> Something went wrong when creating PC part, please try again later.
+            <button type='button' class='close' data-dismiss='alert' aria-label='Close'>
+              <span aria-hidden='true'>&times;</span>
+            </button>
+          </div>";
+          }
+      }
+  }
+
+?>
+
+
 <form style='font-family: Questrial; text-align: left' method='POST' enctype='multipart/form-data'>
+<?php
+
+echo $msgPCP;
+?>
+<input type="hidden" value="<?=$PCPtype ?>" name="PCPpart" >
     <div class='formspacing'>
         <p class='formlabel'>Name</p>
         <input type='text' class='form-control' id='PCPname' placeholder='PC Part Name' name='PCPname'>
@@ -47,7 +111,7 @@
 
     <div class='formspacing'>
         <p class='formlabel'>WiFi built in</p>
-        <select class="form-control" id="PCPMOBOwifibuiltin" name="PCPMOBOwifibuiltin" style="margin-bottom:2vh">
+        <select class="form-control" id="PCPMOBOwifibuiltin" name="PCPMOBOwifibuiltin" >
                 <option selected value="no">No</option>
                 <option value="yes">Yes</option>
             </select>
@@ -60,7 +124,7 @@
 
     <div class='formspacing'>
         <p class='formlabel'>Size of board</p>
-        <select class="form-control" id="PCPMOBOsizeofboard" name="PCPMOBOsizeofboard" style="margin-bottom:2vh">
+        <select class="form-control" id="PCPMOBOsizeofboard" name="PCPMOBOsizeofboard" >
                 <option selected value="ATX">ATX</option>
                 <option value="MATX">MATX</option>
                 <option value="IATX">IATX</option>

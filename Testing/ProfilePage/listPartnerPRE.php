@@ -105,51 +105,45 @@ if (mysqli_num_rows($resultName) > 0) {
 
 <script>
     function deleteData(e) {
-        var id = $(e).attr('id');
+        Swal.fire({
+  title: 'Do you want to delete the data?',
+  showDenyButton: true,
+  confirmButtonText: 'Delete',
+  denyButtonText: "Don't delete",
+}).then((result) => {
+  /* Read more about isConfirmed, isDenied below */
+  if (result.isConfirmed) {
+    var id = $(e).attr('id');
         $.ajax({
             url: "ProfilePage/deletePRE.php",
             type: "POST",
             data: {
-                idDelete: id
+                idDeletePRE: id
             },
             success: function(result) {
+                var obj = JSON.parse(result)
+                console.log(obj.status);
+                if(obj.status){
                 window.location.reload();
+            }
+            else{
+                Swal.fire({
+            title: 'Error',
+            text: obj.message,
+            icon: 'error',
+            confirmButtonColor: '#866a60',
+            confirmButtonText: 'OK',
+            allowOutsideClick: 1,
+        });
+            }
             },
             error: function(result) {
                 console.log(result);
             },
         })
-    }
+  } 
+})
+       
+}    
 </script>
 
-<!-- <script>
-    function updateData(i) {
-        var id = $(i).attr('id');
-        $.ajax({
-            url: "ProfilePage/updatePRE.php",
-            type: "POST",
-            data: {
-                idUpdate: id
-            },
-            success: function(result){
-                location.href = "profilePage.php?editPRE=3&editProf=0";
-            },
-            error: function(result) {
-                console.log(result);
-            },
-        })
-    }
-</script> -->
-
-<!-- <script>
-    $(document).ready(function() {
-        $('table tbody tr').click(function() {
-            var id = $(this).attr('id');
-            var url = new URL('http://localhost/NexusNet/ShowsProfilePage.php');
-
-            url.searchParams.set('showsID', id)
-            window.location.href = url
-
-        });
-    });
-</script> -->

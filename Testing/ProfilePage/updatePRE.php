@@ -27,7 +27,7 @@ if ($updatePREname != "" && $updatePREprice != "" && $updatePREcategory != "" &&
              
         if (mysqli_query($conn, $updateQuery)) {
             echo "<script>
-            window.location.href = \"profilePage.php?editPRE=1&editProf=0\";
+            window.location.href = \"profilePage.php?editPRE=1&editProf=0&editPCP=0&editAuc=0\";
             </script>";
         } else {
             $msg = "<div class='alert alert-danger alert-dismissible' role='alert'>
@@ -92,7 +92,7 @@ if ($updatePREname != "" && $updatePREprice != "" && $updatePREcategory != "" &&
                             </div>
 
                         <div class='formspacing'>
-                        <p class='formlabel'>Product Picture&nbsp;<a href='#' data-toggle='tooltip' title='Your existing profile picture will be used if no picture is uploaded' style='font-size:1.2vw'><i class='fas fa-question-circle'></i></a></p>
+                        <p class='formlabel'>Product Picture&nbsp;<a href='#' data-toggle='tooltip' title='Your existing picture will be used if no picture is uploaded' style='font-size:1.2vw'><i class='fas fa-question-circle'></i></a></p>
                             <input class='filepond' id='updatePREpic' name='updatePREpic' type='file'>
                         </div>
 

@@ -59,6 +59,7 @@ session_start();
 
 
 </form>
+<hr>
 
 
 

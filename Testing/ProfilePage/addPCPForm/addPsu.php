@@ -1,4 +1,64 @@
+<?php
+
+$msgPCP ="";
+  if(isset($_POST) && isset($_POST['btnSubmitCreatePSU'])){
+    include "includes/dbh.inc.php";
+    session_start();
+
+      $pcpname = $_POST['PCPname'];
+      $pcpprice = $_POST['PCPprice'];
+      $pcpstock = $_POST['PCPstock'];
+      $pcpdesc = $_POST['PCPdesc'];
+      $pcpstatus = 2;
+      $pcppart = "PSU";
+      $pcppic = addslashes(file_get_contents($_FILES['PCPpic']['tmp_name']));
+      $pcpPSUwattage = $_POST['PCPPSUwattage'];
+      $pcpPSUefficientgrade = $_POST['PCPPSUefficientgrade'];
+      $pcpPSUfansize = $_POST['PCPPSUfansize'];
+
+      $selleremail = $_SESSION['email'];
+      $getIDquery = mysqli_query($conn,"SELECT id FROM partner where email ='$selleremail'");
+      $getID = mysqli_fetch_assoc($getIDquery);
+      $id = $getID['id'];
+
+      $insertPCPQuery = "INSERT INTO `pcpart` (`price`, `name`, `description`, `stock`, `image`, `status`, `seller`, `part`) VALUES ('$pcpprice', '$pcpname', '$pcpdesc', '$pcpstock', '$pcppic', '$pcpstatus', '$id', '$pcppart')";
+      if(mysqli_query($conn, $insertPCPQuery)){
+          $selectpcpartIDquery = "SELECT * FROM pcpart where name ='$pcpname'";
+          $executepcpartID = mysqli_query($conn, $selectpcpartIDquery);
+          $resultpcpID = mysqli_fetch_assoc($executepcpartID);
+          $pcpID = $resultpcpID['id'];
+          $insertPSUQuery = "INSERT INTO `psu` (`wattage`, `efficientgrade`, `fansize`, `pcpno`) VALUES ('$pcpPSUwattage', '$pcpPSUefficientgrade', '$pcpPSUfansize', '$pcpID')";
+          if(mysqli_query($conn, $insertPSUQuery)){
+            $msgPCP = "<div class='alert alert-dark alert-dismissible' role='alert'>
+            <a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a>
+            <strong>Success!</strong> Your PC part has been sent to admin for approval.
+            <button type='button' class='close' data-dismiss='alert' aria-label='Close'>
+              <span aria-hidden='true'>&times;</span>
+            </button>
+          </div>";
+          }
+          else{
+            $msgPCP = "<div class='alert alert-danger alert-dismissible' role='alert'>
+            <a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a>
+            <strong>Oh No!</strong> Something went wrong when creating PC part, please try again later.
+            <button type='button' class='close' data-dismiss='alert' aria-label='Close'>
+              <span aria-hidden='true'>&times;</span>
+            </button>
+          </div>";
+          }
+      }
+  }
+
+?>
+
+
 <form style='font-family: Questrial; text-align: left' method='POST' enctype='multipart/form-data'>
+<?php
+
+echo $msgPCP;
+?>
+<input type="hidden" value="<?=$PCPtype ?>" name="PCPpart" >
+
     <div class='formspacing'>
         <p class='formlabel'>Name</p>
         <input type='text' class='form-control' id='PCPname' placeholder='PC Part Name' name='PCPname'>
@@ -32,7 +92,7 @@
 
     <div class='formspacing'>
         <p class='formlabel'>Efficient Grade</p>
-        <select class="form-control" id="PCPPSUefficientgrade" name="PCPPSUefficientgrade" style="margin-bottom:2vh">
+        <select class="form-control" id="PCPPSUefficientgrade" name="PCPPSUefficientgrade" >
                 <option selected value="80+">80 Plus</option>
                 <option value="80+bronze">80 Plus Bronze</option>
                 <option value="80+silver">80 Plus Silver</option>
@@ -43,13 +103,8 @@
     </div>
 
     <div class='formspacing'>
-        <p class='formlabel'>Dimension (mm)&nbsp; <a href="#" data-toggle="tooltip" title="Add comma sign behind the consecutive dimension value for example: width,height,depth "><i class='fas fa-question-circle'></i></a></p>
-        <input class='form-control' id='PCPPSUdimension' name='PCPPSUdimension' type='text' placeholder="e.g. 150,86,140">
-    </div>
-
-    <div class='formspacing'>
         <p class='formlabel'>Fan size (mm)</p>
-        <input class='form-control' id='PCPRAMvoltage' name='PCPRAMvoltage' type='text' pattern="[0-9]+" placeholder='e.g. 120'>
+        <input class='form-control' id='PCPPSUfansize' name='PCPPSUfansize' type='text' pattern="[0-9]+" placeholder='e.g. 120'>
     </div>
 
 
