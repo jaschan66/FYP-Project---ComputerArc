@@ -1,6 +1,46 @@
 <?php
+date_default_timezone_set("Asia/Kuala_Lumpur");
 
-if (isset($_POST['btnCreateAuction'])) {
+$auctionTittle  = $_POST['aucTitle'];
+$biddingPrice   = $_POST['bidPrice'];
+$auctionStartDt = $_POST['startDate'];
+$auctionEndDt   = $_POST['endDate'];
+$image          = "";
+
+if(!empty($_FILES['auctionImage']['tmp_name'])){
+    $image      = addslashes(file_get_contents($_FILES['auctionImage']['tmp_name']));
+}
+
+$err = "";
+$date_now = new DateTime();
+
+if ($auctionTittle == "") {
+    $err .= "Missing Auction Title! \n";
+}
+
+if ($biddingPrice == "") {
+    $err .= "Missing Starting Bidding Price! \n";
+} else if (!is_numeric($biddingPrice)) {
+    $err .= "Invalid Bidding Price! \n";
+}
+
+if($auctionStartDt == "") {
+    $err .= "Missing Starting Date! \n";
+} else if ($auctionStartDt > $date_now) {
+    $err .= "Choose a Starting Date in the future! \n";
+}
+
+if($auctionStartDt == "") {
+    $err .= "Missing Ending Date! \n";
+} else if ($auctionStartDt > $auctionEndDt) {
+    $err .= "Choose an Ending Date in the future! \n";
+}
+
+if ($image == "") {
+    $err .= "Please insert image! \n";
+}
+
+if (empty($err)) {
     include_once "dbh.local.inc.php";
     session_start();
     $PartnerEmail   = $_SESSION['email'];
@@ -11,18 +51,15 @@ if (isset($_POST['btnCreateAuction'])) {
         $Getresult = mysqli_fetch_assoc($GetPartnerID);
         $GetOwnerID = $Getresult['id'];
     }
-
-    $auctionTittle  = $_POST['aucTitle'];
-    $biddingPrice   = $_POST['bidPrice'];
-    $auctionStartDt = $_POST['startDate'];
-    $auctionEndDt   = $_POST['endDate'];
-    $image          = addslashes(file_get_contents($_FILES['auctionImage']['tmp_name']));
-
-    $insert = "INSERT INTO auction (`title`, `starting_bid`, `image`, `start_date`, `end_date`, `owner_id`) VALUES ('$auctionTittle', '$biddingPrice', '$image', '$auctionStartDt', '$auctionEndDt', '$GetOwnerID')";
-
+    
+    $insert = "INSERT INTO auction (`title`, `starting_bid`, `image`, `start_date`, `end_date`, `owner_id`, `status`) VALUES ('$auctionTittle', '$biddingPrice', '$image', '$auctionStartDt', '$auctionEndDt', '$GetOwnerID', 0)";
+    
     if (mysqli_query($conn, $insert)) {
-        header("Location: profilePage.php?editAuc=1&editPRE=0&editProf=0&editPCP=0");
+        echo "Auction created successfuly!";
     } else {
         echo "Error occured: " . mysqli_error($conn);
     }
+    
+} else {
+    echo "$err";
 }

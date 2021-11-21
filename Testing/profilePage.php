@@ -341,6 +341,9 @@ session_start();
     <script src="filepond/filepond.jquery.js"></script>
     <script src="filepond/plugins/preview/filepond-plugin-image-preview.min.js"></script>
 
+    <script src="filepond/plugins/validate-size/filepond-plugin-file-validate-size.js"></script>
+    <script src="filepond/plugins/validate-type/filepond-plugin-file-validate-type.js"></script>
+
     <script>
         $(document).ready(function() {
             $('[data-toggle="tooltip"]').tooltip();
@@ -417,6 +420,9 @@ if ($_GET['editProf'] == 1 && $_SESSION['role'] == "partner") {
     echo "<script>
    $(document).ready(function() {
        FilePond.registerPlugin(FilePondPluginImagePreview);
+       FilePond.registerPlugin(FilePondPluginFileValidateSize);
+       FilePond.registerPlugin(FilePondPluginFileValidateType);
+
        const inputElement = document.querySelector('#auctionImage');
 
        const pond = FilePond.create(inputElement, {
@@ -430,6 +436,9 @@ if ($_GET['editProf'] == 1 && $_SESSION['role'] == "partner") {
     echo "<script>
    $(document).ready(function() {
        FilePond.registerPlugin(FilePondPluginImagePreview);
+       FilePond.registerPlugin(FilePondPluginFileValidateSize);
+       FilePond.registerPlugin(FilePondPluginFileValidateType);
+
        const inputElement = document.querySelector('#updateAucImage');
 
        const pond = FilePond.create(inputElement, {

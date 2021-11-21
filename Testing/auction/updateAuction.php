@@ -1,4 +1,12 @@
 <?php
+date_default_timezone_set("Asia/Kuala_Lumpur"); 
+$mindate=date("Y-m-d");
+$mintime=date("h:i");
+$min=$mindate."T".$mintime;
+$maxdate=date("Y-m-d", strtotime("+12 Days"));
+$maxtime=date("h:i");
+$max=$maxdate."T".$maxtime;
+
 include "includes/dbh.inc.php";
 session_start();
 $updateAucID = $_GET['idUpdate'];
@@ -21,7 +29,7 @@ if (isset($_POST['btnSubmitUpdateAuc'])) {
             $queryWithUpdatePicture = ", image = '$updateAucImage'";
         }
 
-        $updateQuery = "UPDATE auction SET title = '$updateAucTitle', starting_bid = '$updateAucBidPrice', start_date = '$updateAucStartDate', end_date = '$updateAucEndDate'
+        $updateQuery = "UPDATE auction SET title = '$updateAucTitle', starting_bid = '$updateAucBidPrice', start_date = '$updateAucStartDate', end_date = '$updateAucEndDate', status = 0 
                         $queryWithUpdatePicture WHERE id = '$updateAucID'";
 
         if (mysqli_query($conn, $updateQuery)) {
@@ -31,7 +39,7 @@ if (isset($_POST['btnSubmitUpdateAuc'])) {
         } else {
             $msg = "<div class='alert alert-danger alert-dismissible' role='alert'>
                     <a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a>
-                    <strong>Oh No!</strong> Something went wrong when editing your profile, please try again later.
+                    <strong>Oh No!</strong> Something went wrong when updating your auction, please try again later.
                     <button type='button' class='close' data-dismiss='alert' aria-label='Close'>
                     <span aria-hidden='true'>&times;</span>
                     </button>
@@ -57,12 +65,12 @@ if (isset($_POST['btnSubmitUpdateAuc'])) {
 
     <div class='formspacing'>
         <p class='formlabel'>Start Date</p>
-        <input type="date" placeholder="21/10/2021" required class="form-control" name="updateStartDate" value='<?php  echo ''.date("Y-m-d",strtotime($resultGetData["start_date"])).''  ?>'>
+        <input type="datetime-local" placeholder="21/10/2021" required class="form-control" name="updateStartDate" min="<?php echo $min; ?>" value='<?php  echo ''.date("Y-m-d H:m:s",strtotime($resultGetData["start_date"])).''?>'>
     </div>
 
     <div class='formspacing'>
         <p class='formlabel'>End Date</p>
-        <input type="date" placeholder="21/10/2021" required class="form-control" name="updateEndDate" value='<?php  echo ''.date("Y-m-d",strtotime($resultGetData["end_date"])).'' ?>'>
+        <input type="datetime-local" placeholder="21/10/2021" required class="form-control" name="updateEndDate" min="<?php echo $min; ?>" value='<?php  echo ''.date("Y-m-d H:m:s",strtotime($resultGetData["end_date"])).''?>'>
     </div>
 
     <div class='formspacing'>
@@ -72,3 +80,55 @@ if (isset($_POST['btnSubmitUpdateAuc'])) {
 
     <input type='submit' name='btnSubmitUpdateAuc' class='btn btn-dark' style='font-size: 1vw; font-family: Questrial; width:100%; margin-bottom: 2vh;' value='Update'>
 </form>
+
+<script>
+    $(document).ready(function() {
+        $('#btnSubmitUpdateAuc').click(function(event) {
+            event.preventDefault();
+            var form = $('#createAuction');
+            var formData = new FormData(form[0]);
+
+            Swal.fire ({
+                title: 'Update Auction?',
+                showCancelButton: true,
+                confirmButtonText: 'Yes',
+            }).then((result) => {
+                if (result.isConfirmed) {
+
+                    $.ajax({
+                        type: "POST",
+                        url: "includes/auction-upload.inc.php",
+                        processData: false,
+                        contentType: false,
+                        data: formData,
+                        success: function(x) {
+                            var delay = 500;
+
+                            if (x == "Auction created successfuly!") {
+                                Swal.fire(x, '', 'success').then((result => {
+                                    if (result.isConfirmed) {
+                                        window.location = "profilePage.php?editAuc=1&editPRE=0&editProf=0&editPCP=0";
+                                    } else {
+                                        setTimeout(function() {
+                                            window.location = "profilePage.php?editAuc=1&editPRE=0&editProf=0&editPCP=0";
+                                        }, delay);
+                                    }
+                                }))
+
+                            } else {
+                                Swal.fire({
+                                    icon: 'error',
+                                    title: 'Something went wrong!',
+                                    html: '<pre>' + x + '</pre>',
+                                    customClass: {
+                                        popup: 'format-pre'
+                                    }
+                                })
+                            }
+                        }
+                    });
+                }
+            })
+        });
+    });
+</script>

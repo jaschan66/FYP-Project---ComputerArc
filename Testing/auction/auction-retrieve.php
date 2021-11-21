@@ -6,12 +6,8 @@ $getAucData = "SELECT * FROM auction WHERE id = '$aucID'";
 $connGetData = mysqli_query($conn, $getAucData);
 $resultGetData = mysqli_fetch_assoc($connGetData);
 
-print_r($aucID);
 if (mysqli_query($conn, $getAucData)) {
-
-
 
 } else {
     header("Location: homepage.php");
 }
-

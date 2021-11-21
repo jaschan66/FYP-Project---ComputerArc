@@ -114,7 +114,8 @@
             </div>
             <div class="col-5">
 
-                <?php echo' <h2>'. $resultGetData["title"] .'</h2>
+                <?php echo' <h1>Auction Details</h1>
+                <h2>'. $resultGetData["title"] .'</h2>
                             <p>' . date("j/n/Y", strtotime($resultGetData["start_date"])) . ' - ' . date("j/n/Y", strtotime($resultGetData["end_date"])) . '</p>
 
                 ' ?>

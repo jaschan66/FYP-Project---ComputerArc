@@ -1,5 +1,6 @@
 <?php
 include "../includes/dbh.inc.php";
+include "auction-status.php";
 session_start();
 $PartnerEmail   = $_SESSION['email'];
 $PartnerRole    = $_SESSION['role'];
@@ -12,8 +13,8 @@ if (mysqli_num_rows($GetPartnerID) > 0) {
 
 $table = '';
 
-$searchByName = "SELECT * FROM auction WHERE owner_id = " . $GetOwnerID . " AND title LIKE '%" . $_POST["search"] . "%'";
-$searchByDate = "SELECT * FROM auction WHERE owner_id = " . $GetOwnerID . " AND start_date LIKE '%" . $_POST["search"] . "%'";
+$searchByName = "SELECT * FROM auction WHERE  owner_id = " . $GetOwnerID . " AND title LIKE '%" . $_POST["search"] . "%' ORDER BY status DESC";
+$searchByDate = "SELECT * FROM auction WHERE owner_id = " . $GetOwnerID . " AND start_date LIKE '%" . $_POST["search"] . "%' ORDER BY status DESC";
 
 $resultName = mysqli_query($conn, $searchByName);
 $resulltDate = mysqli_query($conn, $searchByDate);
@@ -33,6 +34,7 @@ if (mysqli_num_rows($resultName) > 0) {
             <th>Winner</th>
             <th>Start Date</th>
             <th>End Date</th>
+            <th>Status</th>
             <th></th>
         </tr>
     </thead>
@@ -41,19 +43,38 @@ if (mysqli_num_rows($resultName) > 0) {
 
     while ($row = mysqli_fetch_array($resultName)) {
 
-       $table .= '<tr id="' . $row["id"] . '">
-       <a href="auctionDetailPage.php?idRetrieve='.$row["id"].'">
+        if ($row["status"] == 0) {
+            $aucstatus = "<td>Pending approval</td>";
+            $auctionBtn = '<td></td><td></td>';
+        } else if($row["status"] == 1) {
+            $aucstatus = "<td>Approved</td>";
+            $auctionBtn = '<td><a href="profilePage.php?editAuc=3&editPRE=0&editProf=0&editPCP=0&idUpdate=' . $row["id"] . '" class="btn btn-primary" >Update</a></td>
+            <td><button type="button" class="btn btn-danger" onclick="deleteAuction(this)" id="' . $row["id"] . '">Delete</button></td>';
+        } else if($row["status"] == 2) {
+            $aucstatus = "<td>Rejected</td>";
+            $auctionBtn = '<td><a href="profilePage.php?editAuc=3&editPRE=0&editProf=0&editPCP=0&idUpdate=' . $row["id"] . '" class="btn btn-primary" >Update</a></td>
+            <td><button type="button" class="btn btn-danger" onclick="deleteAuction(this)" id="' . $row["id"] . '">Delete</button></td>';
+        } else if($row["status"] == 3) {
+            $aucstatus = "<td>Auction Started</td>";
+            $auctionBtn = '<td></td><td></td>';
+        } else if($row["status"] == 4) {
+            $aucstatus = "<td>Auction Ended</td>";
+            $auctionBtn = '<td></td><td></td>';
+        }
+
+        $table .= '<tr id="' . $row["id"] . '">
+       <a href="auctionDetailPage.php?idRetrieve=' . $row["id"] . '">
        <td>' . $rowNo . '</td>
        <td>' . $row["id"] . '</td>
-       <td><img src="data:image/jpg;base64,' . base64_encode($row['image']) . '" height="180px" width="180px" alt="Profile Picture" class="img-thumbnail img-responsive"/></td>
+       <td><img src="data:image/jpg;base64,' . base64_encode($row['image']) . '" height="180px" width="180px" alt="Auction Image" class="img-thumbnail img-responsive"/></td>
        <td>' . $row["title"] . '</td>
        <td>RM ' . number_format($row["starting_bid"], 2) . '</td>
        <td>' . $row["winner"] . '</td>
-       <td>'.date("j/n/Y",strtotime($row["start_date"])).'</td>
-       <td>'.date("j/n/Y",strtotime($row["end_date"])).'</td>
+       <td>' . date("j/n/Y", strtotime($row["start_date"])) . '</td>
+       <td>' . date("j/n/Y", strtotime($row["end_date"])) . '</td>
+       '. $aucstatus .'
        </a>
-       <td><a href="profilePage.php?editAuc=3&editPRE=0&editProf=0&editPCP=0&idUpdate='.$row["id"].'" class="btn btn-primary" >Update</a></td>
-       <td><button type="button" class="btn btn-danger" onclick="deleteData(this)" id="' . $row["id"] . '">Delete</button></td>
+       '. $auctionBtn .'
        </tr>';
         $rowNo++;
     }
@@ -71,6 +92,7 @@ if (mysqli_num_rows($resultName) > 0) {
             <th>Winner</th>
             <th>Start Date</th>
             <th>End Date</th>
+            <th>Status</th>
             <th></th>
         </tr>
     </thead>
@@ -78,19 +100,39 @@ if (mysqli_num_rows($resultName) > 0) {
 
 
     while ($row = mysqli_fetch_array($resulltDate)) {
+
+        if ($row["status"] == 0) {
+            $aucstatus = "<td>Pending approval</td>";
+            $auctionBtn = '<td></td><td></td>';
+        } else if($row["status"] == 1) {
+            $aucstatus = "<td>Approved</td>";
+            $auctionBtn = '<td><a href="profilePage.php?editAuc=3&editPRE=0&editProf=0&editPCP=0&idUpdate=' . $row["id"] . '" class="btn btn-primary" >Update</a></td>
+            <td><button type="button" class="btn btn-danger" onclick="deleteAuction(this)" id="' . $row["id"] . '">Delete</button></td>';
+        } else if($row["status"] == 2) {
+            $aucstatus = "<td>Rejected</td>";
+            $auctionBtn = '<td><a href="profilePage.php?editAuc=3&editPRE=0&editProf=0&editPCP=0&idUpdate=' . $row["id"] . '" class="btn btn-primary" >Update</a></td>
+            <td><button type="button" class="btn btn-danger" onclick="deleteAuction(this)" id="' . $row["id"] . '">Delete</button></td>';
+        } else if($row["status"] == 3) {
+            $aucstatus = "<td>Auction Started</td>";
+            $auctionBtn = '<td></td><td></td>';
+        } else if($row["status"] == 4) {
+            $aucstatus = "<td>Auction Ended</td>";
+            $auctionBtn = '<td></td><td></td>';
+        }
+
         $table .= '<tr id="' . $row["id"] . '"> 
-        <a href="#">
+        <a href="auctionDetailPage.php?idRetrieve=' . $row["id"] . '">
         <td>' . $rowNo . '</td>
         <td>' . $row["id"] . '</td>
-        <td><img src="data:image/jpg;base64,' . base64_encode($row['image']) . '" height="180px" width="180px" alt="Profile Picture" class="img-thumbnail img-responsive"/></td>
+        <td><img src="data:image/jpg;base64,' . base64_encode($row['image']) . '" height="180px" width="180px" alt="Auction Image" class="img-thumbnail img-responsive"/></td>
         <td>' . $row["title"] . '</td>
         <td>RM ' . number_format($row["starting_bid"], 2) . '</td>
         <td>' . $row["winner"] . '</td> 
-        <td>'.date("j/n/Y",strtotime($row["start_date"])).'</td>
-        <td>'.date("j/n/Y",strtotime($row["end_date"])).'</td>
+        <td>' . date("j/n/Y", strtotime($row["start_date"])) . '</td>
+        <td>' . date("j/n/Y", strtotime($row["end_date"])) . '</td>
+        '. $aucstatus .'
         </a>
-        <td><a href="profilePage.php?editAuc=3&editPRE=0&editProf=0&editPCP=0&idUpdate='.$row["id"].'" class="btn btn-primary" >Update</a></td>
-        <td><button type="button" class="btn btn-danger" onclick="deleteData(this)" id="' . $row["id"] . '">Delete</button></td>
+        '. $auctionBtn .'
        </tr>';
         $rowNo++;
     }
@@ -109,20 +151,36 @@ if (mysqli_num_rows($resultName) > 0) {
 ?>
 
 <script>
-    function deleteData(e) {
+    function deleteAuction(e) {
         var id = $(e).attr('id');
-        $.ajax({
-            url: "ProfilePage/deleteAuc.php",
-            type: "POST",
-            data: {
-                idDelete: id
-            },
-            success: function(result) {
-                window.location.reload();
-            },
-            error: function(result) {
-                console.log(result);
-            },
+        Swal.fire({
+            title: 'Do you want to delete this Auction?',
+            showCancelButton: true,
+            confirmButtonText: 'Yes',
+        }).then((result) => {
+            if (result.isConfirmed) {
+
+                $.ajax({
+                    type: "POST",
+                    url: "auction/deleteAuc.php",
+                    data: {
+                        idDelete: id
+                    },
+                    success: function(result) {
+                        var delay = 500
+
+                        Swal.fire(result, '', 'success').then((result => {
+                            if (result.isConfirmed) {
+                                window.location.reload();
+                            } else {
+                                setTimeout(function() {
+                                    window.location.reload();
+                                }, delay);
+                            }
+                        }))
+                    }
+                });
+            }
         })
     }
 </script>

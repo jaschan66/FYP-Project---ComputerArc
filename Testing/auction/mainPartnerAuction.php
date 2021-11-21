@@ -26,7 +26,7 @@ session_start();
 </script>
 <a href='profilePage.php?editAuc=2&editPRE=0&editProf=0&editPCP=0' class="btn btn-success" style="font-size: 0.75vw; margin-bottom:2vh;" role="button">Create A New Auction</a>
 
-<input type="text" class="form-control" size="50" placeholder="Enter Name or Category" onkeyup="Aucfunction()" name="searchAuc" id="searchAuc" autofocus style="margin-bottom:2vh;">
+<input type="text" class="form-control" size="50" placeholder="Search Name or Start Date" onkeyup="Aucfunction()" name="searchAuc" id="searchAuc" autofocus style="margin-bottom:2vh;">
 
 <div id="listResAuc">
 
@@ -41,7 +41,7 @@ session_start();
             var txt = $(this).val();
             if (txt == '' || txt != '') {
                 $.ajax({
-                    url: "auction/listPartnerAuction.php",
+                    url: "auction/listPartnerAuc.php",
                     method: "post",
                     data: {
                         search: txt

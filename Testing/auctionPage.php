@@ -139,7 +139,7 @@
 
                     while ($row = mysqli_fetch_array($result)) {
                         echo '<a href="auctionDetailPage.php?idRetrieve='.$row["id"].'">
-                        <img src="data:image/jpg;base64,' . base64_encode($row["image"]) . '"/>
+                        <img src="data:image/jpg;base64,' . base64_encode($row["image"]) . '" alt="Auction Image""/>
                         <h4 style="margin: 12px 0px 10px 30px;">' . $row["title"] . '</h4>
                         <p style="margin: 12px 0px 10px 30px;">Starting Bid: RM ' . number_format($row["starting_bid"], 2) . '</p>
                         <p style="margin: 12px 0px 10px 30px;">' . date("j/n/Y", strtotime($row["start_date"])) . ' - ' . date("j/n/Y", strtotime($row["end_date"])) . '</p>
