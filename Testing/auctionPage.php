@@ -13,35 +13,6 @@
     <link href='filepond/plugins/preview/filepond-plugin-image-preview.min.css' rel='stylesheet'>
 
     <style>
-        body {
-            overflow-x: hidden;
-            overflow-y: scroll;
-        }
-
-        ::-webkit-scrollbar {
-
-            width: 0.8vw;
-            border-style: solid;
-            border-color: #000000;
-        }
-
-        /* Track */
-        ::-webkit-scrollbar-track {
-            background: rgba(255, 255, 255, 1);
-        }
-
-        /* Handle */
-        ::-webkit-scrollbar-thumb {
-            background: rgba(161, 161, 161, 0.5);
-            border-radius: 10px;
-        }
-
-        /* Handle on hover */
-        ::-webkit-scrollbar-thumb:hover {
-            background: rgba(0, 0, 0, 1);
-
-        }
-
         html,
         body {
             height: 100%;
@@ -108,11 +79,11 @@
     <!--header-->
     <?php require "includes/header.php"; ?>
 
-    <div class="row" style="padding-top: 1vh;">
+    <div class="row" style="padding-top: 1vh; padding-bottom: 1vh;">
         <div class="col-1">
 
         </div>
-        <div class="col-10 " style="height: 100vh; background-image: linear-gradient(to right, #1f2428 80%, #2c3037 )">
+        <div class="col-10 " style="height:auto; background-image: linear-gradient(to right, #1f2428 80%, #2c3037 )">
             <div class="col-12">
                 <h2 style="color: #ffffff; text-align: center; padding-top: 5vh;">Auction</h2>
 

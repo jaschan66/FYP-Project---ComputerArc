@@ -13,6 +13,13 @@ if(!empty($_FILES['auctionImage']['tmp_name'])){
 
 $err = "";
 $date_now = new DateTime();
+$todayDate = date_format($date_now, 'Y-m-d');
+$newTime = date_format($date_now, 'H:i');
+
+// print_r($todayDate."\n");
+// print_r($newTime. "\n");
+// echo date("Y-m-d",strtotime($auctionStartDt));
+// die();
 
 if ($auctionTittle == "") {
     $err .= "Missing Auction Title! \n";
@@ -26,7 +33,7 @@ if ($biddingPrice == "") {
 
 if($auctionStartDt == "") {
     $err .= "Missing Starting Date! \n";
-} else if ($auctionStartDt > $date_now) {
+} else if (!(date("Y-m-d",strtotime($auctionStartDt) > $todayDate))) {
     $err .= "Choose a Starting Date in the future! \n";
 }
 

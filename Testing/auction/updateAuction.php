@@ -65,12 +65,12 @@ if (isset($_POST['btnSubmitUpdateAuc'])) {
 
     <div class='formspacing'>
         <p class='formlabel'>Start Date</p>
-        <input type="datetime-local" placeholder="21/10/2021" required class="form-control" name="updateStartDate" min="<?php echo $min; ?>" value='<?php  echo ''.date("Y-m-d H:m:s",strtotime($resultGetData["start_date"])).''?>'>
+        <input type="datetime-local" placeholder="21/10/2021" required class="form-control" name="updateStartDate" min="<?php echo $min; ?>" value='<?php  echo ''.date("Y-m-d\TH:m",strtotime($resultGetData["start_date"])).''?>'>
     </div>
 
     <div class='formspacing'>
         <p class='formlabel'>End Date</p>
-        <input type="datetime-local" placeholder="21/10/2021" required class="form-control" name="updateEndDate" min="<?php echo $min; ?>" value='<?php  echo ''.date("Y-m-d H:m:s",strtotime($resultGetData["end_date"])).''?>'>
+        <input type="datetime-local" placeholder="21/10/2021" required class="form-control" name="updateEndDate" min="<?php echo $min; ?>" value='<?php  echo ''.date("Y-m-d\TH:m",strtotime($resultGetData["end_date"])).''?>'>
     </div>
 
     <div class='formspacing'>

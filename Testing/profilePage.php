@@ -16,48 +16,6 @@ session_start();
     <link href='filepond/plugins/preview/filepond-plugin-image-preview.min.css' rel='stylesheet'>
     <link href='SweetAlert/sweetalert2.min.css' rel='stylesheet'>
     <style>
-        body {
-            overflow-x: hidden;
-            overflow-y: auto;
-        }
-
-        ::-webkit-scrollbar {
-
-            width: 0.8vw;
-            border-style: solid;
-            border-color: #000000;
-        }
-
-        /* Track */
-        ::-webkit-scrollbar-track {
-            background: rgba(255, 255, 255, 1);
-        }
-
-        /* Handle */
-        ::-webkit-scrollbar-thumb {
-            background: rgba(161, 161, 161, 0.5);
-            border-radius: 10px;
-        }
-
-        input::-webkit-outer-spin-button,
-        input::-webkit-inner-spin-button {
-            -webkit-appearance: none;
-            margin: 0;
-        }
-
-
-        /* Handle on hover */
-        ::-webkit-scrollbar-thumb:hover {
-            background: rgba(0, 0, 0, 1);
-
-        }
-
-        html,
-        body {
-            height: 100%;
-        }
-
-
         a {
             color: #b5b0aa;
         }
@@ -291,28 +249,38 @@ session_start();
 
                 <div class="col-10">
                     <?php
-                    if ($_GET['editProf'] == 1 && $_SESSION['role'] == "partner") {
+
+                    //Partner Pages
+                if ($_SESSION['role'] == "partner") {
+                    if ($_GET['editProf'] == 1) {
                         include "ProfilePage/editPartnerProf.php";
-                    } else if ($_GET['editPRE'] == 1 && $_SESSION['role'] == "partner") {
+                    } else if ($_GET['editPRE'] == 1) {
                         include "ProfilePage/mainPartnerPRE.php";
-                    } else if ($_GET['editPRE'] == 2 && $_SESSION['role'] == "partner") {
+                    } else if ($_GET['editPRE'] == 2) {
                         include "ProfilePage/editPartnerPRE.php";
-                    } else if ($_GET['editPRE'] == 3 && $_SESSION['role'] == "partner") {
+                    } else if ($_GET['editPRE'] == 3) {
                         include "ProfilePage/updatePRE.php";
-                    } else if ($_GET['editPCP'] == 1 && $_SESSION['role'] == "partner") {
+                    } else if ($_GET['editPCP'] == 1) {
                         include "ProfilePage/mainPartnerPart.php";
-                    } else if ($_GET['editPCP'] == 2 && $_SESSION['role'] == "partner") {
+                    } else if ($_GET['editPCP'] == 2) {
                         include "ProfilePage/editPartnerPCP.php";
-                    } else if ($_GET['editPCP'] == 3 && $_SESSION['role'] == "partner") {
+                    } else if ($_GET['editPCP'] == 3) {
                         include "ProfilePage/updatePCP.php";
-                    } else if ($_GET['editAuc'] == 1 && $_SESSION['role'] == "partner") {
+                    } else if ($_GET['editAuc'] == 1) {
                         include "auction/mainPartnerAuction.php";
-                    } else if ($_GET['editAuc'] == 2 && $_SESSION['role'] == "partner") {
+                    } else if ($_GET['editAuc'] == 2) {
                         include "auction/editPartnerAuction.php";
-                    } else if ($_GET['editAuc'] == 3 && $_SESSION['role'] == "partner") {
+                    } else if ($_GET['editAuc'] == 3) {
                         include "auction/updateAuction.php";
+                    }
+                } 
+                else if ($_SESSION['role'] == "member") {
+                    //Member Pages
+                    if ($_GET['editProf'] == 1) {
+                        include "ProfilePage/editMemberProf.php";
                     } 
-                    ?>
+                }
+                ?>
 
 
                 </div>
@@ -341,8 +309,8 @@ session_start();
     <script src="filepond/filepond.jquery.js"></script>
     <script src="filepond/plugins/preview/filepond-plugin-image-preview.min.js"></script>
 
-    <script src="filepond/plugins/validate-size/filepond-plugin-file-validate-size.js"></script>
-    <script src="filepond/plugins/validate-type/filepond-plugin-file-validate-type.js"></script>
+    <!-- <script src="filepond/plugins/validate-size/filepond-plugin-file-validate-size.js"></script>
+    <script src="filepond/plugins/validate-type/filepond-plugin-file-validate-type.js"></script> -->
 
     <script>
         $(document).ready(function() {
@@ -420,8 +388,6 @@ if ($_GET['editProf'] == 1 && $_SESSION['role'] == "partner") {
     echo "<script>
    $(document).ready(function() {
        FilePond.registerPlugin(FilePondPluginImagePreview);
-       FilePond.registerPlugin(FilePondPluginFileValidateSize);
-       FilePond.registerPlugin(FilePondPluginFileValidateType);
 
        const inputElement = document.querySelector('#auctionImage');
 
@@ -436,8 +402,6 @@ if ($_GET['editProf'] == 1 && $_SESSION['role'] == "partner") {
     echo "<script>
    $(document).ready(function() {
        FilePond.registerPlugin(FilePondPluginImagePreview);
-       FilePond.registerPlugin(FilePondPluginFileValidateSize);
-       FilePond.registerPlugin(FilePondPluginFileValidateType);
 
        const inputElement = document.querySelector('#updateAucImage');
 
@@ -474,6 +438,21 @@ if ($_GET['editProf'] == 1 && $_SESSION['role'] == "partner") {
       $('[data-toggle=\"tooltip\"]').tooltip();
   });
 </script>";
+}
+
+if ($_GET['editProf'] == 1 && $_SESSION['role'] == "member") {
+    echo "<script>
+    $(document).ready(function() {
+        FilePond.registerPlugin(FilePondPluginImagePreview);
+        const inputElement = document.querySelector('#profilepic');
+ 
+        const pond = FilePond.create(inputElement, {
+            storeAsFile: true
+        });
+ 
+       $('[data-toggle=\"tooltip\"]').tooltip();
+   });
+ </script>";
 }
 
 
