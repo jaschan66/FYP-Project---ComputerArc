@@ -234,8 +234,8 @@ session_start();
                     include "ProfilePage/memberSideBar.php";
                 } else if ($role == "partner") {
                     include "ProfilePage/partnerSideBar.php";
-                } else {
-                    //include "ProfilePage/adminSideBar.php";
+                } else if ($role == "admin") {
+                    include "ProfilePage/adminSideBar.php";
                 }
                 ?>
 
@@ -274,10 +274,16 @@ session_start();
                         include "auction/updateAuction.php";
                     }
                 } 
-                else if ($_SESSION['role'] == "member") {
-                    //Member Pages
+                else if ($_SESSION['role'] == "member") 
+                {           //Member Pages
                     if ($_GET['editProf'] == 1) {
                         include "ProfilePage/editMemberProf.php";
+                    } 
+                } 
+                else if($_SESSION['role'] == "admin") 
+                {           //Admin Pages
+                    if ($_GET['editProf'] == 1) {
+                        include "ProfilePage/editAdminProf.php";
                     } 
                 }
                 ?>

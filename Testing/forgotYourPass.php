@@ -107,7 +107,7 @@ if(isset($_POST) && isset($_POST["btnSubmitResetPass"])) {
             //Content
             $mail->isHTML(true);                                  //Set email format to HTML
             $mail->Subject = 'ComputerArc Inc. - Forgot Password';
-            $mail->Body    = 'It seems like you\'ve have forgot your password, you can then reset your password with the <a href=\'http://localhost/FYP--ComputerArc/Testing/resetPassword.php?id='.$resultdata['id'].'&roleget='.$roleget.'\' style=\'font-size: 1.5vw; \' role=\'button\'>link </a>here';
+            $mail->Body    = 'It seems like you\'ve have forgot your password, you can then reset your password with the <a href=\'http://localhost/FYP-Project---ComputerArc/Testing/resetPassword.php?id='.$resultdata['id'].'&roleget='.$roleget.'\' style=\'font-size: 1.5vw; \' role=\'button\'>link </a>here';
             if($mail->send()){
                 header("Location: remindCheckEmail.php");
             }

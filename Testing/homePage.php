@@ -12,9 +12,63 @@ session_start();
     <link rel="icon" href="Logo stuff\favicon-32x32.png" type="image/x-icon">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link href='https://fonts.googleapis.com/css?family=Questrial' rel='stylesheet'>
+
+    <link href='SweetAlert/sweetalert2.min.css' rel='stylesheet'>
+    <script src="SweetAlert/sweetalert2.min.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
 </head>
 
+<?php
 
+if (!empty($_SESSION['email'])) {
+?>
+    <script>
+        $(function() {
+            const Toast = Swal.mixin({
+                toast: true,
+                position: 'top-end',
+                showConfirmButton: false,
+                timer: 2000,
+                timerProgressBar: true,
+                didOpen: (toast) => {
+                    toast.addEventListener('mouseenter', Swal.stopTimer)
+                    toast.addEventListener('mouseleave', Swal.resumeTimer)
+                }
+            })
+
+            Toast.fire({
+                icon: 'success',
+                title: 'Signed in successfully'
+            })
+        })
+    </script>
+<?php
+} else {
+    ?>
+    <script>
+        $(function() {
+            const Toast = Swal.mixin({
+                toast: true,
+                position: 'top-end',
+                showConfirmButton: false,
+                timer: 2000,
+                timerProgressBar: true,
+                didOpen: (toast) => {
+                    toast.addEventListener('mouseenter', Swal.stopTimer)
+                    toast.addEventListener('mouseleave', Swal.resumeTimer)
+                }
+            })
+
+            Toast.fire({
+                icon: 'success',
+                title: 'Signed out successfully'
+            })
+        })
+    </script>
+<?php
+}
+
+?>
 
 
 
@@ -26,7 +80,7 @@ session_start();
 
     <!--header-->
     <?php
-    include("includes/header.php");?>
+    include("includes/header.php"); ?>
 
 
     <div class="row" style="height:70vh">

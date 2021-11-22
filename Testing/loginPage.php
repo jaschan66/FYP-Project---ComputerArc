@@ -1,5 +1,5 @@
 <?php
-  session_start();
+session_start();
 ?>
 
 <!DOCTYPE html>
@@ -13,52 +13,24 @@
     <link rel="icon" href="Logo stuff\favicon-32x32.png" type="image/x-icon">
     <link href='https://fonts.googleapis.com/css?family=Questrial' rel='stylesheet'>
     <script src="https://www.google.com/recaptcha/api.js?render=6LcrZPEcAAAAAOD-gL2ox-rjslwDMlTfFn8xarIM"></script>
+    <link href='SweetAlert/sweetalert2.min.css' rel='stylesheet'>
+
     <style>
         body {
             overflow-x: hidden;
             overflow-y: hidden;
         }
 
-        ::-webkit-scrollbar {
-
-            width: 0.8vw;
-            border-style: solid;
-            border-color: #000000;
-        }
-
-        /* Track */
-        ::-webkit-scrollbar-track {
-            background: rgba(255, 255, 255, 1);
-        }
-
-        /* Handle */
-        ::-webkit-scrollbar-thumb {
-            background: rgba(161, 161, 161, 0.5);
-            border-radius: 10px;
-        }
-
-        /* Handle on hover */
-        ::-webkit-scrollbar-thumb:hover {
-            background: rgba(0, 0, 0, 1);
-
-        }
-
-        html,
-        body {
-            height: 100%;
-        }
-
         .row {
             margin: 0;
-            /*padding:0;*/
         }
     </style>
 
-<?php
-if (isset($_POST) && isset($_POST["btnSubmitLogin"])) {
+    <?php
+    if (isset($_POST) && isset($_POST["btnSubmitLogin"])) {
 
-    include "includes/dbh.inc.php";
-    
+        include "includes/dbh.inc.php";
+
         $secretKey = '6LcrZPEcAAAAADHir9dVmYUYIDN2HedLkrlqo6Fv';
         $token = $_POST["g-toekn"];
         $ip = $_SERVER['REMOTE_ADDR'];
@@ -68,63 +40,66 @@ if (isset($_POST) && isset($_POST["btnSubmitLogin"])) {
         $response = json_decode($request);
 
         if ($response->success) {
-           $loginEmail = $_POST['email'];
-           $loginPass = $_POST['password'];
-         
+            $loginEmail = $_POST['email'];
+            $loginPass = $_POST['password'];
 
-      
-           $sqlcheckdupnameonmember = mysqli_query($conn,"SELECT * FROM `member` WHERE email ='$loginEmail'");
-           $sqlcheckdupnameonpartner = mysqli_query($conn,"SELECT * FROM `partner` WHERE email ='$loginEmail'");
-           $sqlcheckdupnameonadmin = mysqli_query($conn,"SELECT * FROM `admin` WHERE email ='$loginEmail'");
-           if (mysqli_num_rows($sqlcheckdupnameonmember) == 1 || mysqli_num_rows($sqlcheckdupnameonpartner) == 1 || mysqli_num_rows($sqlcheckdupnameonadmin) == 1) {
-           if (mysqli_num_rows($sqlcheckdupnameonmember) > mysqli_num_rows($sqlcheckdupnameonpartner) && mysqli_num_rows($sqlcheckdupnameonmember) > mysqli_num_rows($sqlcheckdupnameonadmin)) {
-               $passwordindb = mysqli_query($conn, "SELECT pass FROM `member` WHERE email ='$loginEmail'");
-               $result = mysqli_fetch_assoc($passwordindb);
-               if( $result['pass'] == $loginPass){
-                header("Location: homePage.php");
-                //Create session for member
-                $_SESSION['email'] = $loginEmail;
-                 $_SESSION['role'] = "member";
-               }
-               else{
-                   echo 'Email or password entered might be wrong.';
-               }
-              
-           }
-           else if (mysqli_num_rows($sqlcheckdupnameonpartner) > mysqli_num_rows($sqlcheckdupnameonmember) && mysqli_num_rows($sqlcheckdupnameonpartner) > mysqli_num_rows($sqlcheckdupnameonadmin)){
-            $passwordindb = mysqli_query($conn, "SELECT pass FROM `partner` WHERE email ='$loginEmail'");
-           $result = mysqli_fetch_assoc($passwordindb);
-            if( $result['pass'] == $loginPass){
-                header("Location: homePage.php");
-                //Create session for partner
-                $_SESSION['email'] = $loginEmail;
-                 $_SESSION['role'] = "partner";
-            }
-            else{
+
+
+            $sqlcheckdupnameonmember = mysqli_query($conn, "SELECT * FROM `member` WHERE email ='$loginEmail'");
+            $sqlcheckdupnameonpartner = mysqli_query($conn, "SELECT * FROM `partner` WHERE email ='$loginEmail'");
+            $sqlcheckdupnameonadmin = mysqli_query($conn, "SELECT * FROM `admin` WHERE email ='$loginEmail'");
+            if (mysqli_num_rows($sqlcheckdupnameonmember) == 1 || mysqli_num_rows($sqlcheckdupnameonpartner) == 1 || mysqli_num_rows($sqlcheckdupnameonadmin) == 1) {
+                if (mysqli_num_rows($sqlcheckdupnameonmember) > mysqli_num_rows($sqlcheckdupnameonpartner) && mysqli_num_rows($sqlcheckdupnameonmember) > mysqli_num_rows($sqlcheckdupnameonadmin)) {
+                    $passwordindb = mysqli_query($conn, "SELECT pass FROM `member` WHERE email ='$loginEmail'");
+                    $result = mysqli_fetch_assoc($passwordindb);
+                    if ($result['pass'] == $loginPass) {
+
+                        //Create session for member
+                        $_SESSION['role'] = "member";
+                        $_SESSION['email'] = $loginEmail;
+                        require 'includes/generateTwoFA.php';
+                        
+                        //header("Location: homePage.php");
+
+                    } else {
+                        echo 'Email or password entered might be wrong.';
+                    }
+                } else if (mysqli_num_rows($sqlcheckdupnameonpartner) > mysqli_num_rows($sqlcheckdupnameonmember) && mysqli_num_rows($sqlcheckdupnameonpartner) > mysqli_num_rows($sqlcheckdupnameonadmin)) {
+                    $passwordindb = mysqli_query($conn, "SELECT pass FROM `partner` WHERE email ='$loginEmail'");
+                    $result = mysqli_fetch_assoc($passwordindb);
+                    if ($result['pass'] == $loginPass) {
+
+                        //Create session for partner
+                        $_SESSION['role'] = "partner";
+                        $_SESSION['email'] = $loginEmail;
+                        require 'includes/generateTwoFA.php';
+                        
+                        //header("Location: homePage.php");
+
+                    } else {
+                        echo 'Email or password entered might be wrong.';
+                    }
+                } else {
+                    $passwordindb = mysqli_query($conn, "SELECT pass FROM `admin` WHERE email ='$loginEmail'");
+                    $result = mysqli_fetch_assoc($passwordindb);
+                    if ($result['pass'] == $loginPass) {
+
+                        //Create session for admin
+                        $_SESSION['role'] = "admin";
+                        $_SESSION['email'] = $loginEmail;
+                        require 'includes/generateTwoFA.php';
+
+                        //header("Location: homePage.php");
+
+                    }
+                }
+            } else {
                 echo 'Email or password entered might be wrong.';
             }
-           }
-           else{
-            $passwordindb = mysqli_query($conn, "SELECT pass FROM `admin` WHERE email ='$loginEmail'");
-            $result = mysqli_fetch_assoc($passwordindb);
-             if( $result['pass'] == $loginPass){
-                 header("Location: homePage.php");
-                 //Create session for admin
-                 $_SESSION['email'] = $loginEmail;
-                 $_SESSION['role'] = "admin";
-             }
-
-           }
-
         }
-         else {
-           echo 'Email or password entered might be wrong.';
-        }
-        }
-        
-     }
+    }
     ?>
-    
+
 
 </head>
 
@@ -139,33 +114,32 @@ if (isset($_POST) && isset($_POST["btnSubmitLogin"])) {
 
                     <form style="padding-top: 20vh;" class="form-group" method="POST" enctype="multipart/form-data">
 
-                    <?php
-                    
-                    if($_GET['resetPass'] == true){
+                        <?php
 
-                        echo  "<div class='alert alert-dark alert-dismissible' role='alert'>
+                        if ($_GET['resetPass'] == true) {
+
+                            echo  "<div class='alert alert-dark alert-dismissible' role='alert'>
                         <a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a>
                         <strong>Success!</strong> You should try logging in with your new password now.
                         <button type='button' class='close' data-dismiss='alert' aria-label='Close'>
                           <span aria-hidden='true'>&times;</span>
                         </button>
                       </div>";
-
-                    }
-                    ?>
-                    <input type="hidden" id="g-token" name="g-toekn" />
+                        }
+                        ?>
+                        <input type="hidden" id="g-token" name="g-toekn" />
                         <p style="color:#ffffff; font-family: 'Questrial'; padding-bottom: 5vh; text-align: center; font-size: 2.5em;">
                             SIGN IN</p>
                         <p style="color: #b5b0aa; font-family: 'Questrial'; padding-right: 6vw;">E-mail</p>
                         <input class="form-control" id="email" name="email" type="text" style="margin-bottom: 3vh;background-image: linear-gradient(to right, #2c3037, #1f2428); color: white;">
                         <p style="color: #b5b0aa; font-family: 'Questrial'; padding-right: 6vw;">Password</p>
                         <input class="form-control" id="password" name="password" type="password" style="margin-bottom: 5vh; background-image: linear-gradient(to right, #2c3037, #1f2428); color: white;">
-                   
-                    <input type="submit" name="btnSubmitLogin" id="btnSubmitLogin" class="btn btn-primary" style="font-size: 0.75vw; font-family: 'Questrial'; width:14vw;  margin-bottom: 2vh;" value="Sign In">
-                    <a href="homePage.php" class="btn btn-dark" style="font-size: 0.75vw; font-family: 'Questrial'; width: 8vw;  margin-bottom: 2vh;">Back to home</a>
-                    <a href="forgotYourPass.php" style="font-size: 0.75vw; font-family: 'Questrial'; width: 20vw; margin-left: 7.3vw; color: #ffffff;">Forgot
-                        Your Password?</a>
-                     </form>
+
+                        <input type="submit" name="btnSubmitLogin" id="btnSubmitLogin" onclick="Testing()" class="btn btn-primary" style="font-size: 0.75vw; font-family: 'Questrial'; width:14vw;  margin-bottom: 2vh;" value="Sign In">
+                        <a href="homePage.php" class="btn btn-dark" style="font-size: 0.75vw; font-family: 'Questrial'; width: 8vw;  margin-bottom: 2vh;">Back to home</a>
+                        <a href="forgotYourPass.php" style="font-size: 0.75vw; font-family: 'Questrial'; width: 20vw; margin-left: 7.3vw; color: #ffffff;">Forgot
+                            Your Password?</a>
+                    </form>
                 </div>
                 <div class="col-3">
 
@@ -201,15 +175,16 @@ if (isset($_POST) && isset($_POST["btnSubmitLogin"])) {
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
+    <script src="SweetAlert/sweetalert2.min.js"></script>
     <script>
-    grecaptcha.ready(function() {
-        grecaptcha.execute('6LcrZPEcAAAAAOD-gL2ox-rjslwDMlTfFn8xarIM', {
-            action: 'homepage'
-        }).then(function(token) {
-            document.getElementById("g-token").value = token;
+        grecaptcha.ready(function() {
+            grecaptcha.execute('6LcrZPEcAAAAAOD-gL2ox-rjslwDMlTfFn8xarIM', {
+                action: 'homepage'
+            }).then(function(token) {
+                document.getElementById("g-token").value = token;
+            });
         });
-    });
-</script>
+    </script>
 </body>
 
 </html>

@@ -19,3 +19,5 @@ echo "
 
     <input type='submit' name='btnEditMemProf' class='btn btn-dark' style='font-size: 1vw; font-family: Questrial; width:100%; margin-bottom: 2vh;' value='Edit'>
 </form>";
+
+?>

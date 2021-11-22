@@ -73,8 +73,6 @@
             $partnerTelno = $_POST['partnertelno'];
             $partnerFaxNo = $_POST['partnerfaxno'];
             $partnerProfilepic = addslashes(file_get_contents($_FILES['partnerprofilepic']['tmp_name']));
-            echo $partnerProfilepic;
-            die();
             $partnerStatus = 1;
             $partnerJoineddate = date("Y/m/d");
            
