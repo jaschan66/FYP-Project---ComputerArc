@@ -95,7 +95,7 @@ session_start();
 
         .nav-item::after {
             content: '';
-            display: block;
+            display:block;
             width: 0;
             height: 2px;
             background: #000000;
@@ -125,43 +125,118 @@ session_start();
 
     <?php
     include "includes/dbh.inc.php";
-    
+    $queryloadPRE = "SELECT * FROM prebuildpc WHERE status = 1 ";
+    $queryloadstreamPRE = "SELECT * FROM prebuildpc WHERE status = 1 AND category = 'Streaming'";
+    $queryloadgamePRE = "SELECT * FROM prebuildpc WHERE status = 1 AND category = 'Gaming'";
+    $queryloadofficePRE = "SELECT * FROM prebuildpc WHERE status = 1 AND category = 'Office-Used'";
+    $queryloadgraphicPRE = "SELECT * FROM prebuildpc WHERE status = 1 AND category = 'Graphic Designing'";
+   
+    $executePRE = mysqli_query($conn,$queryloadPRE);
+        
+
     ?>
 </head>
 
-<body>
+<body style="overflow:hidden">
 
     <!--header-->
     <?php include "includes/header.php"; ?>
 
     <div class="container-fluid" style="min-height: 70vh; margin-top:1vh; margin-bottom:2vh;">
-        <!--top of profile page-->
+  
         
 
         <button onclick="topFunction()" id="myBtn" title="Go to top"><i class='fas fa-angle-up' style='font-size:36px'></i></button>
 
+       <div class="row" style="min-height:70vh">
        
-            <div class="col-2" style=" border-right-style: solid;">
-                <!--Based on the role change the sidebar menu-->
-                
+            <div class="col-sm-2" style=" border-right-style: solid;">
+            <label style="color:#b5b0aa; font-family: 'Questrial'; margin-left:4vw; font-size: 1.5vw;">Categories</label>
+            <hr>
+            <nav class='nav flex-column' style="text-align:center">
+            <?php if(isset($_GET)){
+            $category = $_GET['cate'];
+            $selec1 = "";
+            $selec2 = "";
+            $selec3 = "";
+            $selec4 = "";
+            $selec5 = "";
 
+            if($category == "streaming"){
+               $selec1 = "style='color:#000000;'";
+             }
+             else if($category == "office"){
+                $selec2 = "style='color:#000000;'";
+              }
+              else if($category == "graphic"){
+                $selec3 = "style='color:#000000;'";
+              }
+              else if($category == "gaming"){
+                $selec4 = "style='color:#000000;'";
+              }
+              else if($category == "all"){
+                $selec5 = "style='color:#000000;'";
+              }
+
+            }   
+            ?>
+                    <a class='nav-link nav-item' href='showPREPage.php?cate=all' <?php echo $selec5 ?>>All</a>
+                    <a class='nav-link nav-item' href='showPREPage.php?cate=streaming' <?php echo $selec1 ?>>Streaming</a>
+                    <a class='nav-link nav-item' href='showPREPage.php?cate=office' <?php echo $selec2 ?>>Office-Use</a>
+                    <a class='nav-link nav-item' href='showPREPage.php?cate=graphic' <?php echo $selec3 ?>>Graphic Designing</a>
+                    <a class='nav-link nav-item' href='showPREPage.php?cate=gaming' <?php echo $selec4 ?>>Gaming</a>
+             </nav>
             </div>
 
-            <div class="col-10">
-                <!--Based on side menu bar change its content-->
-                <div class="col-1">
+            <div class="col-sm-10" style="overflow-y:auto;max-height:83vh">
+                <div class="col-sm-1">
 
                 </div>
 
-                <div class="col-10">
+                <div class="col-sm-10">
+                <div class="row">
+                <?php
+                if(isset($_GET)){
                     
+                    if($category == "streaming"){
+                       $executePRE = mysqli_query($conn,$queryloadstreamPRE);
+                    }
+                    else if($category == "office"){
+                        $executePRE = mysqli_query($conn,$queryloadofficePRE);
+                     }
+                     else if($category == "graphic"){
+                        $executePRE = mysqli_query($conn,$queryloadgraphicPRE);
+                     }
+                     else if($category == "gaming"){
+                        $executePRE = mysqli_query($conn,$queryloadgamePRE);
+                     }
+                     else if($category == "all"){
+                        $executePRE = mysqli_query($conn,$queryloadPRE);
+                     }
+                }
+                    while($PREdata = mysqli_fetch_array($executePRE)){
+                        echo '<div class="col-sm-4">
+                        <div class="card" style="margin:1vw;">
+                            <img class="card-img-top img-responsive" src="data:image/jpg;base64,' . base64_encode($PREdata['image']) . '" height="180px" width="180px" style="object-fit: contain;" alt="Card image cap">
+                                <div class="card-body">
+                                    <h5 class="card-title">'.$PREdata['name'].'</h5>
+                                    <p class="card-text">RM '.$PREdata['price'].' </p>
+                                    <hr>
+                                    <a href="productPage.php?pcpart=0&productID='.$PREdata['id'].'" class="btn btn-primary" style="width:100%; background-color:#000000">Details</a>
+                                </div>
+                        </div>
+                    </div> ';
+                    }
+                    ?>
+                </div>                 
+                    </div>
+                    
+                
 
+                <div class="col-sm-1">
 
                 </div>
-
-                <div class="col-1">
-
-                </div>
+            </div>
             </div>
 
        

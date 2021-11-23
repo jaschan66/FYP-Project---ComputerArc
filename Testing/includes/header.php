@@ -200,7 +200,7 @@ echo '<nav class="navbar navbar-expand-sm bg-white navbar-light" style="max-heig
                         </a>
                         <div class="dropdown-menu">
                             <a class="dropdown-item" style="font-size: 1vw;" href="Category.aspx?category=popurbanart">PC Part</a>
-                            <a class="dropdown-item" style="font-size: 1vw;" href="showPREPage.php">Pre-build PC</a>
+                            <a class="dropdown-item" style="font-size: 1vw;" href="showPREPage.php?cate=all">Pre-build PC</a>
                         </div>
                     </li>
                     <li class="nav-item" style="padding-right:1vw">
