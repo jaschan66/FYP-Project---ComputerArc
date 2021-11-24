@@ -9,5 +9,7 @@ if(!empty($_POST["idDelete"])){
     if (mysqli_query($conn, $deleteById)) {
         echo "Auction deleted successful";
     }
+} else {
+    echo "Failed to delete Auction";
 }
 ?>

@@ -27,7 +27,7 @@ if ($auctionTittle == "") {
 
 if ($biddingPrice == "") {
     $err .= "Missing Starting Bidding Price! \n";
-} else if (!is_numeric($biddingPrice)) {
+} else if (!is_numeric($biddingPrice) || $biddingPrice <= 0) {
     $err .= "Invalid Bidding Price! \n";
 }
 
@@ -37,7 +37,7 @@ if($auctionStartDt == "") {
     $err .= "Choose a Starting Date in the future! \n";
 }
 
-if($auctionStartDt == "") {
+if($auctionEndDt == "") {
     $err .= "Missing Ending Date! \n";
 } else if ($auctionStartDt > $auctionEndDt) {
     $err .= "Choose an Ending Date in the future! \n";
@@ -49,7 +49,6 @@ if ($image == "") {
 
 if (empty($err)) {
     include_once "dbh.local.inc.php";
-    session_start();
     $PartnerEmail   = $_SESSION['email'];
     $PartnerRole    = $_SESSION['role'];
     $GetPartnerID    = mysqli_query($conn, "SELECT * FROM `$PartnerRole` WHERE email ='$PartnerEmail'");

@@ -1,19 +1,10 @@
 <?php
-if (isset($_POST) && isset($_POST['btnEditMemProf'])) {
+if (isset($_POST) && isset($_POST['btnEditAdminProf'])) {
 
   $description = $_POST['description'];
-  $telNo = $_POST['telNo'];
   $twoFAStatus = $_POST['twoFAStatus'];
 
-  if ($_POST['telNo'] != "") {
-
-    $queryWithPicture = "";
-    if ($_FILES['profilepic']['size'] > 0) {
-      $ProfilePic = addslashes(file_get_contents($_FILES['profilepic']['tmp_name']));
-      $queryWithPicture = ", profilepic = '$ProfilePic'";
-    }
-
-    $query = "UPDATE $role SET description = '$description', telNo = '$telNo', twoFAStatus = '$twoFAStatus' $queryWithPicture WHERE email = '$email'";
+    $query = "UPDATE $role SET description = '$description', twoFAStatus = '$twoFAStatus' WHERE email = '$email'";
 
     if (mysqli_query($conn, $query)) {
       $msg = "<div class='alert alert-dark alert-dismissible' role='alert'>
@@ -33,5 +24,4 @@ if (isset($_POST) && isset($_POST['btnEditMemProf'])) {
     </div>";
       echo mysqli_error($conn);
     }
-  }
 }

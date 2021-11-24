@@ -27,7 +27,7 @@ echo '
 
                         </tr>
                         <tr>
-                            <td><a class="text-decoration-none text-white" style="font-size:1vw;" href="#">About Us</a></td>
+                            <td><a class="text-decoration-none text-white" style="font-size:1vw;" href="AboutUs.php">About Us</a></td>
                             <td><a class="text-decoration-none text-white" style="font-size:1vw;" href="https://www.https://twitter.com">Twitter</a></td>
 
                         </tr>

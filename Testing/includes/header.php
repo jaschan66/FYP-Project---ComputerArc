@@ -15,6 +15,7 @@ if (empty($_SESSION['email'])) {
 if (isset($_GET['logout'])) {
     unset($_SESSION['email']);
     unset($_SESSION['role']);
+    $_SESSION['status'] = "logout";
     header("Location: ../homePage.php");
 }
 ?>
@@ -213,7 +214,7 @@ echo '<nav class="navbar navbar-expand-sm bg-white navbar-light" style="max-heig
                         <a class="nav-link" style="font-size: 1vw;" href="raffle.php">Raffle</a>
                     </li>
                     <li class="nav-item" style="padding-right:1vw">
-                        <a class="nav-link" style="font-size: 1vw;" href="auctionPage.php">Auction</a>
+                        <a class="nav-link" style="font-size: 1vw;" href="auctionPage.php?sort=all">Auction</a>
                     </li>
                     <li class="nav-item" style="padding-right:1vw">
                         <a class="nav-link" style="font-size: 1vw;" href="AboutUs.php">About Us</a>

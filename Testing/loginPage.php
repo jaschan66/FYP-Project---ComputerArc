@@ -57,6 +57,7 @@ session_start();
                         //Create session for member
                         $_SESSION['role'] = "member";
                         $_SESSION['email'] = $loginEmail;
+                        $_SESSION['status'] = "login";
                         require 'includes/generateTwoFA.php';
                         
                         //header("Location: homePage.php");
@@ -72,6 +73,7 @@ session_start();
                         //Create session for partner
                         $_SESSION['role'] = "partner";
                         $_SESSION['email'] = $loginEmail;
+                        $_SESSION['status'] = "login";
                         require 'includes/generateTwoFA.php';
                         
                         //header("Location: homePage.php");
@@ -87,6 +89,7 @@ session_start();
                         //Create session for admin
                         $_SESSION['role'] = "admin";
                         $_SESSION['email'] = $loginEmail;
+                        $_SESSION['status'] = "login";
                         require 'includes/generateTwoFA.php';
 
                         //header("Location: homePage.php");

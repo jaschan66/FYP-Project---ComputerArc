@@ -20,7 +20,7 @@ $max=$maxdate."T".$maxtime;
 <form style='font-family: Questrial; text-align: left' method='POST' id="createAuction" enctype='multipart/form-data'>
     <div class='formspacing'>
         <p class='formlabel'>Auction Title</p>
-        <input type='text' class='form-control' id='aucTitle' required placeholder='Auction Title...' name='aucTitle'>
+        <input type='text' class='form-control' id='aucTitle' required placeholder='Auction Title...' autofocus name='aucTitle'>
     </div>
 
     <div class='formspacing'>
@@ -42,8 +42,12 @@ $max=$maxdate."T".$maxtime;
         <p class='formlabel'>Product Picture</p>
         <input class='filepond' id='auctionImage' name='auctionImage' type='file'>
     </div>
-
-    <input type='submit' id="btnCreateAuction" name="btnCreateAuction" class='btn btn-dark' style='font-size: 1vw; font-family: Questrial; width:100%; margin-bottom: 2vh;' value='Create'>
+    
+    <div class="form-inline">
+        <input type='submit' name='btnCreateAuction' id='btnCreateAuction' class='btn btn-dark col-3' style='font-size: 1vw; font-family: Questrial; margin-bottom: 2vh; margin-right: 5vw; margin-left: 3vw;' value='Create'>
+        <button type="reset" name="reset" id="reset" class="btn btn-danger col-3" style='font-size: 1vw; font-family: Questrial; margin-bottom: 2vh; margin-right: 5vw;'>Reset</button>
+        <button type="reset" onclick="history.back();" name="reset" id="reset" class="btn btn-secondary col-3" style='font-size: 1vw; font-family: Questrial; margin-bottom: 2vh;'>Back</button>
+    </div>
 </form>
 
 <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>

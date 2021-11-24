@@ -92,13 +92,22 @@ session_start();
     $email = $_SESSION['email'];
     $role = $_SESSION['role'];
 
+    if ($_SESSION['role'] == "member") {
+        // For edit Profile (Member Ver)
+        include "includes/editMember-upload.inc.php";
+    } else if ($_SESSION['role'] == "admin") {
+        // For edit Profile (Admin Ver)
+        include "includes/editAdmin-upload.inc.php";
+    }
+
 
     // For edit Profile (Partner Ver)
     if (isset($_POST) && isset($_POST['btnSubmitEditProf'])) {
 
-        $description = $_POST['description'];
+        $description = $conn -> real_escape_string($_POST['description']);
         $telNo = $_POST['telNo'];
         $faxNo = $_POST['faxNo'];
+        $twoFAStatus = $_POST['twoFAStatus'];
 
 
 
@@ -110,7 +119,7 @@ session_start();
                 $queryWithPicture = ", profilepic = '$ProfilePic'";
             }
 
-            $query = "UPDATE $role SET description = '$description', telNo = '$telNo', faxNo = '$faxNo' $queryWithPicture WHERE email = '$email'";
+            $query = "UPDATE $role SET description = '$description', telNo = '$telNo', faxNo = '$faxNo', twoFAStatus = '$twoFAStatus' $queryWithPicture WHERE email = '$email'";
 
             if (mysqli_query($conn, $query)) {
                 $msg = "<div class='alert alert-dark alert-dismissible' role='alert'>
@@ -165,11 +174,11 @@ session_start();
             <div class="col-2" style="padding-left: 10vw">
 
                 <?php
-
-                while ($img = mysqli_fetch_array($resultimg)) {
-                    echo '<img src="data:image/jpg;base64,' . base64_encode($img['profilepic']) . '" height="180px" width="180px" alt="Profile Picture" class="img-thumbnail img-responsive"/>';
+                if ($_SESSION['role'] != "admin") {
+                    while ($img = mysqli_fetch_array($resultimg)) {
+                        echo '<img src="data:image/jpg;base64,' . base64_encode($img['profilepic']) . '" height="180px" width="180px" alt="Profile Picture" class="img-thumbnail img-responsive"/>';
+                    }
                 }
-
                 ?>
             </div>
 
@@ -180,7 +189,7 @@ session_start();
                 <p style="color:#b5b0aa; font-family: 'Questrial'; text-align: left; font-size: 1.5vw;">
                     <?php
                     if ($name['description'] == null) {
-                        echo "Tell us more about yourself <a href='#' style='font-size: 1.5vw; color:#54524f' role='button'>here</a>";
+                        echo "Tell us more about yourself <a href='profilePage.php?&editProf=1' style='font-size: 1.5vw; color:#54524f' role='button'>here</a>";
                     } else {
                         echo $name['description'];
                     } ?>
@@ -315,8 +324,9 @@ session_start();
     }
 </script>
 <?php
-if ($_GET['editProf'] == 1 && $_SESSION['role'] == "partner") {
-    echo "<script>
+if ($_SESSION['role'] == "partner") {
+    if ($_GET['editProf'] == 1) {
+        echo "<script>
         $(document).ready(function() {
            FilePond.registerPlugin(FilePondPluginImagePreview);
            const inputElement = document.querySelector('#profilepic');
@@ -328,102 +338,103 @@ if ($_GET['editProf'] == 1 && $_SESSION['role'] == "partner") {
           $('[data-toggle=\"tooltip\"]').tooltip();
        });
   </script>";
-} else if ($_GET['editPRE'] == 1 && $_SESSION['role'] == "partner") {
-    echo "<script>
+    } else if ($_GET['editPRE'] == 1) {
+        echo "<script>
    $(document).ready(function() {
        FilePond.registerPlugin(FilePondPluginImagePreview);
        const inputElement = document.querySelector('#PREpic');
 
-       const pond = FilePond.create(inputElement, {
-           storeAsFile: true
-       });
+            const pond = FilePond.create(inputElement, {
+                storeAsFile: true
+            });
 
       $('[data-toggle=\"tooltip\"]').tooltip();
   });
 </script>";
-} else if ($_GET['editPRE'] == 3 && $_SESSION['role'] == "partner") {
-    echo "<script>
+    } else if ($_GET['editPRE'] == 3) {
+        echo "<script>
     $(document).ready(function() {
         FilePond.registerPlugin(FilePondPluginImagePreview);
         const inputElement = document.querySelector('#updatePREpic');
  
-        const pond = FilePond.create(inputElement, {
-            storeAsFile: true
-        });
+            const pond = FilePond.create(inputElement, {
+                storeAsFile: true
+            });
  
-       $('[data-toggle=\"tooltip\"]').tooltip();
+        $('[data-toggle=\"tooltip\"]').tooltip();
    });
  </script>";
-} else if ($_GET['editAuc'] == 2 && $_SESSION['role'] == "partner") {
-    echo "<script>
+    } else if ($_GET['editAuc'] == 2) {
+        echo "<script>
    $(document).ready(function() {
        FilePond.registerPlugin(FilePondPluginImagePreview);
-
        const inputElement = document.querySelector('#auctionImage');
 
-       const pond = FilePond.create(inputElement, {
-           storeAsFile: true
-       });
+            const pond = FilePond.create(inputElement, {
+                storeAsFile: true
+            });
 
-      $('[data-toggle=\"tooltip\"]').tooltip();
+        $('[data-toggle=\"tooltip\"]').tooltip();
   });
 </script>";
-} else if ($_GET['editAuc'] == 3 && $_SESSION['role'] == "partner") {
-    echo "<script>
+    } else if ($_GET['editAuc'] == 3) {
+        echo "<script>
    $(document).ready(function() {
        FilePond.registerPlugin(FilePondPluginImagePreview);
+            const inputElement = document.querySelector('#updateAucImage');
 
-       const inputElement = document.querySelector('#updateAucImage');
+            const pond = FilePond.create(inputElement, {
+                storeAsFile: true
+            });
 
-       const pond = FilePond.create(inputElement, {
-           storeAsFile: true
-       });
-
-      $('[data-toggle=\"tooltip\"]').tooltip();
+        $('[data-toggle=\"tooltip\"]').tooltip();
   });
 </script>";
-} else if ($_GET['editPCP'] == 2 && $_SESSION['role'] == "partner") {
-    echo "<script>
-   $(document).ready(function() {
-       FilePond.registerPlugin(FilePondPluginImagePreview);
-       const inputElement = document.querySelector('#PCPpic');
+    } else if ($_GET['editPCP'] == 2) {
+        echo "<script>
+        $(document).ready(function() {
+            FilePond.registerPlugin(FilePondPluginImagePreview);
+            const inputElement = document.querySelector('#PCPpic');
 
-       const pond = FilePond.create(inputElement, {
-           storeAsFile: true
-       });
+            const pond = FilePond.create(inputElement, {
+                storeAsFile: true
+             });
 
-      $('[data-toggle=\"tooltip\"]').tooltip();
+        $('[data-toggle=\"tooltip\"]').tooltip();
   });
 </script>";
-} else if ($_GET['editPCP'] == 3 && $_SESSION['role'] == "partner") {
-    echo "<script>
-   $(document).ready(function() {
-       FilePond.registerPlugin(FilePondPluginImagePreview);
-       const inputElement = document.querySelector('#updatePCPpic');
+    } else if ($_GET['editPCP'] == 3) {
+        echo "<script>
+        $(document).ready(function() {
+            FilePond.registerPlugin(FilePondPluginImagePreview);
+            const inputElement = document.querySelector('#updatePCPpic');
 
-       const pond = FilePond.create(inputElement, {
-           storeAsFile: true
-       });
+            const pond = FilePond.create(inputElement, {
+                storeAsFile: true
+            });
 
-      $('[data-toggle=\"tooltip\"]').tooltip();
+         $('[data-toggle=\"tooltip\"]').tooltip();
   });
 </script>";
+    }
+} else if ($_SESSION['role'] == "member") {
+    if ($_GET['editProf'] == 1) {
+        echo "<script>
+        $(document).ready(function() {
+            FilePond.registerPlugin(FilePondPluginImagePreview);
+            const inputElement = document.querySelector('#profilepic');
+     
+            const pond = FilePond.create(inputElement, {
+                storeAsFile: true
+            });
+     
+           $('[data-toggle=\"tooltip\"]').tooltip();
+       });
+     </script>";
+    }
 }
 
-if ($_GET['editProf'] == 1 && $_SESSION['role'] == "member") {
-    echo "<script>
-    $(document).ready(function() {
-        FilePond.registerPlugin(FilePondPluginImagePreview);
-        const inputElement = document.querySelector('#profilepic');
- 
-        const pond = FilePond.create(inputElement, {
-            storeAsFile: true
-        });
- 
-       $('[data-toggle=\"tooltip\"]').tooltip();
-   });
- </script>";
-}
+
 
 
 

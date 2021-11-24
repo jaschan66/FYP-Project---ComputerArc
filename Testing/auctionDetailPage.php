@@ -3,80 +3,47 @@
 <meta charset=" utf-8" />
 
 <head>
-    <title>ComputerArc</title>
+    <title>ComputerArc - Auction</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
     <script src='https://kit.fontawesome.com/a076d05399.js'></script>
     <link rel="icon" href="Logo stuff\favicon-32x32.png" type="image/x-icon">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link href='https://fonts.googleapis.com/css?family=Questrial' rel='stylesheet'>
+
+    <link href='SweetAlert/sweetalert2.min.css' rel='stylesheet'>
+    <script src="SweetAlert/sweetalert2.min.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
     <style>
-        * {
-            box-sizing: border-box;
+        p {
+            /* font-family: "Questrial"; */
+            margin-bottom: 0.5rem;
         }
 
-        body {
-            overflow-x: hidden;
-            overflow-y: scroll;
-            /* Add the ability to scroll */
+        h1,
+        h2,
+        h3 {
+            margin-bottom: 1.25rem;
         }
 
-        ::-webkit-scrollbar {
-
-            width: 0.8vw;
-            border-style: solid;
-            border-color: #000000;
-        }
-
-        /* Track */
-        ::-webkit-scrollbar-track {
-            background: rgba(255, 255, 255, 1);
-        }
-
-        /* Handle */
-        ::-webkit-scrollbar-thumb {
-            background: rgba(161, 161, 161, 0.5);
-            border-radius: 10px;
-        }
-
-        /* Handle on hover */
-        ::-webkit-scrollbar-thumb:hover {
-            background: rgba(0, 0, 0, 1);
-
-        }
-
-        .logoutBtn {
-            display: none;
-        }
-
-        #profileBtn {
-            display: none;
-        }
-
-        html,
-        body {
-            height: 100%;
-        }
-
-        .row {
-            margin: 0;
-            /*padding:0;*/
-        }
-
-        .dropdown-item.active,
-        .dropdown-item:active {
-            color: #212529;
-        }
-
-        .dropdown-item:focus,
-        .dropdown-item:hover {
-            background: #fec400;
+        .img-magnifier-glass {
+            position: absolute;
+            border: 3px solid #000;
+            border-radius: 50%;
+            cursor: none;
+            /*Set the size of the magnifier glass:*/
+            width: 100px;
+            height: 100px;
         }
     </style>
 
-    <?php include "auction/auction-retrieve.php"; ?>
+    <!--header-->
+    <?php require "includes/header.php"; ?>
+
 </head>
 
 <body>
-    <!--header-->
-    <?php require "includes/header.php"; ?>
+
+    <?php include "auction/auction-retrieve.php"; ?>
 
     <!--Content after here-->
     <div class="container">
@@ -109,69 +76,43 @@
                         <span class="carousel-control-next-icon"></span>
                     </a>
                 </div> -->
-                 <?php echo' <img src="data:image/jpg;base64, '. base64_encode($resultGetData["image"]) . '" height="800px" width="800px" alt="Profile Picture" class="img-thumbnail img-responsive"/>' ?>
+                <div class="col-sm-7" class="img-magnifier-container">
+                    <img class="img-responsive" src="<?php echo 'data:image/jpg;base64,' . base64_encode($resultGetData['image']) . '' ?>" height="512px" width="512px" style="object-fit: contain;" alt="Card image cap" id="auctionImage">
+                </div>
 
             </div>
             <div class="col-5">
 
-                <?php echo' <h1>Auction Details</h1>
-                <h2>'. $resultGetData["title"] .'</h2>
-                            <p>' . date("j/n/Y", strtotime($resultGetData["start_date"])) . ' - ' . date("j/n/Y", strtotime($resultGetData["end_date"])) . '</p>
-
-                ' ?>
-                <p style="color: gray;">_________________________________________________________________</p>
+                <h2>Auction Details</h2>
+                <div style="margin-bottom: 1.25rem">
+                    <h2><?php echo  $resultGetData["title"] ?></h2>
+                    <p style="font-weight: bold;">Auction Duration:</p>
+                    <p><?php echo date("j/n/Y", strtotime($resultGetData["start_date"])) ?> - <?php echo date("j/n/Y", strtotime($resultGetData["end_date"])) ?></p>
+                    <p style="color: gray;">_________________________________________________________________</p>
+                </div>
 
 
                 <div class="row" style="padding-bottom: 2vh;">
-                    <div class="col-8">
-                        <buttton class="btn btn-primary">Bid Now</buttton>
-                    </div>
-                    <div class="col-3">
-                        <!--<asp:Button ID="BtnWL" class="btn btn-danger" OnClick="BtnWL_Click" runat="server" Text="Add Wishlist" UseSubmitBehavior="False"></asp:Button>-->
-                    </div>
-                </div>
-
-                <h3> </h3>
-
-                ?>
-
-
-                <a href="#terms" class="btn btn-outline-dark btn-block border-2 border-top-0 border-left-0 border-right-0 rounded-0" data-toggle="collapse" style="text-align: left;">OUR GUARANTEE TO YOU</a>
-                <div id="terms" class="collapse" style="text-align: center;">
-                    We are so confident you will love our products that we offer a full 30 days 100% risk free. If
-                    for any reason you don't like our products or they are not as you expected, we will refund you
-                    100%.
+                    <buttton class='btn btn-dark' style='width:100%'>Bid Now</buttton>
                 </div>
             </div>
         </div>
         <hr />
         <div class="row">
             <div class="col-12" style="padding:0px">
-                <h4><u>Description</u></h4>
-                <p style="text-align:Left; width:auto;">OPTIMIZED FOR INTEL® AND AMD®<br>
-                    CORSAIR VENGEANCE RGB PRO SL DDR4 memory lights up your PC with dynamic, individually addressable RGB lighting, while delivering peak performance in a compact form factor.
-                    <br><br>
-                    INTELLIGENT CONTROL, UNLIMITED POSSIBILITIES<br>
-                    Take control with CORSAIR iCUE software and synchronize lighting with other CORSAIR RGB products, including coolers, keyboards and fans.
-                    <br><br>
-                    Switch through various profiles.
-                    <br><br>
-                    WAVE SPIRAL RAIN VISOR SEQUENTIAL<br>
-                    PERFORMANCE HERITAGE<br>
-                    Each Vengeance RGB PRO SL module starts with our custom performance PCB and tightly screened memory chips to provide incredible frequencies, for maximum bandwidth and tight response times on all platforms.
-                    <br><br>
-                    COMPACT FORM FACTOR<br>
-                    Standing at just 44mm tall for wider compatibility with air coolers and smaller form factor chassis, each module looks great from any angle.
-                    <br><br>
-                    ONE STEP OVERCLOCKING<br>
-                    With Intel® XMP 2.0 support, a single BIOS setting is all that’s required to set your memory to its ideal performance settings.
-                    <br><br>
-                    LIMITED LIFETIME WARRANTY<br>
-                    For complete peace of mind and years of worry-free performance.
-                </p>
+                <h3><u>Description</u></h3>
+                <h4>Partner Details</h4>
+                <div>
+                    <p style="font-weight: bold;">Name</p>
+                    <p style><?php echo $resultPartnerData["name"] ?></p><br>
+                    <p style="font-weight: bold;">Email</p>
+                    <p style><?php echo $resultPartnerData["email"] ?></p><br>
+                    <p style="font-weight: bold;">Phone-no</p>
+                    <p style><?php echo $resultPartnerData["telNo"] ?></p><br>
+                </div>
             </div>
         </div>
-        <div class="row mt-5">
+        <div class="row mt-3">
             <div class="col-12">
                 <h2>Recommendations for you.</h2>
                 <asp:DataList ID="dtlDisplay" runat="server" RepeatColumns="4">
@@ -198,9 +139,14 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
+    <script>
+        /* Initiate Magnify Function with the id of the image, and the strength of the magnifier glass:*/
+        magnify("auctionImage", 1.5);
+    </script>
 
 
 </body>
+
 
 <!--footer-->
 <?php require "includes/footer.php"; ?>

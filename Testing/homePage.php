@@ -1,5 +1,9 @@
 <?php
 session_start();
+
+if (empty($_SESSION['status'])) {
+    $_SESSION['status'] = "ignore";
+}
 ?>
 <!DOCTYPE html>
 <meta name="viewport" content="width=device-width, initial-scale= 1, shrink-to-fit=no">
@@ -19,8 +23,8 @@ session_start();
 </head>
 
 <?php
-
-if (!empty($_SESSION['email'])) {
+if (($_SESSION['status']) == "login") {
+    $_SESSION['status'] = "ignore";
 ?>
     <script>
         $(function() {
@@ -28,11 +32,9 @@ if (!empty($_SESSION['email'])) {
                 toast: true,
                 position: 'top-end',
                 showConfirmButton: false,
-                timer: 2000,
+                timer: 1500,
                 timerProgressBar: true,
                 didOpen: (toast) => {
-                    toast.addEventListener('mouseenter', Swal.stopTimer)
-                    toast.addEventListener('mouseleave', Swal.resumeTimer)
                 }
             })
 
@@ -43,19 +45,18 @@ if (!empty($_SESSION['email'])) {
         })
     </script>
 <?php
-} else {
-    ?>
+} else if (($_SESSION['status']) == "logout") {
+    $_SESSION['status'] = "ignore";
+?>
     <script>
         $(function() {
             const Toast = Swal.mixin({
                 toast: true,
                 position: 'top-end',
                 showConfirmButton: false,
-                timer: 2000,
+                timer: 1500,
                 timerProgressBar: true,
                 didOpen: (toast) => {
-                    toast.addEventListener('mouseenter', Swal.stopTimer)
-                    toast.addEventListener('mouseleave', Swal.resumeTimer)
                 }
             })
 
@@ -67,7 +68,6 @@ if (!empty($_SESSION['email'])) {
     </script>
 <?php
 }
-
 ?>
 
 
@@ -235,7 +235,7 @@ if (!empty($_SESSION['email'])) {
     <div class="row" style="height:50vh">
         <div class="col-12" style="max-height:50vh">
             <p class="text-center" style="font-family:'Questrial'; font-size:7vw;padding-top:15vh;color:black">
-                Daily Discover</p>
+                Daily Discovery</p>
             <p class="text-center" style="font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif; font-size:1.5vw;color:grey">
                 _________</p>
         </div>

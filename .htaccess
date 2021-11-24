@@ -1,0 +1,9 @@
+# <IfModule mod_rewrite.c>
+#     RewriteEngine On
+#     RewriteBase /
+#     RewriteRule ^error.php$ - [L]
+#     RewriteCond %{REQUEST_FILENAME} !-f
+#     RewriteCond %{REQUEST_FILENAME} !-d
+#     RewriteRule . /error.php [L]
+# </IfModule>
+ErrorDocument 404 http://localhost/FYP-Project---ComputerArc/Testing/error.php
