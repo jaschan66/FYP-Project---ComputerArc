@@ -10,6 +10,7 @@
     <script src='https://kit.fontawesome.com/a076d05399.js'></script>
     <link rel="icon" href="Logo stuff\favicon-32x32.png" type="image/x-icon">
     <link href='https://fonts.googleapis.com/css?family=Questrial' rel='stylesheet'>
+     <link href='SweetAlert/sweetalert2.min.css' rel='stylesheet'>
     <style>
         * {
             box-sizing: border-box;
@@ -87,24 +88,24 @@ $productID = $_GET['productID'];
 
 
 
-if($isPCP == "PRE"){
+if($isPCP == "prebuildpc"){
     $querygetProduct = "SELECT * FROM prebuildpc WHERE id = '$productID'";
     $getProductData = mysqli_query($conn, $querygetProduct);
     $productData = mysqli_fetch_assoc($getProductData);
-    $productType = "PRE";
+    $productType = "prebuildpc";
 }
-else if($isPCP == "PCP"){
+else if($isPCP == "pcpart"){
     $querygetProduct = "SELECT * FROM pcpart WHERE id = '$productID'";
     $getProductData = mysqli_query($conn, $querygetProduct);
     $productData = mysqli_fetch_assoc($getProductData);
-    $productType = "PCP";
+    $productType = "pcpart";
 }
 
 ?>
 
 <body>
 <script
-    src='https://www.paypal.com/sdk/js?client-id=AQ4hQhEivZvuuZanNqIzkb23shsqzDUcwUMPb4hRvNkf9RAlWdpH0n-rbFxFw_hDV9ctv3OPxfOXAwoV&currency=MYR'> // Required. Replace YOUR_CLIENT_ID with your sandbox client ID.
+    src='https://www.paypal.com/sdk/js?client-id=AQ4hQhEivZvuuZanNqIzkb23shsqzDUcwUMPb4hRvNkf9RAlWdpH0n-rbFxFw_hDV9ctv3OPxfOXAwoV&locale=en_GB&currency=MYR'> // Required. Replace YOUR_CLIENT_ID with your sandbox client ID.
 </script>
 
 <?php
@@ -113,49 +114,34 @@ else if($isPCP == "PCP"){
    
         <!--Content after here-->
         <div class="container">
-            <div class="row">
-                <div class="col-sm-7" class="img-magnifier-container">
-                <img class="img-responsive" src="<?php echo 'data:image/jpg;base64,' . base64_encode($productData['image']) . ''?>" height="512px" width="512px" style="object-fit: contain;" alt="Card image cap" id="productIMG">
+            <div class="row" style="min-height:70vh;">
+                <div class="col-lg-5" class="img-magnifier-container">
+                <img class="img-responsive" src="<?php echo 'data:image/jpg;base64,' . base64_encode($productData['image']) . ''?>" height="440px" width="440px" style="object-fit: contain;" alt="Card image cap" id="productIMG">
                 </div>
-                <div class="col-sm-5">
+                <div class="col-lg-7">
 
-                    <h2></h2>
+                   
                     
                     <p style="font-size: 28px"><?php echo $productData['name'] ?></p>
-                    <p style="font-size: 20px">RM <?php echo $productData['price'] ?></p>
-                    <p style="font-size: 16px">Stock Left: <?php echo $productData['stock'] ?></p>
-                    <p style="color: gray;">_________________________________________________________________</p>
+                    
+                    
 
 
-                    <div class="row" style="padding-bottom: 2vh;">
-                    <?php 
-                        $querygetID = "SELECT id FROM member WHERE email = '$logonEmail'";
-                        $getID = mysqli_query($conn,$querygetID);
-                        $ID = mysqli_fetch_assoc($getID);
-                        
-                    if($productData['seller'] == $ID['id'] && $logonRole == "partner"){
-                        echo "<div class='col-sm-12' style='margin-bottom:1vh'>
-                        <input type='number' pattern='[0-9]+' required placeholder='e.g. 10' class='form-control' name='Productupdatestock' value='".$productData['stock']."' style='text-align:center'>
+                   
+                        <div class='col-sm-12' style='margin-bottom:1vh;padding:0'>
+                        <input type='hidden' value='<?php echo $productData['id'] ?>' id='productID'>
+                        <input type='hidden' value='<?php echo $isPCP ?>' id='productType'>
+                        <input type='number' pattern='[0-9]+'  required value='<?php echo $qty ?>' class='form-control' id='ProductPurchasestock' name='ProductPurchasestock' onchange="changeTotal(this)" style='text-align:center' min='1' max='3'>
+                        <p style="font-size: 20px">Total(RM):  <label style="text-align:right;font-size: 25px" id='totalPrice'></label></p>
                             </div>
-                        <div class='col-sm-12'>
-                        <buttton class='btn btn-dark' style='width: 100%;'>Update Stock</buttton>
-                         </div>";
-                    }else{
-                        echo "<div class='col-sm-12' style='margin-bottom:1vh'>
-                        <input type='hidden' value='".$productData['id']."' id='currentProductID'>
-                        <input type='hidden' value='".$productType."' id='currentProductType'>
-                        <input type='number' pattern='[0-9]+' required value='1' class='form-control' id='ProductPurchasestock' name='ProductPurchasestock' style='text-align:center'>
-                            </div>
-                            <button type='button' onclick='tocheckout()' class='btn btn-dark' style='width:100%'>Buy Now</button>
+                            <div id="paypal-button-container"></div>
                             
                          <div class='col-sm-12'>
                          
-                    </div>";
-                    } 
-                    
-                    ?>
-                       
                     </div>
+                    
+                  
+              
                 
 
                     
@@ -174,8 +160,43 @@ else if($isPCP == "PCP"){
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
+
+        <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+        <script src="SweetAlert/sweetalert2.min.js"></script>
+
+    <script>
+         $(document).ready(function() {
+             changeTotal(document.getElementById("ProductPurchasestock"));
+         })
+
+         var producttype = document.getElementById("productType").value;
+        var productid = document.getElementById("productID").value;
+        var productQty = document.getElementById("ProductPurchasestock").value;
+
+        </script>
         
+
+
 <script>
+    var total = 0;
+function changeTotal(e){
+        var qty = $(e).val();
+        var unitPrice = <?= $productData['price'] ?>;
+        // let unitPriceId = '#up_'.idIndex;
+        // var unitPrice = $(unitPriceId).val();
+        total = qty * unitPrice;
+
+        $('#totalPrice').html(total.toFixed(2));
+    }
+
+
+
+</script>
+
+<script>
+
+
+
     paypal.Buttons({
         style: {
             layout: 'vertical',
@@ -187,9 +208,52 @@ else if($isPCP == "PCP"){
       return actions.order.create({
         purchase_units: [{
           amount: {
-            value: '300'
+            value: total
           }
         }]
+      });
+    },
+    onApprove: function(data, actions) {
+      // This function captures the funds from the transaction.
+      return actions.order.capture().then(function(details) {
+        // This function shows a transaction success message to your buyer.
+        console.log(details);
+        
+        $.ajax({
+                        type: "POST",
+                        url: "processCheckout.php",
+                        data: {
+                        paymentDetail: details,
+                        productType: producttype,
+                        productID: productid,
+                        productQty: productQty,
+                    },
+                        success: function(x) {
+                            if (x == "Paid successfuly!") {
+                                Swal.fire(x, '', 'success').then((result => {
+                                    var delay = 500;
+                                    if (result.isConfirmed) {
+                                        window.location = "homePage.php";
+                                    } else {
+                                        setTimeout(function() {
+                                            window.location = "homePage.php";
+                                        }, delay);
+                                    }
+                                }))
+
+                            } else {
+                                Swal.fire({
+                                    icon: 'error',
+                                    title: 'Something went wrong!',
+                                    html: '<pre>' + x + '</pre>',
+                                    customClass: {
+                                        popup: 'format-pre'
+                                    }
+                                })
+                            }
+                        }
+                    });
+          
       });
     }
         

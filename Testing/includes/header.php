@@ -199,7 +199,7 @@ echo '<nav class="navbar navbar-expand-sm bg-white navbar-light" style="max-heig
                             Products
                         </a>
                         <div class="dropdown-menu">
-                            <a class="dropdown-item" style="font-size: 1vw;" href="Category.aspx?category=popurbanart">PC Part</a>
+                            <a class="dropdown-item" style="font-size: 1vw;" href="showPCPPage.php?cate=all">PC Part</a>
                             <a class="dropdown-item" style="font-size: 1vw;" href="showPREPage.php?cate=all">Pre-build PC</a>
                         </div>
                     </li>

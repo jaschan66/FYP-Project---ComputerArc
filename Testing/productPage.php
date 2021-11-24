@@ -10,70 +10,8 @@
     <script src='https://kit.fontawesome.com/a076d05399.js'></script>
     <link rel="icon" href="Logo stuff\favicon-32x32.png" type="image/x-icon">
     <link href='https://fonts.googleapis.com/css?family=Questrial' rel='stylesheet'>
-    <style>
-        * {
-            box-sizing: border-box;
-        }
-
-        body {
-            overflow-x: hidden;
-            overflow-y: scroll;
-            /* Add the ability to scroll */
-        }
-        
-
-        ::-webkit-scrollbar {
-
-            width: 0.8vw;
-            border-style: solid;
-            border-color: #000000;
-        }
-
-        /* Track */
-        ::-webkit-scrollbar-track {
-            background: rgba(255, 255, 255, 1);
-        }
-
-        /* Handle */
-        ::-webkit-scrollbar-thumb {
-            background: rgba(161, 161, 161, 0.5);
-            border-radius: 10px;
-        }
-
-        /* Handle on hover */
-        ::-webkit-scrollbar-thumb:hover {
-            background: rgba(0, 0, 0, 1);
-
-        }
-
-        .logoutBtn {
-            display: none;
-        }
-
-        #profileBtn {
-            display: none;
-        }
-
-        html,
-        body {
-            height: 100%;
-        }
-
-        .row {
-            margin: 0;
-            /*padding:0;*/
-        }
-
-        .dropdown-item.active,
-        .dropdown-item:active {
-            color: #212529;
-        }
-
-        .dropdown-item:focus,
-        .dropdown-item:hover {
-            background: #fec400;
-        }
-
+    
+<style>
         .img-magnifier-container {
   position:relative;
 }
@@ -148,6 +86,10 @@ function magnify(imgID, zoom) {
 
 <?php
 
+if(empty($_SESSION['email']) && empty($_SESSION['role'])){
+    header("Location: homePage.php");
+}
+
 include "includes/dbh.inc.php";
 $productID = $_GET['productID'];
 $isPCP = $_GET['pcpart'];
@@ -157,17 +99,27 @@ $logonRole = $_SESSION['role'];
 
 
 
+
 if($isPCP == 0){
     $querygetProduct = "SELECT * FROM prebuildpc WHERE id = '$productID'";
     $getProductData = mysqli_query($conn, $querygetProduct);
     $productData = mysqli_fetch_assoc($getProductData);
-    $productType = "PRE";
+    $productType = "prebuildpc";
 }
 else if($isPCP == 1){
     $querygetProduct = "SELECT * FROM pcpart WHERE id = '$productID'";
     $getProductData = mysqli_query($conn, $querygetProduct);
     $productData = mysqli_fetch_assoc($getProductData);
-    $productType = "PCP";
+    $productType = "pcpart";
+}
+
+if(isset($_POST['updateStockCount'])){
+    $updateStockNumber = $_POST['Productupdatestock'];
+    
+    $queryUpdateStock = "UPDATE $productType SET stock = '$updateStockNumber' WHERE id = '$productID'";
+    if(mysqli_query($conn,$queryUpdateStock)){
+        echo "<meta http-equiv='refresh' content='0'>";
+    }
 }
 
 ?>
@@ -208,38 +160,49 @@ else if($isPCP == 1){
                         $ID = mysqli_fetch_assoc($getID);
                     }
                     if($productData['seller'] == $ID['id'] && $logonRole == "partner"){
-                        echo "<div class='col-sm-12' style='margin-bottom:1vh'>
+                        echo "<form method='POST' enctype='multipart/form-data' style='width:100%'>
+                        <div class='col-sm-12' style='margin-bottom:1vh'>
                         <input type='number' pattern='[0-9]+' required placeholder='e.g. 10' class='form-control' name='Productupdatestock' value='".$productData['stock']."' style='text-align:center'>
                             </div>
                         <div class='col-sm-12'>
-                        <buttton class='btn btn-dark' style='width: 100%;'>Update Stock</buttton>
-                         </div>";
-                    }else{
-                        echo "<div class='col-sm-12' style='margin-bottom:1vh'>
+                        <input type='submit' class='btn btn-dark' name='updateStockCount' style='width: 100%;' value='Update Stock'>
+                         </div>
+                         </form>";
+                    }else if ($logonRole =="member" && $productData['stock'] > 0){
+                        echo "<div class='col-sm-12' style='margin-bottom:1vh;padding:0'>
                         <input type='hidden' value='".$productData['id']."' id='currentProductID'>
                         <input type='hidden' value='".$productType."' id='currentProductType'>
-                        <input type='number' pattern='[0-9]+' required value='1' class='form-control' id='ProductPurchasestock' name='ProductPurchasestock' style='text-align:center'>
+                        <input type='number' pattern='[0-9]+' required value='1' class='form-control' id='ProductPurchasestock' name='ProductPurchasestock' style='text-align:center' min='1' max='3'>
                             </div>
+                            <a href='#terms'
+                        class='btn btn-outline-dark btn-block border-2 '
+                        data-toggle='collapse' style='text-align: left;margin-bottom:1vh'>Raffle Ticket</a>
+                    <div id='terms' class='collapse' style='text-align: left;'>
+                        By purchasing item over RM200, you'll be rewarded with a ticket that's eligible for you to join raffle and stand a chance to win awesome reward!
+                    </div>
                             <button type='button' onclick='tocheckout()' class='btn btn-dark' style='width:100%'>Buy Now</button>
                             
                          <div class='col-sm-12'>
                          
                     </div>";
-                    } 
+                    }else if ($logonRole =="member" && $productData['stock'] <= 0){
+                        echo "<div class='col-sm-12'>
+                        <buttton class='btn btn-dark' style='width: 100%;text-align:center'>Out of stock</buttton>
+                         </div>";
+
+                    }
+                    else{
+                       echo "<div class='col-sm-12'>
+                        <buttton class='btn btn-dark' style='width: 100%;text-align:left'>Unable to purchase with Partner account</buttton>
+                         </div>";
+                    }
                     
                     ?>
                        
                     </div>
                 
 
-                    <a href="#terms"
-                        class="btn btn-outline-dark btn-block border-2 border-top-0 border-left-0 border-right-0 rounded-0"
-                        data-toggle="collapse" style="text-align: left;">OUR GUARANTEE TO YOU</a>
-                    <div id="terms" class="collapse" style="text-align: left;">
-                        We are so confident you will love our products that we offer a full 30 days 100% risk free. If
-                        for any reason you don't like our products or they are not as you expected, we will refund you
-                        100% of the fund.
-                    </div>
+                    
                 </div>
             </div>
             <hr />
@@ -271,6 +234,7 @@ magnify("productIMG", 1.5);
   <script>
 
 function tocheckout(){
+    
     var productId = document.getElementById("currentProductID").value;
     var quantity = document.getElementById("ProductPurchasestock").value;
     var type = document.getElementById("currentProductType").value;
@@ -283,7 +247,13 @@ url.searchParams.set('qty', quantity);
 url.searchParams.set('productID', productId);
 url.searchParams.set('productType', type);
 
-window.location.href = url;
+if(quantity <= <?= $productData['stock'] ?>){
+    window.location.href = url;
+}
+else{
+    window.alert("Purchase quantity exceed stock quantity.");
+}
+
 
 // if window.location.href has already some qs params this set function
 // modify or append key/value in it

@@ -134,43 +134,7 @@ session_start();
     }
 
     // For Create PRE
-    if (isset($_POST) && isset($_POST['btnSubmitCreatePRE'])) {
-        $PREPrice       = $_POST['PREprice'];
-        $PRECategory    = $_POST['PREcategory'];
-        $PREName        = $_POST['PREname'];
-        $PREDesc        = $_POST['PREdesc'];
-        $PREStock       = $_POST['PREstock'];
-        $PREImage       = addslashes(file_get_contents($_FILES['PREpic']['tmp_name']));
-        $PREStatus      = 2;
-
-        $resultPREID    = mysqli_query($conn, "SELECT * FROM `$role` WHERE email ='$email'");
-
-        if (mysqli_num_rows($resultPREID) > 0) {
-            $PREIDResult = mysqli_fetch_assoc($resultPREID);
-            $PREID = $PREIDResult['id'];
-        }
-
-
-        $InsertPRE = "INSERT INTO `prebuildpc` (`price`, `category`, `name`, `description`, `stock`, `image`, `status`, `seller`) VALUES ('$PREPrice', '$PRECategory', '$PREName', '$PREDesc', '$PREStock', '$PREImage', '$PREStatus', '$PREID')";
-
-        if (mysqli_query($conn, $InsertPRE)) {
-            $msg = "<div class='alert alert-dark alert-dismissible' role='alert'>
-                <a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a>
-                <strong>Success!</strong> Your submission are now pending approval from admin.
-                <button type='button' class='close' data-dismiss='alert' aria-label='Close'>
-                  <span aria-hidden='true'>&times;</span>
-                </button>
-              </div>";
-        } else {
-            $msg = "<div class='alert alert-danger alert-dismissible' role='alert'>
-            <a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a>
-            <strong>Oh No!</strong> Something went wrong when publishing the pre-build pc, please try again later.
-            <button type='button' class='close' data-dismiss='alert' aria-label='Close'>
-              <span aria-hidden='true'>&times;</span>
-            </button>
-          </div>";
-        }
-    }
+    
 
     $result = mysqli_query($conn, "SELECT * FROM `$role` WHERE email ='$email'");
     $resultimg = mysqli_query($conn, "SELECT profilepic FROM `$role` WHERE email ='$email'");

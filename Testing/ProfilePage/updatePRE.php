@@ -6,46 +6,13 @@ $getPREData = "SELECT * FROM prebuildpc WHERE id = '$updatePREID'";
 $conngetData = mysqli_query($conn, $getPREData);
 $resultgetData = mysqli_fetch_assoc($conngetData);
 
-if(isset($_POST['btnSubmitUpdatePRE'])){
 
-$updatePREname = $_POST['updatePREname'];
-$updatePREprice = $_POST['updatePREprice'];
-$updatePREcategory = $_POST['updatePREcategory'];
-$updatePREstock = $_POST['updatePREstock'];
-$updatePREdesc = $_POST['updatePREdesc'];
-
-
-if ($updatePREname != "" && $updatePREprice != "" && $updatePREcategory != "" && $updatePREstock != ""){
-    $queryWithUpdatePicture = "";
-            if ($_FILES['updatePREpic']['size'] > 0) {
-                $updatePREpic = addslashes(file_get_contents($_FILES['updatePREpic']['tmp_name']));
-                $queryWithUpdatePicture = ", image = '$updatePREpic'";
-            }
-
-            $updateQuery = "UPDATE prebuildpc SET name = '$updatePREname', price = '$updatePREprice', category = '$updatePREcategory', stock = '$updatePREstock',
-             description = '$updatePREdesc' $queryWithUpdatePicture WHERE id = '$updatePREID'";
-             
-        if (mysqli_query($conn, $updateQuery)) {
-            echo "<script>
-            window.location.href = \"profilePage.php?editPRE=1&editProf=0&editPCP=0&editAuc=0\";
-            </script>";
-        } else {
-            $msg = "<div class='alert alert-danger alert-dismissible' role='alert'>
-    <a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a>
-    <strong>Oh No!</strong> Something went wrong when editing your profile, please try again later.
-    <button type='button' class='close' data-dismiss='alert' aria-label='Close'>
-      <span aria-hidden='true'>&times;</span>
-    </button>
-  </div>";
-            echo mysqli_error($conn);
-    }
-}
-}
 
 
 ?>
 
-<form style='font-family: Questrial; text-align: left' method='POST' enctype='multipart/form-data'>
+<form style='font-family: Questrial; text-align: left' method='POST' enctype='multipart/form-data' id='updatePRE'>
+                            <input type='hidden' name='updatePREID' value='<?php echo $updatePREID  ?>'>
                         <div class='formspacing'>
                             <p class='formlabel'>Name</p>
                             <input type='text' class='form-control' id='PREname' placeholder='Alienware G10' name='updatePREname' value='<?php  echo $resultgetData['name'] ?>'>
@@ -96,5 +63,60 @@ if ($updatePREname != "" && $updatePREprice != "" && $updatePREcategory != "" &&
                             <input class='filepond' id='updatePREpic' name='updatePREpic' type='file'>
                         </div>
 
-                        <input type='submit' name='btnSubmitUpdatePRE' class='btn btn-dark' style='font-size: 1vw; font-family: Questrial; width:100%; margin-bottom: 2vh;' value='Update'>
+                        <input type='submit' name='btnSubmitUpdatePRE' id='btnSubmitUpdatePRE' class='btn btn-dark' style='font-size: 1vw; font-family: Questrial; width:100%; margin-bottom: 2vh;' value='Update'>
                     </form>
+
+                    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+                    <script src="SweetAlert/sweetalert2.min.js"></script>
+
+                    <script>
+    $(document).ready(function() {
+        $('#btnSubmitUpdatePRE').click(function(event) {
+            event.preventDefault();
+            var form = $('#updatePRE');
+            var formData = new FormData(form[0]);
+
+            Swal.fire ({
+                title: 'Update Pre-build PC?',
+                showCancelButton: true,
+                confirmButtonText: 'Yes',
+            }).then((result) => {
+                if (result.isConfirmed) {
+
+                    $.ajax({
+                        type: "POST",
+                        url: "ProfilePage/PRE-update.php",
+                        processData: false,
+                        contentType: false,
+                        data: formData,
+                        success: function(x) {
+                            var delay = 500;
+                            console.log(x);
+                            if (x == "Pre-Build PC updated successfuly!") {
+                                Swal.fire(x, '', 'success').then((result => {
+                                    if (result.isConfirmed) {
+                                        window.location = "profilePage.php?editAuc=0&editPRE=1&editProf=0&editPCP=0";
+                                    } else {
+                                        setTimeout(function() {
+                                            window.location = "profilePage.php?editAuc=0&editPRE=1&editProf=0&editPCP=0";
+                                        }, delay);
+                                    }
+                                }))
+
+                            } else {
+                                Swal.fire({
+                                    icon: 'error',
+                                    title: 'Something went wrong!',
+                                    html: '<pre>' + x + '</pre>',
+                                    customClass: {
+                                        popup: 'format-pre'
+                                    }
+                                })
+                            }
+                        }
+                    });
+                }
+            })
+        });
+    });
+</script>

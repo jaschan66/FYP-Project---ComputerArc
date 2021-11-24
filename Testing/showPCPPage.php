@@ -6,7 +6,7 @@ session_start();
 <meta charset="utf-8" />
 
 <head>
-    <title>ComputerArc - Pre-Build PC</title>
+    <title>ComputerArc - PC Part</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
     <script src='https://kit.fontawesome.com/a076d05399.js'></script>
     <link rel="icon" href="Logo stuff\favicon-32x32.png" type="image/x-icon">
@@ -125,13 +125,19 @@ session_start();
 
     <?php
     include "includes/dbh.inc.php";
-    $queryloadPRE = "SELECT * FROM prebuildpc WHERE status = 1 ";
-    $queryloadstreamPRE = "SELECT * FROM prebuildpc WHERE status = 1 AND category = 'Streaming'";
-    $queryloadgamePRE = "SELECT * FROM prebuildpc WHERE status = 1 AND category = 'Gaming'";
-    $queryloadofficePRE = "SELECT * FROM prebuildpc WHERE status = 1 AND category = 'Office-Used'";
-    $queryloadgraphicPRE = "SELECT * FROM prebuildpc WHERE status = 1 AND category = 'Graphic Designing'";
+    $queryloadPCP = "SELECT * FROM pcpart WHERE status = 1 ";
+    $queryloadPCPadapter = "SELECT * FROM pcpart WHERE status = 1 AND part = 'adapter'";
+    $queryloadPCPcasing = "SELECT * FROM pcpart WHERE status = 1 AND part = 'casing'";
+    $queryloadPCPcooler = "SELECT * FROM pcpart WHERE status = 1 AND part = 'cooler'";
+    $queryloadPCPGPU = "SELECT * FROM pcpart WHERE status = 1 AND part = 'GPU'";
+    $queryloadPCPmobo = "SELECT * FROM pcpart WHERE status = 1 AND part = 'mobo'";
+    $queryloadPCPprocessor = "SELECT * FROM pcpart WHERE status = 1 AND part = 'processor'";
+    $queryloadPCPPSU = "SELECT * FROM pcpart WHERE status = 1 AND part = 'PSU'";
+    $queryloadPCPRAM = "SELECT * FROM pcpart WHERE status = 1 AND part = 'RAM'";
+    $queryloadPCPstorage = "SELECT * FROM pcpart WHERE status = 1 AND part = 'storage'";
+
    
-    $executePRE = mysqli_query($conn,$queryloadPRE);
+    $executePCP = mysqli_query($conn,$queryloadPCP);
         
 
     ?>
@@ -161,30 +167,56 @@ session_start();
             $selec3 = "";
             $selec4 = "";
             $selec5 = "";
+            $selec6 = "";
+            $selec7 = "";
+            $selec8 = "";
+            $selec9 = "";
+            $selec10 = "";
 
-            if($category == "streaming"){
+            if($category == "adapter"){
                $selec1 = "style='color:#000000;'";
              }
-             else if($category == "office"){
+             else if($category == "casing"){
                 $selec2 = "style='color:#000000;'";
               }
-              else if($category == "graphic"){
+              else if($category == "cooler"){
                 $selec3 = "style='color:#000000;'";
               }
-              else if($category == "gaming"){
+              else if($category == "GPU"){
                 $selec4 = "style='color:#000000;'";
               }
               else if($category == "all"){
                 $selec5 = "style='color:#000000;'";
               }
+              else if($category == "mobo"){
+                $selec6 = "style='color:#000000;'";
+              }
+              else if($category == "processor"){
+                $selec7 = "style='color:#000000;'";
+              }
+              else if($category == "PSU"){
+                $selec8 = "style='color:#000000;'";
+              }
+              else if($category == "RAM"){
+                $selec9 = "style='color:#000000;'";
+              }
+              else if($category == "storage"){
+                $selec10 = "style='color:#000000;'";
+              }
 
             }   
             ?>
-                    <a class='nav-link nav-item' href='showPREPage.php?cate=all' <?php echo $selec5 ?>>All</a>
-                    <a class='nav-link nav-item' href='showPREPage.php?cate=streaming' <?php echo $selec1 ?>>Streaming</a>
-                    <a class='nav-link nav-item' href='showPREPage.php?cate=office' <?php echo $selec2 ?>>Office-Use</a>
-                    <a class='nav-link nav-item' href='showPREPage.php?cate=graphic' <?php echo $selec3 ?>>Graphic Designing</a>
-                    <a class='nav-link nav-item' href='showPREPage.php?cate=gaming' <?php echo $selec4 ?>>Gaming</a>
+                    <a class='nav-link nav-item' href='showPCPPage.php?cate=all' <?php echo $selec5 ?>>All</a>
+                    <a class='nav-link nav-item' href='showPCPPage.php?cate=adapter' <?php echo $selec1 ?>>Adapter</a>
+                    <a class='nav-link nav-item' href='showPCPPage.php?cate=casing' <?php echo $selec2 ?>>Casing</a>
+                    <a class='nav-link nav-item' href='showPCPPage.php?cate=cooler' <?php echo $selec3 ?>>Cooler</a>
+                    <a class='nav-link nav-item' href='showPCPPage.php?cate=GPU' <?php echo $selec4 ?>>Graphic Card</a>
+                    <a class='nav-link nav-item' href='showPCPPage.php?cate=mobo' <?php echo $selec6 ?>>Motherboard</a>
+                    <a class='nav-link nav-item' href='showPCPPage.php?cate=processor' <?php echo $selec7 ?>>Processor</a>
+                    <a class='nav-link nav-item' href='showPCPPage.php?cate=PSU' <?php echo $selec8 ?>>Power Supply</a>
+                    <a class='nav-link nav-item' href='showPCPPage.php?cate=RAM' <?php echo $selec9 ?>>Memory</a>
+                    <a class='nav-link nav-item' href='showPCPPage.php?cate=storage' <?php echo $selec10 ?>>Storage</a>
+
              </nav>
             </div>
 
@@ -198,31 +230,46 @@ session_start();
                 <?php
                 if(isset($_GET)){
                     
-                    if($category == "streaming"){
-                       $executePRE = mysqli_query($conn,$queryloadstreamPRE);
+                    if($category == "adapter"){
+                       $executePCP = mysqli_query($conn,$queryloadPCPadapter);
                     }
-                    else if($category == "office"){
-                        $executePRE = mysqli_query($conn,$queryloadofficePRE);
+                    else if($category == "casing"){
+                        $executePCP = mysqli_query($conn,$queryloadPCPcasing);
                      }
-                     else if($category == "graphic"){
-                        $executePRE = mysqli_query($conn,$queryloadgraphicPRE);
+                     else if($category == "cooler"){
+                        $executePCP = mysqli_query($conn,$queryloadPCPcooler);
                      }
-                     else if($category == "gaming"){
-                        $executePRE = mysqli_query($conn,$queryloadgamePRE);
+                     else if($category == "GPU"){
+                        $executePCP = mysqli_query($conn,$queryloadPCPGPU);
                      }
                      else if($category == "all"){
-                        $executePRE = mysqli_query($conn,$queryloadPRE);
+                        $executePCP = mysqli_query($conn,$queryloadPCP);
+                     }
+                     else if($category == "mobo"){
+                        $executePCP = mysqli_query($conn,$queryloadPCPmobo);
+                     }
+                     else if($category == "processor"){
+                        $executePCP = mysqli_query($conn,$queryloadPCPprocessor);
+                     }
+                     else if($category == "PSU"){
+                        $executePCP = mysqli_query($conn,$queryloadPCPPSU);
+                     }
+                     else if($category == "RAM"){
+                        $executePCP = mysqli_query($conn,$queryloadPCPRAM);
+                     }
+                     else if($category == "storage"){
+                        $executePCP = mysqli_query($conn,$queryloadPCPstorage);
                      }
                 }
-                    while($PREdata = mysqli_fetch_array($executePRE)){
+                    while($PCPdata = mysqli_fetch_array($executePCP)){
                         echo '<div class="col-sm-4">
                         <div class="card" style="margin:1vw;">
-                            <img class="card-img-top img-responsive" src="data:image/jpg;base64,' . base64_encode($PREdata['image']) . '" height="180px" width="180px" style="object-fit: contain;" alt="Card image cap">
+                            <img class="card-img-top img-responsive" src="data:image/jpg;base64,' . base64_encode($PCPdata['image']) . '" height="180px" width="180px" style="object-fit: contain;" alt="Card image cap">
                                 <div class="card-body">
-                                    <h5 class="card-title">'.$PREdata['name'].'</h5>
-                                    <p class="card-text">RM '.$PREdata['price'].' </p>
+                                    <h5 class="card-title">'.$PCPdata['name'].'</h5>
+                                    <p class="card-text">RM '.$PCPdata['price'].' </p>
                                     <hr>
-                                    <a href="productPage.php?pcpart=0&productID='.$PREdata['id'].'" class="btn btn-primary" style="width:100%; background-color:#000000">Details</a>
+                                    <a href="productPage.php?pcpart=1&productID='.$PCPdata['id'].'" class="btn btn-primary" style="width:100%; background-color:#000000">Details</a>
                                 </div>
                         </div>
                     </div> ';
