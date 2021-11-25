@@ -13,8 +13,8 @@ if (mysqli_num_rows($GetPartnerID) > 0) {
 
 $table = '';
 
-$searchByName = "SELECT * FROM auction WHERE  owner_id = " . $GetOwnerID . " AND title LIKE '%" . $_POST["search"] . "%'";
-$searchByDate = "SELECT * FROM auction WHERE owner_id = " . $GetOwnerID . " AND start_date LIKE '%" . $_POST["search"] . "%'";
+$searchByName = "SELECT * FROM auction WHERE  owner_id = " . $GetOwnerID . " AND title LIKE '%" . $_POST["search"] . "%' ORDER BY status DESC";
+$searchByDate = "SELECT * FROM auction WHERE owner_id = " . $GetOwnerID . " AND start_date LIKE '%" . $_POST["search"] . "%' ORDER BY status DESC";
 
 
 $sortByName = "SELECT * FROM auction WHERE owner_id = " . $GetOwnerID . "ORDER BY title ASC";

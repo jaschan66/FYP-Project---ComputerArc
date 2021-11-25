@@ -9,11 +9,12 @@ if (mysqli_num_rows($GetMemberID) > 0) {
     $GetOwnerID = $Getresult['id'];
 }
 
-$listWishlist = "SELECT * FROM wishlist WHERE member_id = $GetOwnerID";
+$listAuctionJoined = "SELECT * FROM deposit WHERE bidder = $GetOwnerID";
 
-$resultWishlist = mysqli_query($conn, $listWishlist);
+$resultAuctionJoined = mysqli_query($conn, $listAuctionJoined);
 $rowNo = 1;
-
+// print_r($resultAuctionJoined);
+// die();
 ?>
 
 <!-- Displays PC-part's Approvals -->
@@ -23,58 +24,46 @@ $rowNo = 1;
             <tr>
                 <th>No.</th>
                 <th>Image</th>
-                <th>Name</th>
-                <th>Price</th>
-                <th>Date Added</th>
-                <th></th>
+                <th>Title</th>
+                <th>Starting Bid</th>
+                <th>Start Date</th>
+                <th>End Date</th>
                 <th></th>
             </tr>
         </thead>
         <tbody>
 
             <?php
-            if (mysqli_num_rows($resultWishlist) > 0) {
-                while ($row = mysqli_fetch_array($resultWishlist)) {
-                    if (mysqli_num_rows($resultItem = mysqli_query($conn, "SELECT * FROM pcpart WHERE status = 1 AND id = {$row['product_id']}")) > 0) {
+            if (mysqli_num_rows($resultAuctionJoined) > 0) {
+                while ($row = mysqli_fetch_array($resultAuctionJoined)) {
+                    if (mysqli_num_rows($resultItem = mysqli_query($conn, "SELECT * FROM auction WHERE id = {$row['auctionID']}")) > 0) {
                         $rowItem = mysqli_fetch_assoc($resultItem);
             ?>
                         <tr id="<?php echo $row["id"] ?>">
                             <td><?php echo $rowNo ?></td>
                             <td><img src="data:image/jpg;base64,<?php echo base64_encode($rowItem['image']) ?>" height="180px" width="180px" alt="PC-part Image" class="img-thumbnail img-responsive" /></td>
-                            <td id="auctionTitle"><?php echo $rowItem["name"] ?></td>
-                            <td>RM <?php echo $rowItem["price"] ?></td>
-                            <td><?php echo date("j/n/Y", strtotime($row["date"])) ?></td>
-                            <td><a href="productPage.php?pcpart=1&productID=<?php echo $rowItem["id"] ?>" class="btn btn-dark">View</a></td>
-                            <td><button type="button" class="btn btn-danger" onclick="wishPCP(this)" id="<?php echo $rowItem["id"] ?>">Remove</button></td>
+                            <td id="auctionTitle"><?php echo $rowItem["title"] ?></td>
+                            <td>RM <?php echo $rowItem["starting_bid"] ?></td>
+                            <td><?php echo date("j/n/Y", strtotime($rowItem["start_date"])) ?></td>
+                            <td><?php echo date("j/n/Y", strtotime($rowItem["end_date"])) ?></td>
+                            <td><a href="auctionDetailPage.php?idRetrieve=<?php echo $rowItem["id"] ?>" class="btn btn-dark">View</a></td>
                         </tr>
                         <?php $rowNo++; ?>
 
-                    <?php } else if (mysqli_num_rows($resultItem = mysqli_query($conn, "SELECT * FROM prebuildpc WHERE status = 1 AND id = {$row['product_id']}")) > 0) {
-                        $rowItem = mysqli_fetch_assoc($resultItem);
-                    ?>
-                        <tr id="<?php echo $row["id"] ?>">
-                            <td><?php echo $rowNo ?></td>
-                            <td><img src="data:image/jpg;base64,<?php echo base64_encode($rowItem['image']) ?>" height="180px" width="180px" alt="PC-part Image" class="img-thumbnail img-responsive" /></td>
-                            <td id="auctionTitle"><?php echo $rowItem["name"] ?></td>
-                            <td>RM <?php echo $rowItem["price"] ?></td>
-                            <td><?php echo date("j/n/Y", strtotime($row["date"])) ?></td>
-                            <td><a href="productPage.php?pcpart=0&productID=<?php echo $rowItem["id"] ?>" class="btn btn-dark">View</a></td>
-                            <td><button type="button" class="btn btn-danger" onclick="wishPRE(this)" id="<?php echo $rowItem["id"] ?>">Remove</button></td>
-                        </tr>
-                <?php $rowNo++;
-                    }
-                }
-            } else { ?>
+                    <?php
+                    } else { ?>
         </tbody>
     </table>
     <div class='alert alert-danger alert-dismissible col-12' role='alert'>
         <a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a>
-        <strong> No item in wishlist are found. </strong>
+        <strong> No Auction Joined. </strong>
         <button type='button' class='close' data-dismiss='alert' aria-label='Close'>
             <span aria-hidden='true'>&times;</span>
         </button>
     </div>
-<?php } ?>
+<?php }
+                }
+            } ?>
 
 
 <script>

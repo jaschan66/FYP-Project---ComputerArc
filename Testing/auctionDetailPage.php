@@ -25,6 +25,10 @@
             margin-bottom: 1.25rem;
         }
 
+        .img-magnifier-container {
+            position: relative;
+        }
+
         .img-magnifier-glass {
             position: absolute;
             border: 3px solid #000;
@@ -37,13 +41,100 @@
     </style>
 
     <!--header-->
-    <?php require "includes/header.php"; ?>
+    <?php require "includes/header.php";
+    require "auction/auction-status.php"; ?>
+    <script>
+        function magnify(imgID, zoom) {
+            var img, glass, w, h, bw;
+            img = document.getElementById(imgID);
+            /*create magnifier glass:*/
+            glass = document.createElement("DIV");
+            glass.setAttribute("class", "img-magnifier-glass");
+            /*insert magnifier glass:*/
+            img.parentElement.insertBefore(glass, img);
+            /*set background properties for the magnifier glass:*/
+            glass.style.backgroundImage = "url('" + img.src + "')";
+            glass.style.backgroundRepeat = "no-repeat";
+            glass.style.backgroundSize = (img.width * zoom) + "px " + (img.height * zoom) + "px";
+            bw = 3;
+            w = glass.offsetWidth / 2;
+            h = glass.offsetHeight / 2;
+            /*execute a function when someone moves the magnifier glass over the image:*/
+            glass.addEventListener("mousemove", moveMagnifier);
+            img.addEventListener("mousemove", moveMagnifier);
+            /*and also for touch screens:*/
+            glass.addEventListener("touchmove", moveMagnifier);
+            img.addEventListener("touchmove", moveMagnifier);
+
+            function moveMagnifier(e) {
+                var pos, x, y;
+                /*prevent any other actions that may occur when moving over the image*/
+                e.preventDefault();
+                /*get the cursor's x and y positions:*/
+                pos = getCursorPos(e);
+                x = pos.x;
+                y = pos.y;
+                /*prevent the magnifier glass from being positioned outside the image:*/
+                if (x > img.width - (w / zoom)) {
+                    x = img.width - (w / zoom);
+                }
+                if (x < w / zoom) {
+                    x = w / zoom;
+                }
+                if (y > img.height - (h / zoom)) {
+                    y = img.height - (h / zoom);
+                }
+                if (y < h / zoom) {
+                    y = h / zoom;
+                }
+                /*set the position of the magnifier glass:*/
+                glass.style.left = (x - w) + "px";
+                glass.style.top = (y - h) + "px";
+                /*display what the magnifier glass "sees":*/
+                glass.style.backgroundPosition = "-" + ((x * zoom) - w + bw) + "px -" + ((y * zoom) - h + bw) + "px";
+            }
+
+            function getCursorPos(e) {
+                var a, x = 0,
+                    y = 0;
+                e = e || window.event;
+                /*get the x and y positions of the image:*/
+                a = img.getBoundingClientRect();
+                /*calculate the cursor's x and y coordinates, relative to the image:*/
+                x = e.pageX - a.left;
+                y = e.pageY - a.top;
+                /*consider any page scrolling:*/
+                x = x - window.pageXOffset;
+                y = y - window.pageYOffset;
+                return {
+                    x: x,
+                    y: y
+                };
+            }
+        }
+    </script>
 
 </head>
 
 <body>
 
-    <?php include "auction/auction-retrieve.php"; ?>
+    <?php include "auction/auction-retrieve.php";
+    $aucID = $_GET['idRetrieve'];
+    if (!empty($_SESSION['email'])) {
+        $MemberEmail   = $_SESSION['email'];
+        $MemberEmail    = mysqli_query($conn, "SELECT * FROM `member` WHERE email ='$MemberEmail'");
+
+        if (mysqli_num_rows($MemberEmail) > 0) {
+            $Getresult = mysqli_fetch_assoc($MemberEmail);
+            $GetBidderID = $Getresult['id'];
+        }
+
+        //Check if member has already deposit or not
+        $getAucData = "SELECT * FROM deposit WHERE auctionID = '$aucID' AND bidder = '$GetBidderID'";
+
+        $connGetBidderData = mysqli_query($conn, $getAucData);
+    }
+    ?>
 
     <!--Content after here-->
     <div class="container">
@@ -59,20 +150,25 @@
                     <p style="font-weight: bold; font-size: 20px">Auction Duration:</p>
                     <p style="font-size: 20px; margin-bottom: 2vh"><?php echo date("j/n/Y", strtotime($resultGetData["start_date"])) ?> - <?php echo date("j/n/Y", strtotime($resultGetData["end_date"])) ?></p>
                     <p style="font-weight: bold; font-size: 20px">Starting Bid</p>
-                    <p style="font-size: 20px">RM <?php echo $resultGetData["starting_bid"] ?></p>
+                    <p style="font-size: 20px" id="startingBid">RM <?php echo $resultGetData["starting_bid"] ?></p>
                     <p style="color: gray;">_________________________________________________________________</p>
                 </div>
 
 
                 <div class="row" style="padding-bottom: 2vh;">
-                    <?php
+                    <?php if ($resultGetData["status"] == 4) { ?>
+                        <button type='button' class='btn btn-dark' style='width:100%'>Auction Ended</button>
+                    <?php }
                     if (empty($_SESSION['role'])) { ?>
                         <a href="loginPage.php" class='btn btn-dark' style='width: 100%;text-align:left'>Sign in as Member to bid</a>
 
-                    <?php } else if ($_SESSION['role'] == "member") { ?>
-                        <button class='btn btn-dark' style='width:100%'>Bid Now</button>
+                    <?php } else if ($_SESSION['role'] == "member" && mysqli_num_rows($connGetBidderData) > 0) { ?>
+                        <button type='button' class='btn btn-dark' style='width:100%'>Start Bidding Now</button>
 
-                    <?php } else if ($_SESSION['role'] == "partner") { ?>
+                    <?php } else if ($_SESSION['role'] == "member") { ?>
+                        <button type='button' class='btn btn-dark' onclick="deposit()" style='width:100%'> Bid Now</button>
+
+                    <?php } else if ($_SESSION['role'] == "partner" && $resultGetData["status"] == 3) { ?>
                         <button class='btn btn-dark' style='width: 100%;text-align:left'>Sign in as Member to bid</button>
 
                     <?php } else if ($_SESSION['role'] == "admin") { ?>
@@ -134,6 +230,20 @@
 
 <!--footer-->
 <?php require "includes/footer.php"; ?>
+
+<script>
+    function deposit() {
+        var auctionId = '<?php echo $resultGetData["id"] ?>';
+        var startingBid = '<?php echo $resultGetData["starting_bid"] ?>';
+        var deposit = Math.round((startingBid * 0.10) * 100) / 100;
+        const url = new URL('http://localhost/FYP--ComputerArc/Testing/auctionDeposit.php')
+
+        url.searchParams.set('deposit', deposit);
+        url.searchParams.set('auctionID', auctionId);
+
+        window.location.href = url;
+    }
+</script>
 
 <script>
     function approvedApp(e) {

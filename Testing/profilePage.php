@@ -255,6 +255,8 @@ session_start();
                 {           //Member Pages
                     if ($_GET['editProf'] == 1) {
                         include "ProfilePage/editMemberProf.php";
+                    }  else if ($_GET['memAuc'] == 1) {
+                        include "auction/mainMemberAuction.php";
                     }  else if ($_GET['wishlist'] == 1) {
                         include "wishlist/mainWishlist.php";
                     } 

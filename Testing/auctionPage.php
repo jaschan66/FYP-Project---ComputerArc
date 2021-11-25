@@ -115,6 +115,7 @@ $querySortPrice = "SELECT * FROM auction WHERE status = 1 OR status = 3 ORDER BY
     <!--header-->
     <?php
     require "includes/header.php";
+    require "auction/auction-status.php";
     ?>
 
     <div class="container-fluid" style="min-height: 70vh; margin-top:1vh; margin-bottom:2vh;">

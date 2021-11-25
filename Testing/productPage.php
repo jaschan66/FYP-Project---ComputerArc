@@ -199,6 +199,7 @@
                             By purchasing item over RM200, you'll be rewarded with a ticket that's eligible for you to join raffle and stand a chance to win awesome reward!
                         </div>
                         <button type='button' onclick='tocheckout()' class='btn btn-dark' style='width:40%;margin-right:2vw;margin-left:1vw;'>Buy Now</button>
+
                         <?php if ($isPCP == 0) { ?>
                             <buttton class='btn btn-danger' style='width: 40%;' onclick="wishPRE(this)" id="<?php echo $productData["id"] ?>">Add to Wishlist</buttton>
 
@@ -212,6 +213,7 @@
                     <?php } else if ($logonRole == "member" && $productData['stock'] <= 0) { ?>
                         <div class='col-sm-12'>
                             <buttton class='btn btn-dark' style='width: 40%;margin-right:2vw;margin-left:1vw;'>Out of stock</buttton>
+                            
                             <?php if ($isPCP == 0) { ?>
                                 <buttton class='btn btn-danger' style='width: 40%;' onclick="wishPRE(this)" id="<?php echo $productData["id"] ?>">Add to Wishlist</buttton>
 
