@@ -132,7 +132,7 @@ session_start();
                             var delay = 500;
                             console.log(x);
                             if (x == "Login Successfully!") {
-                                window.location = "../generateTwoFA.php";
+                                window.location = "includes/generateTwoFA.php";
                             }else{
                                 Swal.fire({
                                     icon: 'error',

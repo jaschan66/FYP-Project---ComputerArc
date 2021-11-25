@@ -61,5 +61,5 @@ if ($resultData['twoFAStatus'] == 1) {
     }
 
 } else {
-    header("Location: homePage.php");
+    header("Location: ../homePage.php");
 }
