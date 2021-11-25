@@ -208,7 +208,7 @@ session_start();
                 } else if ($role == "partner") {
                     include "ProfilePage/partnerSideBar.php";
                 } else if ($role == "admin") {
-                    include "ProfilePage/adminSideBar.php";
+                    include "admin/adminSideBar.php";
                 }
                 ?>
 
@@ -216,12 +216,16 @@ session_start();
 
             <div class="col-10">
                 <!--Based on side menu bar change its content-->
-                <div class="col-1">
-
-                </div>
-
-                <div class="col-10">
-                    <?php
+                <?php
+                if ($_SESSION['role'] == "partner" || $_SESSION['role'] == "member") {
+                    echo '<div class="col-1">
+                    </div>
+                    <div class="col-10">';
+                } else {
+                    echo ' <div class="col-12">';
+                }
+                ?>
+                <?php
 
                     //Partner Pages
                 if ($_SESSION['role'] == "partner") {
@@ -251,22 +255,30 @@ session_start();
                 {           //Member Pages
                     if ($_GET['editProf'] == 1) {
                         include "ProfilePage/editMemberProf.php";
+                    }  else if ($_GET['wishlist'] == 1) {
+                        include "wishlist/mainWishlist.php";
                     } 
                 } 
                 else if($_SESSION['role'] == "admin") 
                 {           //Admin Pages
                     if ($_GET['editProf'] == 1) {
+                        include "admin/editAdminProf.php";
+                    } else if ($_GET['reviewUser'] == 1) {
                         include "ProfilePage/editAdminProf.php";
+                    } else if ($_GET['reviewApp'] == 1) {
+                        include "admin/mainListApproval.php";
                     } 
                 }
                 ?>
 
-
                 </div>
 
-                <div class="col-1">
-
-                </div>
+                <?php
+                if ($_SESSION['role'] == "partner" || $_SESSION['role'] == "member") {
+                    echo '<div class="col-1">
+                    </div>';
+                }
+                ?>
             </div>
 
         </div>

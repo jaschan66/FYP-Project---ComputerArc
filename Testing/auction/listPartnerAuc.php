@@ -26,26 +26,31 @@ $resulltDate = mysqli_query($conn, $searchByDate);
 
 $rowNo = 1;
 ?>
-<?php
-if(!empty(isset($_POST))){
-    $sort = $_POST["sort"];
-                    
-    if($sort == "all"){
-       $executeSort = mysqli_query($conn,$searchByName);
+<style>
+    .auctionTitle {
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
     }
-    else if($sort == "name"){
-        $executeSort = mysqli_query($conn,$sortByName);
-     }
-     else if($sort == "date"){
-        $executeSort = mysqli_query($conn,$sortByDate);
-     }
-     else if($sort == "status"){
-        $executeSort = mysqli_query($conn,$sortByStatus);
-     }
-}
+</style>
+<?php
+$sort = $_POST["sort"];
 
-if (mysqli_num_rows($resultName) > 0) {
-    $table .= '<div class="table-responsive">
+if ($sort == "all") {
+    $executeSort = mysqli_query($conn, $searchByName);
+} else if ($sort == "name") {
+    $executeSort = mysqli_query($conn, $sortByName);
+} else if ($sort == "date") {
+    $executeSort = mysqli_query($conn, $sortByDate);
+} else if ($sort == "status") {
+    $executeSort = mysqli_query($conn, $sortByStatus);
+}
+//echo $sort;
+// if ($sort == "name"|| $sort == "date" || $sort == "status") {
+ 
+// }
+
+$table .= '<div class="table-responsive">
     <table class="table table-hover ">
     <thead>
         <tr>
@@ -58,104 +63,30 @@ if (mysqli_num_rows($resultName) > 0) {
             <th>End Date</th>
             <th>Status</th>
             <th></th>
-        </tr>
-    </thead>
-    <tbody>';
-
-
-    while ($row = mysqli_fetch_array($resultName)) {
-
-        if ($row["status"] == 0) {
-            $aucstatus = "<td>Pending approval</td>";
-            $auctionBtn = '<td></td><td></td>';
-        } else if ($row["status"] == 1) {
-            $aucstatus = "<td>Approved</td>";
-            $auctionBtn = '<td><a href="profilePage.php?editAuc=3&editPRE=0&editProf=0&editPCP=0&idUpdate=' . $row["id"] . '" class="btn btn-primary" >Update</a></td>
-            <td><button type="button" class="btn btn-danger" onclick="deleteAuction(this)" id="' . $row["id"] . '">Delete</button></td>';
-        } else if ($row["status"] == 2) {
-            $aucstatus = "<td>Rejected</td>";
-            $auctionBtn = '<td><a href="profilePage.php?editAuc=3&editPRE=0&editProf=0&editPCP=0&idUpdate=' . $row["id"] . '" class="btn btn-primary" >Update</a></td>
-            <td><button type="button" class="btn btn-danger" onclick="deleteAuction(this)" id="' . $row["id"] . '">Delete</button></td>';
-        } else if ($row["status"] == 3) {
-            $aucstatus = "<td>Auction Started</td>";
-            $auctionBtn = '<td></td><td></td>';
-        } else if ($row["status"] == 4) {
-            $aucstatus = "<td>Auction Ended</td>";
-            $auctionBtn = '<td></td><td></td>';
-        }
-
-        $table .= '<tr id="' . $row["id"] . '">
-       <a href="auctionDetailPage.php?idRetrieve=' . $row["id"] . '">
-       <td>' . $rowNo . '</td>
-       <td>' . $row["id"] . '</td>
-       <td><img src="data:image/jpg;base64,' . base64_encode($row['image']) . '" height="180px" width="180px" alt="Auction Image" class="img-thumbnail img-responsive"/></td>
-       <td>' . $row["title"] . '</td>
-       <td>RM ' . number_format($row["starting_bid"], 2) . '</td>
-       <td>' . date("j/n/Y", strtotime($row["start_date"])) . '</td>
-       <td>' . date("j/n/Y", strtotime($row["end_date"])) . '</td>
-       ' . $aucstatus . '
-       </a>
-       ' . $auctionBtn . '
-       </tr>';
-        $rowNo++;
-    }
-    echo $table .  "</tbody></table>";
-} else if (mysqli_num_rows($resulltDate) > 0) {
-    $table .= '<div class="table-responsive">
-    <table class="table">
-    <thead>
-        <tr>
-            <th>No.</th>
-            <th>ID</th>
-            <th>Image</th>
-            <th>Title</th>
-            <th>Starting bid</th>
-            <th>Start Date</th>
-            <th>End Date</th>
-            <th>Status</th>
+            <th></th>
             <th></th>
         </tr>
     </thead>
     <tbody>';
-
-
-    while ($row = mysqli_fetch_array($resulltDate)) {
-
-        if ($row["status"] == 0) {
-            $aucstatus = "<td>Pending approval</td>";
-            $auctionBtn = '<td></td><td></td>';
-        } else if ($row["status"] == 1) {
-            $aucstatus = "<td>Approved</td>";
-            $auctionBtn = '<td><a href="profilePage.php?editAuc=3&editPRE=0&editProf=0&editPCP=0&idUpdate=' . $row["id"] . '" class="btn btn-primary" >Update</a></td>
-            <td><button type="button" class="btn btn-danger" onclick="deleteAuction(this)" id="' . $row["id"] . '">Delete</button></td>';
-        } else if ($row["status"] == 2) {
-            $aucstatus = "<td>Rejected</td>";
-            $auctionBtn = '<td><a href="profilePage.php?editAuc=3&editPRE=0&editProf=0&editPCP=0&idUpdate=' . $row["id"] . '" class="btn btn-primary" >Update</a></td>
-            <td><button type="button" class="btn btn-danger" onclick="deleteAuction(this)" id="' . $row["id"] . '">Delete</button></td>';
-        } else if ($row["status"] == 3) {
-            $aucstatus = "<td>Auction Started</td>";
-            $auctionBtn = '<td></td><td></td>';
-        } else if ($row["status"] == 4) {
-            $aucstatus = "<td>Auction Ended</td>";
-            $auctionBtn = '<td></td><td></td>';
-        }
-
-        $table .= '<tr id="' . $row["id"] . '"> 
-        <a href="auctionDetailPage.php?idRetrieve=' . $row["id"] . '">
-        <td>' . $rowNo . '</td>
-        <td>' . $row["id"] . '</td>
-        <td><img src="data:image/jpg;base64,' . base64_encode($row['image']) . '" height="180px" width="180px" alt="Auction Image" class="img-thumbnail img-responsive"/></td>
-        <td>' . $row["title"] . '</td>
-        <td>RM ' . number_format($row["starting_bid"], 2) . '</td>
-        <td>' . date("j/n/Y", strtotime($row["start_date"])) . '</td>
-        <td>' . date("j/n/Y", strtotime($row["end_date"])) . '</td>
-        ' . $aucstatus . '
-        </a>
-        ' . $auctionBtn . '
-       </tr>';
-        $rowNo++;
+if (mysqli_num_rows($resultName) > 0) {
+    
+    while ($row = mysqli_fetch_array($resultName)) {
+        include "displayAuction.php";
     }
     echo $table .  "</tbody></table>";
+} else if (mysqli_num_rows($resulltDate) > 0) {
+
+    while ($row = mysqli_fetch_array($resulltDate)) {
+        include "displayAuction.php";
+    }
+    echo $table .  "</tbody></table>";
+} else if (mysqli_num_rows($executeSort) > 0) {
+
+    while ($row = mysqli_fetch_array($executeSort)) {
+        include "displayAuction.php";
+    }
+    echo $table .  "</tbody></table>";
+
 } else {
     echo "<div class='alert alert-danger alert-dismissible' role='alert'>
     <a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a>

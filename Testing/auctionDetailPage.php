@@ -49,51 +49,38 @@
     <div class="container">
         <div class="row">
             <div class="col-7">
-
-                <!--                                                                            Carousel
-                    <div id="showcase" class="carousel slide" data-ride="carousel">
-
-                    <ul class="carousel-indicators">
-                        <li data-target="#showcase" data-slide-to="0" class="active"></li>
-                    </ul>
-
-                    <div class="carousel-inner">
-                        <div class="carousel-item active">
-                            <img src="ywOf1GrT1600829308-700x700.png" alt="">
-                        </div>
-                        <div class="carousel-item ">
-                            <img src="cmw8gx4m1z3200c16-1-1000x1000_1.jpg" alt="">
-                        </div>
-                        <div class="carousel-item ">
-                            <img src="20-236-551-V01_1024x1024.jpg" alt="">
-                        </div>
-                    </div>
-
-                    <a class="carousel-control-prev" href="#showcase" data-slide="prev">
-                        <span class="carousel-control-prev-icon"></span>
-                    </a>
-                    <a class="carousel-control-next" href="#showcase" data-slide="next">
-                        <span class="carousel-control-next-icon"></span>
-                    </a>
-                </div> -->
                 <div class="col-sm-7" class="img-magnifier-container">
                     <img class="img-responsive" src="<?php echo 'data:image/jpg;base64,' . base64_encode($resultGetData['image']) . '' ?>" height="512px" width="512px" style="object-fit: contain;" alt="Card image cap" id="auctionImage">
                 </div>
-
             </div>
             <div class="col-5">
-
-                <h2>Auction Details</h2>
                 <div style="margin-bottom: 1.25rem">
-                    <h2><?php echo  $resultGetData["title"] ?></h2>
-                    <p style="font-weight: bold;">Auction Duration:</p>
-                    <p><?php echo date("j/n/Y", strtotime($resultGetData["start_date"])) ?> - <?php echo date("j/n/Y", strtotime($resultGetData["end_date"])) ?></p>
+                    <h2 style="margin-bottom: 3vh"><?php echo  $resultGetData["title"] ?></h2>
+                    <p style="font-weight: bold; font-size: 20px">Auction Duration:</p>
+                    <p style="font-size: 20px; margin-bottom: 2vh"><?php echo date("j/n/Y", strtotime($resultGetData["start_date"])) ?> - <?php echo date("j/n/Y", strtotime($resultGetData["end_date"])) ?></p>
+                    <p style="font-weight: bold; font-size: 20px">Starting Bid</p>
+                    <p style="font-size: 20px">RM <?php echo $resultGetData["starting_bid"] ?></p>
                     <p style="color: gray;">_________________________________________________________________</p>
                 </div>
 
 
                 <div class="row" style="padding-bottom: 2vh;">
-                    <buttton class='btn btn-dark' style='width:100%'>Bid Now</buttton>
+                    <?php
+                    if (empty($_SESSION['role'])) { ?>
+                        <a href="loginPage.php" class='btn btn-dark' style='width: 100%;text-align:left'>Sign in as Member to bid</a>
+
+                    <?php } else if ($_SESSION['role'] == "member") { ?>
+                        <button class='btn btn-dark' style='width:100%'>Bid Now</button>
+
+                    <?php } else if ($_SESSION['role'] == "partner") { ?>
+                        <button class='btn btn-dark' style='width: 100%;text-align:left'>Sign in as Member to bid</button>
+
+                    <?php } else if ($_SESSION['role'] == "admin") { ?>
+                        <button type="button" class='btn btn-dark' style='width: 40%;margin-right:2vw;margin-left:1vw;' onclick="approvedApp(this)" id="<?php echo $resultGetData["id"] ?>">Approved</button>
+                        <button type="button" class='btn btn-danger' style='width: 40%;' onclick="rejectApp(this)" id="<?php echo $resultGetData["id"] ?>">Reject</button>
+                    <?php } ?>
+
+
                 </div>
             </div>
         </div>
@@ -143,12 +130,77 @@
         /* Initiate Magnify Function with the id of the image, and the strength of the magnifier glass:*/
         magnify("auctionImage", 1.5);
     </script>
-
-
 </body>
-
 
 <!--footer-->
 <?php require "includes/footer.php"; ?>
+
+<script>
+    function approvedApp(e) {
+        var id = $(e).attr('id');
+        Swal.fire({
+            title: 'Are you sure you want to approved this Approval?',
+            showCancelButton: true,
+            confirmButtonText: 'Yes',
+        }).then((result) => {
+            if (result.isConfirmed) {
+
+                $.ajax({
+                    type: "POST",
+                    url: "admin/approveApproval.php",
+                    data: {
+                        idAUCApprove: id
+                    },
+                    success: function(result) {
+                        var delay = 500
+
+                        Swal.fire(result, '', 'success').then((result => {
+                            if (result.isConfirmed) {
+                                window.location = "profilePage.php?editProf=0&reviewUser=0&reviewApp=1";
+                            } else {
+                                setTimeout(function() {
+                                    window.location = "profilePage.php?editProf=0&reviewUser=0&reviewApp=1";
+                                }, delay);
+                            }
+                        }))
+                    }
+                });
+            }
+        })
+    }
+
+    function rejectApp(e) {
+        var id = $(e).attr('id');
+        Swal.fire({
+            title: 'Are you sure you want to reject this Approval?',
+            showCancelButton: true,
+            confirmButtonText: 'Yes',
+        }).then((result) => {
+            if (result.isConfirmed) {
+
+                $.ajax({
+                    type: "POST",
+                    url: "admin/rejectApproval.php",
+                    data: {
+                        idAUCReject: id
+                    },
+                    success: function(result) {
+                        var delay = 500
+
+                        Swal.fire(result, '', 'success').then((result => {
+                            if (result.isConfirmed) {
+                                window.location = "profilePage.php?editProf=0&reviewUser=0&reviewApp=1";
+                            } else {
+                                setTimeout(function() {
+                                    window.location = "profilePage.php?editProf=0&reviewUser=0&reviewApp=1";
+                                }, delay);
+                            }
+                        }))
+                    }
+                });
+            }
+        })
+    }
+</script>
 
 </html>

@@ -6,4 +6,4 @@
 #     RewriteCond %{REQUEST_FILENAME} !-d
 #     RewriteRule . /error.php [L]
 # </IfModule>
-ErrorDocument 404 http://localhost/FYP-Project---ComputerArc/Testing/error.php
+ErrorDocument 404 http://localhost/FYP--ComputerArc/Testing/error.php

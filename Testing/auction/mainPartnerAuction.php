@@ -37,7 +37,7 @@ session_start();
 
 <input type="text" class="form-control" size="50" placeholder="Search Name or Start Date" onkeyup="Aucfunction()" name="searchAuc" id="searchAuc" autofocus style="margin-bottom:2vh;">
 <div class="form-inline">
-    <a type="button" onclick="sortReset()" class="btn btn-dark col-2" style='margin-right: 6vw; margin-left: 3vw;'>Reset Sorting</a>
+    <a type="button" onclick="sortReset()" class="btn btn-dark col-2" style='margin-right: 6vw;'>Reset Sorting</a>
     <a type="button" onclick="sortName()" class='btn btn-secondary col-2' style='margin-right: 1vw;'>Sort by Name</a>
     <a type="button" onclick="sortDate()" class="btn btn-secondary col-2" style='margin-right: 1vw;'>Sort by Date</a>
     <a type="button" onclick="sortStatus()" id="sortStatus" name="sortStatus" class="btn btn-secondary col-2">Sort by Status</a>
@@ -74,7 +74,6 @@ session_start();
     });
 
     function sortReset() {
-        console.log("test");
         var txt = "";
         $.ajax({
             url: "auction/listPartnerAuc.php",
@@ -87,7 +86,6 @@ session_start();
     }
 
     function sortName() {
-        console.log("test");
         var txt = "";
         $.ajax({
             url: "auction/listPartnerAuc.php",
@@ -100,7 +98,6 @@ session_start();
     }
 
     function sortDate() {
-        console.log("test");
         var txt = "";
         $.ajax({
             url: "auction/listPartnerAuc.php",
@@ -113,7 +110,6 @@ session_start();
     }
 
     function sortStatus() {
-        console.log("test");
         var txt = "";
         $.ajax({
             url: "auction/listPartnerAuc.php",

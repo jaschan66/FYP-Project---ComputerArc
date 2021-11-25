@@ -25,7 +25,7 @@
 
         p {
             font-family: "Questrial";
-            color: #b5b0aa;
+            color: #000000;
         }
 
         a {
@@ -42,7 +42,7 @@
             font-family: "Questrial";
         }
 
-        h4, h5 {
+        h5 {
             white-space: nowrap;
             overflow: hidden;
             text-overflow: ellipsis;
@@ -103,32 +103,28 @@
 </head>
 
 <?php
-include "includes/dbh.inc.php";
-$queryloadPRE = "SELECT * FROM prebuildpc WHERE status = 1 ";
-$queryloadstreamPRE = "SELECT * FROM prebuildpc WHERE status = 1 AND category = 'Streaming'";
-$queryloadgamePRE = "SELECT * FROM prebuildpc WHERE status = 1 AND category = 'Gaming'";
-$queryloadofficePRE = "SELECT * FROM prebuildpc WHERE status = 1 AND category = 'Office-Used'";
-$queryloadgraphicPRE = "SELECT * FROM prebuildpc WHERE status = 1 AND category = 'Graphic Designing'";
+include "includes/dbh.local.inc.php";
+$querySort = "SELECT * FROM auction WHERE status = 1 OR status = 3 ";
+$querySortName = "SELECT * FROM auction WHERE status = 1 OR status = 3 ORDER BY title ASC";
+$querySortDate = "SELECT * FROM auction WHERE status = 1 OR status = 3 ORDER BY start_date ASC";
+$querySortPrice = "SELECT * FROM auction WHERE status = 1 OR status = 3 ORDER BY starting_bid ASC";
 
-$executePRE = mysqli_query($conn, $queryloadPRE);
 ?>
 
 <body>
     <!--header-->
-    <?php 
-    require "includes/header.php"; 
-    require "auction/auction-status.php";
+    <?php
+    require "includes/header.php";
     ?>
 
     <div class="container-fluid" style="min-height: 70vh; margin-top:1vh; margin-bottom:2vh;">
-
 
         <button onclick="topFunction()" id="myBtn" title="Go to top"><i class='fas fa-angle-up' style='font-size:36px'></i></button>
 
         <div class="row" style="min-height:70vh">
 
             <div class="col-sm-2" style=" border-right-style: solid;">
-                <label style="color:#b5b0aa; font-family: 'Questrial'; margin-left:4vw; font-size: 1.5vw;">Auction</label>
+                <label style="color:#b5b0aa; font-family: 'Questrial'; margin-left:5vw; font-size: 1.5vw;">Auction</label>
                 <hr>
                 <nav class='nav flex-column' style="text-align:center">
                     <?php if (isset($_GET)) {
@@ -149,10 +145,10 @@ $executePRE = mysqli_query($conn, $queryloadPRE);
                         }
                     }
                     ?>
-                    <a class='nav-link nav-item' href='showPREPage.php?cate=all' <?php echo $option1 ?>>All</a>
-                    <a class='nav-link nav-item' href='showPREPage.php?cate=name' <?php echo $option2 ?>>Sort by Name</a>
-                    <a class='nav-link nav-item' href='showPREPage.php?cate=date' <?php echo $option3 ?>>Sort by Date</a>
-                    <a class='nav-link nav-item' href='showPREPage.php?cate=price' <?php echo $option4 ?>>Sort by Price</a>
+                    <a class='nav-link nav-item' href='auctionPage.php?sort=all' <?php echo $option1 ?>>Reset Sort</a>
+                    <a class='nav-link nav-item' href='auctionPage.php?sort=name' <?php echo $option2 ?>>Sort by Name</a>
+                    <a class='nav-link nav-item' href='auctionPage.php?sort=date' <?php echo $option3 ?>>Sort by Date</a>
+                    <a class='nav-link nav-item' href='auctionPage.php?sort=price' <?php echo $option4 ?>>Sort by Price</a>
                 </nav>
             </div>
 
@@ -164,28 +160,27 @@ $executePRE = mysqli_query($conn, $queryloadPRE);
                     <div class="row">
                         <?php
                         if (isset($_GET)) {
-
-                            if ($sortBy == "name") {
-                                $executePRE = mysqli_query($conn, $queryloadofficePRE);
+                            if ($sortBy == "all") {
+                                $executeSort = mysqli_query($conn, $querySort);
+                            } else if ($sortBy == "name") {
+                                $executeSort = mysqli_query($conn, $querySortName);
                             } else if ($sortBy == "date") {
-                                $executePRE = mysqli_query($conn, $queryloadgraphicPRE);
+                                $executeSort = mysqli_query($conn, $querySortDate);
                             } else if ($sortBy == "price") {
-                                $executePRE = mysqli_query($conn, $queryloadgamePRE);
-                            } else if ($sortBy == "all") {
-                                $executePRE = mysqli_query($conn, $queryloadPRE);
+                                $executeSort = mysqli_query($conn, $querySortPrice);
                             }
                         }
-                        while ($PREdata = mysqli_fetch_array($executePRE)) {
+                        while ($row = mysqli_fetch_array($executeSort)) {
                         ?>
                             <div class="col-sm-4">
                                 <div class="card" style="margin:1vw;">
-                                    <img class="card-img-top img-responsive" src="data:image/jpg;base64,<?php echo base64_encode($PREdata['image']) ?>" height="180px" width="180px" style="object-fit: contain;" alt="Card image cap">
+                                    <img class="card-img-top img-responsive" src="data:image/jpg;base64,<?php echo base64_encode($row['image']) ?>" height="180px" width="180px" style="object-fit: contain;" alt="Card image cap">
                                     <div class="card-body">
-                                        <h5 class="card-title"><?php echo $PREdata['name'] ?></h5>
-                                        <p class="card-text">Starting Bid: RM <?php echo $PREdata['price'] ?></p>
-                                        <p class="card-text"><?php echo $PREdata['price'] ?></p>
+                                        <h5 class="card-title"><?php echo $row['title'] ?></h5>
+                                        <p class="card-text">Starting Bid: RM <?php echo $row['starting_bid'] ?></p>
+                                        <p class="card-text"><?php echo date("j/n/Y", strtotime($row["start_date"])) . ' - ' . date("j/n/Y", strtotime($row["end_date"])) ?></p>
                                         <hr>
-                                        <a href="productPage.php?pcpart=0&productID=<?php echo  $PREdata['id'] ?>" class="btn btn-primary" style="width:100%; background-color:#000000">Details</a>
+                                        <a href="auctionDetailPage.php?idRetrieve=<?php echo  $row['id'] ?>" class="btn btn-primary" style="width:100%; background-color:#000000">Details</a>
                                     </div>
                                 </div>
                             </div>
@@ -199,54 +194,6 @@ $executePRE = mysqli_query($conn, $queryloadPRE);
             </div>
         </div>
     </div>
-
-    <div class="row" style="padding-top: 1vh; padding-bottom: 1vh;">
-        <div class="col-1">
-
-        </div>
-        <div class="col-10 " style="height:auto; background-image: linear-gradient(to right, #1f2428 80%, #2c3037 )">
-            <div class="col-12">
-                <h2 style="color: #ffffff; text-align: center; padding-top: 5vh;">Auction</h2>
-
-                <div class="input-group mb-3" style="padding-top: 3vh; padding-bottom: 3vh;">
-                    <input class="form-control" id="searchAuction" type="text" placeholder="Search..">
-                    <div class="input-group-append">
-                        <button class="btn btn-primary" type="submit">🔍</button>
-                    </div>
-                </div>
-            </div>
-
-            <div class="auction-container">
-                <?php
-                include_once "includes/dbh.local.inc.php";
-
-                $sql = "SELECT * FROM auction ORDER BY 'start_date'";
-                $stmt = mysqli_stmt_init($conn);
-
-                if (!mysqli_stmt_prepare($stmt, $sql)) {
-                    echo "SQL statement failed!";
-                } else {
-                    mysqli_stmt_execute($stmt);
-                    $result = mysqli_stmt_get_result($stmt);
-
-                    while ($row = mysqli_fetch_array($result)) {
-                        echo '<a href="auctionDetailPage.php?idRetrieve=' . $row["id"] . '">
-                        <img src="data:image/jpg;base64,' . base64_encode($row["image"]) . '" alt="Auction Image""/>
-                        <h4 style="margin: 12px 30px 10px 30px;">' . $row["title"] . '</h4>
-                        <p style="margin: 12px 30px 10px 30px;">Starting Bid: RM ' . number_format($row["starting_bid"], 2) . '</p>
-                        <p style="margin: 12px 30px 10px 30px;">' . date("j/n/Y", strtotime($row["start_date"])) . ' - ' . date("j/n/Y", strtotime($row["end_date"])) . '</p>
-                    </a>';
-                    }
-                }
-                ?>
-            </div>
-
-        </div>
-        <div class="col-1">
-
-        </div>
-    </div>
-
 </body>
 
 <!--footer-->

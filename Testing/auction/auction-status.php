@@ -1,7 +1,7 @@
 <?php
 $rootDir = realpath($_SERVER["DOCUMENT_ROOT"]);
 
-include "$rootDir/FYP-Project---ComputerArc/Testing/includes/dbh.inc.php";
+include "$rootDir/FYP--ComputerArc/Testing/includes/dbh.inc.php";
 
 date_default_timezone_set("Asia/Kuala_Lumpur");
 $date_now = new DateTime();

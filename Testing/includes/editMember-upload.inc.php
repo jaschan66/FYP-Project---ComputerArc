@@ -7,6 +7,8 @@ if (isset($_POST) && isset($_POST['btnEditMemProf'])) {
 
   if ($_POST['telNo'] != "") {
 
+    if (is_numeric($telNo)) {
+
     $queryWithPicture = "";
     if ($_FILES['profilepic']['size'] > 0) {
       $ProfilePic = addslashes(file_get_contents($_FILES['profilepic']['tmp_name']));
@@ -33,5 +35,14 @@ if (isset($_POST) && isset($_POST['btnEditMemProf'])) {
     </div>";
       echo mysqli_error($conn);
     }
+  } else {
+    $msg = "<div class='alert alert-danger alert-dismissible' role='alert'>
+      <a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a>
+      <strong>Oh No!</strong> Please input a valid Phone No.
+      <button type='button' class='close' data-dismiss='alert' aria-label='Close'>
+        <span aria-hidden='true'>&times;</span>
+      </button>
+    </div>";
+  }
   }
 }

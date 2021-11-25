@@ -49,6 +49,7 @@ if ($image == "") {
 
 if (empty($err)) {
     include_once "dbh.local.inc.php";
+    session_start();
     $PartnerEmail   = $_SESSION['email'];
     $PartnerRole    = $_SESSION['role'];
     $GetPartnerID    = mysqli_query($conn, "SELECT * FROM `$PartnerRole` WHERE email ='$PartnerEmail'");
