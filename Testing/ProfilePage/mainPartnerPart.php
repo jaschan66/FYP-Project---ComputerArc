@@ -2,21 +2,15 @@
 include "includes/dbh.inc.php";
 session_start();
 
-// print_r($_POST);
-// if(!empty($_POST["idDelete"])){
-//     // echo $_POST["idDelete"];
-//     // die();
-//     $idDelete = $_POST["idDelete"];
-//     $deleteById = "DELETE FROM prebuildpc WHERE id = '$idDelete'";
-//     mysqli_query($conn, $deleteById);
-// }
+
 
 
 ?>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
 <script>
     function loadTable() {
-        var txt = $('#searchPCP').val();
+         var txt = $('#searchPCP').val();
         if (txt == '' || txt != '') {
             $.ajax({
                 url: "ProfilePage/listPartnerPCP.php",
@@ -63,14 +57,12 @@ session_start();
 
 
 
-<input type="text" class="form-control" size="50" placeholder="Enter Name or Category" onkeyup="PCPfunction()" name="searchPCP" id="searchPCP" autofocus style="margin-bottom:2vh;">
+<input type="text" class="form-control" size="50" placeholder="Enter Name or Category" name="searchPCP" id="searchPCP" autofocus style="margin-bottom:2vh;">
 
 <div id="listResPCP">
 
 </div>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
 
 
 
@@ -79,22 +71,7 @@ session_start();
 <script>
     $(document).ready(function() {
         $('#searchPCP').keyup(function() {
-            var txt = $(this).val();
-            if (txt == '' || txt != '') {
-                $.ajax({
-                    url: "ProfilePage/listPartnerPCP.php",
-                    method: "post",
-                    data: {
-                        search: txt
-                    },
-                    dataType: "text",
-                    success: function(data) {
-                        $('#listResPCP').html(data);
-                    }
-                })
-            } else {
-                $('#listResPCP').html('');
-            }
+           loadTable();
         });
     });
 </script>

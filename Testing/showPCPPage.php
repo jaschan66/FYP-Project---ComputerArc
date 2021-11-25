@@ -51,6 +51,10 @@ session_start();
             background: rgba(0, 0, 0, 1);
 
         }
+        .hidescrollbar::-webkit-scrollbar {
+        display: none;
+        }
+
 
         html,
         body {
@@ -143,7 +147,7 @@ session_start();
     ?>
 </head>
 
-<body style="overflow:hidden">
+<body style="overflow:auto">
 
     <!--header-->
     <?php include "includes/header.php"; ?>
@@ -220,7 +224,7 @@ session_start();
              </nav>
             </div>
 
-            <div class="col-sm-10" style="overflow-y:auto;max-height:83vh">
+            <div class="col-sm-10 hidescrollbar" style="overflow-y:auto;max-height:83vh">
                 <div class="col-sm-1">
 
                 </div>

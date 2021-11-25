@@ -11,6 +11,7 @@
 
     <link href='filepond/filepond.min.css' rel='stylesheet'>
     <link href='filepond/plugins/preview/filepond-plugin-image-preview.min.css' rel='stylesheet'>
+    <link href='SweetAlert/sweetalert2.min.css' rel='stylesheet'>
 
     <script src="https://www.google.com/recaptcha/api.js?render=6LcrZPEcAAAAAOD-gL2ox-rjslwDMlTfFn8xarIM"></script>
 
@@ -62,43 +63,8 @@
 
     <?php
 
-    if (isset($_POST) && isset($_POST["btnSubmit"]) && !empty($_FILES['memberprofilepic']['tmp_name'])) {
-        include "includes/dbh.local.inc.php";
-        $secretKey = '6LcrZPEcAAAAADHir9dVmYUYIDN2HedLkrlqo6Fv';
-        $token = $_POST["g-toekn"];
-        $ip = $_SERVER['REMOTE_ADDR'];
-
-        $url = "https://www.google.com/recaptcha/api/siteverify?secret=" . $secretKey . "&response=" . $token . "&remoteip=" . $ip;
-        $request = file_get_contents($url);
-        $response = json_decode($request);
-
-        if ($response->success) {
-            $memberEmail = $_POST['memberemail'];
-            $memberPass = $_POST['memberpassword'];
-            $memberUsername = $_POST['memberusername'];
-            $memberTelno = $_POST['membertelno'];
-            $memberProfilepic = addslashes(file_get_contents($_FILES['memberprofilepic']['tmp_name']));
-            $memberStatus = 1;
-            $memberJoineddate = date("Y/m/d");
-
-          
-
-
-            //validate duplicate username
-            $sqlcheckdupname = mysqli_query($conn, "SELECT * FROM `member` WHERE name ='$memberUsername'");
-            if (mysqli_num_rows($sqlcheckdupname) == 0 && !empty($_FILES['memberprofilepic']['tmp_name'])) {
-                $insert = "INSERT INTO `member` (`name`, `email`,  `pass`, `telNo`, `status`, `datejoined`, `profilepic`) VALUES ('$memberUsername', '$memberEmail',  '$memberPass', '$memberTelno', '$memberStatus', '$memberJoineddate', '$memberProfilepic')";
-
-
-                if (mysqli_query($conn, $insert)) {
-                    header("Location: loginPage.php");
-                } else {
-                    echo "Error occured: " . mysqli_error($conn);
-                }
-            } else {;
-            }
-        }
-    }
+    
+         
     ?>
 </head>
 
@@ -111,7 +77,7 @@
 
                     </div>
                     <div class="col-8">
-                        <form style="margin-top: 15vh" class="form-group" method="POST" enctype="multipart/form-data">
+                        <form style="margin-top: 15vh" class="form-group" method="POST" enctype="multipart/form-data" id="signupMember">
                             <input type="hidden" id="g-token" name="g-toekn" />
 
                             <p style="color: #b5b0aa; font-family: 'Questrial'; padding-right: 6vw;" class="formLabel">E-mail &nbsp;<a href="#" data-toggle="tooltip" title="The email is used for sign-in and other purpose such as 2FA on our website"><i class='fas fa-question-circle'></i></a></p>
@@ -131,7 +97,7 @@
 
                             <div class="row">
                                 <div class="col-8">
-                                    <input type="submit" name="btnSubmit" class="btn btn-primary" style="font-size: 0.75vw; font-family: 'Questrial'; width:100%; margin-bottom: 2vh;" value="Sign Up">
+                                    <input type="submit" name="btnSubmit" id="btnSubmit" class="btn btn-primary" style="font-size: 0.75vw; font-family: 'Questrial'; width:100%; margin-bottom: 2vh;" value="Sign Up">
                                 </div>
                                 <div class="col-4">
                                     <a href="chooseSignUp.php" class="btn btn-dark" style="font-size: 0.75vw; font-family: 'Questrial'; width: 100%;  margin-bottom: 2vh;">Back</a>
@@ -174,7 +140,7 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
+
 
 
 
@@ -218,6 +184,61 @@
             document.getElementById("g-token").value = token;
         });
     });
+</script>
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+<script src="SweetAlert/sweetalert2.min.js"></script>
+
+    <script>
+    
+        $('#btnSubmit').click(function(event) {
+            event.preventDefault();
+            var form = $('#signupMember');
+            var formData = new FormData(form[0]);
+
+            Swal.fire ({
+                title: 'Confirm Sign Up?',
+                showCancelButton: true,
+                confirmButtonText: 'Yes',
+            }).then((result) => {
+                if (result.isConfirmed) {
+
+                    $.ajax({
+                        type: "POST",
+                        url: "processMemberSignUp.php",
+                        processData: false,
+                        contentType: false,
+                        data: formData,
+                        success: function(x) {
+                            var delay = 500;
+                            console.log(x);
+                            if (x == "Sign Up Successfully!") {
+                                Swal.fire(x, '', 'success').then((result => {
+                                    if (result.isConfirmed) {
+                                        window.location = "loginPage.php";
+                                    } else {
+                                        setTimeout(function() {
+                                            window.location = "loginPage.php";
+                                        }, delay);
+                                    }
+                                }))
+
+                            } else {
+                                Swal.fire({
+                                    icon: 'error',
+                                    title: 'Something went wrong!',
+                                    html: '<pre>' + x + '</pre>',
+                                    customClass: {
+                                        popup: 'format-pre'
+                                    }
+                                })
+                            }
+                        }
+                    });
+                }
+            })
+        });
+  
 </script>
 
 </html>

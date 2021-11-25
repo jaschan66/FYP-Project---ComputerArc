@@ -12,8 +12,7 @@
      $queryWithUpdatePicture = ", image = '$updatePREpic'";
  }
 
- $updateQuery = "UPDATE prebuildpc SET name = '$updatePREname', price = '$updatePREprice', category = '$updatePREcategory', stock = '$updatePREstock',
-  description = '$updatePREdesc' $queryWithUpdatePicture WHERE id = '$updatePREID'";
+
 
         $err = "";
         

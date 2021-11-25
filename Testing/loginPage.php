@@ -12,7 +12,7 @@ session_start();
     <script src='https://kit.fontawesome.com/a076d05399.js'></script>
     <link rel="icon" href="Logo stuff\favicon-32x32.png" type="image/x-icon">
     <link href='https://fonts.googleapis.com/css?family=Questrial' rel='stylesheet'>
-    <script src="https://www.google.com/recaptcha/api.js?render=6LcrZPEcAAAAAOD-gL2ox-rjslwDMlTfFn8xarIM"></script>
+    <!-- <script src="https://www.google.com/recaptcha/api.js?render=6LcrZPEcAAAAAOD-gL2ox-rjslwDMlTfFn8xarIM"></script> -->
     <link href='SweetAlert/sweetalert2.min.css' rel='stylesheet'>
 
     <style>
@@ -26,82 +26,7 @@ session_start();
         }
     </style>
 
-    <?php
-    if (isset($_POST) && isset($_POST["btnSubmitLogin"])) {
-
-        include "includes/dbh.inc.php";
-
-        $secretKey = '6LcrZPEcAAAAADHir9dVmYUYIDN2HedLkrlqo6Fv';
-        $token = $_POST["g-toekn"];
-        $ip = $_SERVER['REMOTE_ADDR'];
-
-        $url = "https://www.google.com/recaptcha/api/siteverify?secret=" . $secretKey . "&response=" . $token . "&remoteip=" . $ip;
-        $request = file_get_contents($url);
-        $response = json_decode($request);
-
-        if ($response->success) {
-            $loginEmail = $_POST['email'];
-            $loginPass = $_POST['password'];
-
-
-
-            $sqlcheckdupnameonmember = mysqli_query($conn, "SELECT * FROM `member` WHERE email ='$loginEmail'");
-            $sqlcheckdupnameonpartner = mysqli_query($conn, "SELECT * FROM `partner` WHERE email ='$loginEmail'");
-            $sqlcheckdupnameonadmin = mysqli_query($conn, "SELECT * FROM `admin` WHERE email ='$loginEmail'");
-            if (mysqli_num_rows($sqlcheckdupnameonmember) == 1 || mysqli_num_rows($sqlcheckdupnameonpartner) == 1 || mysqli_num_rows($sqlcheckdupnameonadmin) == 1) {
-                if (mysqli_num_rows($sqlcheckdupnameonmember) > mysqli_num_rows($sqlcheckdupnameonpartner) && mysqli_num_rows($sqlcheckdupnameonmember) > mysqli_num_rows($sqlcheckdupnameonadmin)) {
-                    $passwordindb = mysqli_query($conn, "SELECT pass FROM `member` WHERE email ='$loginEmail'");
-                    $result = mysqli_fetch_assoc($passwordindb);
-                    if ($result['pass'] == $loginPass) {
-
-                        //Create session for member
-                        $_SESSION['role'] = "member";
-                        $_SESSION['email'] = $loginEmail;
-                        $_SESSION['status'] = "login";
-                        require 'includes/generateTwoFA.php';
-                        
-                        //header("Location: homePage.php");
-
-                    } else {
-                        echo 'Email or password entered might be wrong.';
-                    }
-                } else if (mysqli_num_rows($sqlcheckdupnameonpartner) > mysqli_num_rows($sqlcheckdupnameonmember) && mysqli_num_rows($sqlcheckdupnameonpartner) > mysqli_num_rows($sqlcheckdupnameonadmin)) {
-                    $passwordindb = mysqli_query($conn, "SELECT pass FROM `partner` WHERE email ='$loginEmail'");
-                    $result = mysqli_fetch_assoc($passwordindb);
-                    if ($result['pass'] == $loginPass) {
-
-                        //Create session for partner
-                        $_SESSION['role'] = "partner";
-                        $_SESSION['email'] = $loginEmail;
-                        $_SESSION['status'] = "login";
-                        require 'includes/generateTwoFA.php';
-                        
-                        //header("Location: homePage.php");
-
-                    } else {
-                        echo 'Email or password entered might be wrong.';
-                    }
-                } else {
-                    $passwordindb = mysqli_query($conn, "SELECT pass FROM `admin` WHERE email ='$loginEmail'");
-                    $result = mysqli_fetch_assoc($passwordindb);
-                    if ($result['pass'] == $loginPass) {
-
-                        //Create session for admin
-                        $_SESSION['role'] = "admin";
-                        $_SESSION['email'] = $loginEmail;
-                        $_SESSION['status'] = "login";
-                        require 'includes/generateTwoFA.php';
-
-                        //header("Location: homePage.php");
-
-                    }
-                }
-            } else {
-                echo 'Email or password entered might be wrong.';
-            }
-        }
-    }
-    ?>
+    
 
 
 </head>
@@ -115,10 +40,10 @@ session_start();
                 </div>
                 <div class="col-6">
 
-                    <form style="padding-top: 20vh;" class="form-group" method="POST" enctype="multipart/form-data">
+                    <form style="padding-top: 20vh;" class="form-group" method="POST" enctype="multipart/form-data" id="submitLogin">
 
                         <?php
-
+                        $_GET['resetPass'] = "";
                         if ($_GET['resetPass'] == true) {
 
                             echo  "<div class='alert alert-dark alert-dismissible' role='alert'>
@@ -138,7 +63,7 @@ session_start();
                         <p style="color: #b5b0aa; font-family: 'Questrial'; padding-right: 6vw;">Password</p>
                         <input class="form-control" id="password" name="password" type="password" style="margin-bottom: 5vh; background-image: linear-gradient(to right, #2c3037, #1f2428); color: white;">
 
-                        <input type="submit" name="btnSubmitLogin" id="btnSubmitLogin" onclick="Testing()" class="btn btn-primary" style="font-size: 0.75vw; font-family: 'Questrial'; width:14vw;  margin-bottom: 2vh;" value="Sign In">
+                        <input type="submit" name="btnSubmitLogin" id="btnSubmitLogin"  class="btn btn-primary" style="font-size: 0.75vw; font-family: 'Questrial'; width:14vw;  margin-bottom: 2vh;" value="Sign In">
                         <a href="homePage.php" class="btn btn-dark" style="font-size: 0.75vw; font-family: 'Questrial'; width: 8vw;  margin-bottom: 2vh;">Back to home</a>
                         <a href="forgotYourPass.php" style="font-size: 0.75vw; font-family: 'Questrial'; width: 20vw; margin-left: 7.3vw; color: #ffffff;">Forgot
                             Your Password?</a>
@@ -178,8 +103,8 @@ session_start();
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
-    <script src="SweetAlert/sweetalert2.min.js"></script>
-    <script>
+
+    <!-- <script>
         grecaptcha.ready(function() {
             grecaptcha.execute('6LcrZPEcAAAAAOD-gL2ox-rjslwDMlTfFn8xarIM', {
                 action: 'homepage'
@@ -187,7 +112,43 @@ session_start();
                 document.getElementById("g-token").value = token;
             });
         });
-    </script>
+    </script> -->
+
+
+    <script src="SweetAlert/sweetalert2.min.js"></script>
+    <script>
+    
+        $('#btnSubmitLogin').click(function(event) {
+            event.preventDefault();
+            var form = $('#submitLogin');
+            var formData = new FormData(form[0]);
+                    $.ajax({
+                        type: "POST",
+                        url: "processLogin.php",
+                        processData: false,
+                        contentType: false,
+                        data: formData,
+                        success: function(x) {
+                            var delay = 500;
+                            console.log(x);
+                            if (x == "Login Successfully!") {
+                                window.location = "../generateTwoFA.php";
+                            }else{
+                                Swal.fire({
+                                    icon: 'error',
+                                    title: 'Something went wrong!',
+                                    html: '<pre>' + x + '</pre>',
+                                    customClass: {
+                                        popup: 'format-pre'
+                                    }
+                                })
+                            }
+                        }
+                    });
+        });
+  
+</script>
+
 </body>
 
 </html>

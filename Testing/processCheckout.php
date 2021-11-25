@@ -9,6 +9,8 @@ $commissionRate = 0.06;
 
 $err ="Error occured, please try again later.";
 
+
+
 $paymentStatus= $_POST['paymentDetail']['status'];
 $paymentAmount = $_POST['paymentDetail']['purchase_units']['0']['amount']['value'];
 $paymentName = $_POST['paymentDetail']['purchase_units']['0']['shipping']['name']['full_name'];
@@ -19,49 +21,47 @@ if($paymentStatus == "COMPLETED"){
     if($executeBuyerQuery = mysqli_query($conn,$queryGetBuyerData)){
         $BuyerData = mysqli_fetch_assoc($executeBuyerQuery);
         $BuyerID = $BuyerData['id'];
-    $queryGetProductData = "SELECT * FROM $productType WHERE id = '$productID'";
-    if($executeProductDataQuery = mysqli_query($conn,$queryGetProductData)){
-        $ProductData = mysqli_fetch_assoc($executeProductDataQuery);
-        $ProductSeller = $ProductData['seller'];
-        $productStockQty = $ProductData['stock'];
-        $newStockQty = $productStockQty - $productQty;
-       $queryUpdateStock = "UPDATE $productType SET stock = '$newStockQty'";
-       if($executeUpdateStockQuery = mysqli_query($conn,$queryUpdateStock)){
-            $queryInsertPayment = "INSERT INTO `payment` (`amount`, `paymentDate`, `shipAddress`, `shipReceiptName`, `madeby`, `seller`) VALUES ('$paymentAmount', '$paymentDate', '$paymentAddress', '$paymentName', '$BuyerID', '$ProductSeller')";
-            if($executeInsertPaymentQuery = mysqli_query($conn,$queryInsertPayment)){
-                $queryGetPaymentData = "SELECT * FROM payment ORDER BY id DESC LIMIT 1 ";
-                if($executePaymentDataQuery = mysqli_query($conn,$queryGetPaymentData)){
-                    $commissionAmount = $paymentAmount * $commissionRate;
-                    $PaymentData = mysqli_fetch_assoc($executePaymentDataQuery);
-                    $PaymentID = $PaymentData['id'];
-                    $queryInsertCommission = "INSERT INTO `commission` (`date`,`rate`,`amount`,`referpay`) VALUES ('$paymentDate', '$commissionRate', '$commissionAmount', '$PaymentID')";
-                        if ($executeInsertCommissionQuery = mysqli_query($conn, $queryInsertCommission)) {
-                        echo "Paid successfuly!";
+        $queryGetProductData = "SELECT * FROM $productType WHERE id = '$productID'";
+        if($executeProductDataQuery = mysqli_query($conn,$queryGetProductData)){
+            $ProductData = mysqli_fetch_assoc($executeProductDataQuery);
+            $ProductSeller = $ProductData['seller'];
+            $productStockQty = $ProductData['stock'];
+            $newStockQty = $productStockQty - $productQty;
+            $queryUpdateStock = "UPDATE $productType SET stock = '$newStockQty' WHERE id='$productID'";
+            if($executeUpdateStockQuery = mysqli_query($conn,$queryUpdateStock)){
+                $queryInsertPayment = "INSERT INTO `payment` (`amount`, `paymentDate`, `shipAddress`, `shipReceiptName`, `madeby`, `seller`) VALUES ('$paymentAmount', '$paymentDate', '$paymentAddress', '$paymentName', '$BuyerID', '$ProductSeller')";
+                if($executeInsertPaymentQuery = mysqli_query($conn,$queryInsertPayment)){
+                    $queryGetPaymentData = "SELECT * FROM payment ORDER BY id DESC LIMIT 1 ";
+                    if($executePaymentDataQuery = mysqli_query($conn,$queryGetPaymentData)){
+                        $commissionAmount = $paymentAmount * $commissionRate;
+                        $PaymentData = mysqli_fetch_assoc($executePaymentDataQuery);
+                        $PaymentID = $PaymentData['id'];
+                        $queryInsertCommission = "INSERT INTO `commission` (`date`,`rate`,`amount`,`referpay`) VALUES ('$paymentDate', '$commissionRate', '$commissionAmount', '$PaymentID')";
+                            if ($executeInsertCommissionQuery = mysqli_query($conn, $queryInsertCommission)) {
+                            echo "Paid successfuly!";
+                                }
+                        else{
+                       echo $err;
+                        }
                     }
                     else{
-                       echo "e7";
+                        echo $err;
                     }
+                
                 }
                 else{
-                    echo "e6";
+                    echo $err;
                 }
-                
+            }else{
+            echo $err;
             }
-            else{
-                echo "e5";
-            }
-       }else{
-        echo "e4";
-       }
-    }
-    else{
-        echo "e3";
-    }
-  }else{
-    echo "e2";
-  }
-    
-    
+        }
+        else{
+            echo $err;
+        }
+    }else{
+        echo $err;
+    }   
 }else{
-    echo "e1";
+    echo $err;
 }

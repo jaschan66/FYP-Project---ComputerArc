@@ -54,6 +54,7 @@ if (mysqli_num_rows($resultName) > 0) {
         $rowNo++;
     }
     echo $table .  "</tbody></table>";
+    exit;
 } else if (mysqli_num_rows($resulltCate) > 0) {
     $table .= '<div class="table-responsive">
     <table class="table">
@@ -88,6 +89,7 @@ if (mysqli_num_rows($resultName) > 0) {
         $rowNo++;
     }
     echo $table .  "</tbody></table>";
+    exit;
 } else {
     echo "<div class='alert alert-danger alert-dismissible' role='alert'>
     <a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a>
@@ -96,6 +98,7 @@ if (mysqli_num_rows($resultName) > 0) {
       <span aria-hidden='true'>&times;</span>
     </button>
   </div>";
+  exit;
 }
 
 

@@ -44,6 +44,9 @@ session_start();
             -webkit-appearance: none;
             margin: 0;
         }
+        .hidescrollbar::-webkit-scrollbar {
+        display: none;
+        }
 
 
         /* Handle on hover */
@@ -137,7 +140,7 @@ session_start();
     ?>
 </head>
 
-<body style="overflow:hidden">
+<body style="overflow:auto">
 
     <!--header-->
     <?php include "includes/header.php"; ?>
@@ -188,7 +191,7 @@ session_start();
              </nav>
             </div>
 
-            <div class="col-sm-10" style="overflow-y:auto;max-height:83vh">
+            <div class="col-sm-10 hidescrollbar" style="overflow-y:auto;max-height:83vh">
                 <div class="col-sm-1">
 
                 </div>

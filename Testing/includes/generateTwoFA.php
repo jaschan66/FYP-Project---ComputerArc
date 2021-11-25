@@ -1,15 +1,16 @@
 <?php 
-require 'phpmailer/PHPMailer.php';
-require 'phpmailer/Exception.php';
-require 'phpmailer/SMTP.php';
-require 'phpmailer/credential.php';
+session_start();
+require '../phpmailer/PHPMailer.php';
+require '../phpmailer/Exception.php';
+require '../phpmailer/SMTP.php';
+require '../phpmailer/credential.php';
 
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\SMTP;
 use PHPMailer\PHPMailer\Exception;
 
 $mail = new PHPMailer();
-require 'includes/dbh.local.inc.php';
+require 'dbh.local.inc.php';
 
 $email = $_SESSION['email'];
 $role =  $_SESSION['role'];
@@ -53,7 +54,7 @@ if ($resultData['twoFAStatus'] == 1) {
         $mail->Body    = "<p style='font-size: 1.2vw;'>It seems like you are trying to log in here is the code. $twoFACode </p><br><p> If you did not request this please change your password immediately, </p>";
         if ($mail->send()) {
 
-            header("Location: includes/processTwoFA.php");
+            header("Location: processTwoFA.php");
         }
     } catch (Exception $e) {
         echo "Message could not be sent. Mailer Error: {$mail->ErrorInfo}";
