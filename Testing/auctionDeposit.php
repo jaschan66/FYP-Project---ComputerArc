@@ -111,7 +111,7 @@
                             auctionID: getAuctionID,
                         },
                         success: function(x) {
-                            if (x == "Paid successfuly!") {
+                            if (x == "Paid successfully!") {
                                 Swal.fire(x, '', 'success').then((result => {
                                     var delay = 500;
                                     if (result.isConfirmed) {

@@ -32,7 +32,7 @@ if ($paymentStatus == "COMPLETED") {
             $queryInsertDeposit = "INSERT INTO `deposit` (`amount`, `depositDate`, `shipAddress`, `bidderName`, `bidder`, `owner_id`, `auctionID`) VALUES ('$paymentAmount', '$paymentDate', '$paymentAddress', '$paymentName', '$BidderID', '$auctionOwner', '$auctionID')";
 
             if ($executeInsertDepositQuery = mysqli_query($conn, $queryInsertDeposit)) {
-                echo "Paid successfuly!";
+                echo "Paid successfully!";
             } else {
                 echo $err;
             }
