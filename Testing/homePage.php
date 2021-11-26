@@ -301,13 +301,13 @@ if (($_SESSION['status']) == "login") {
         <div class="col-6  text-center" style="background-image: url('HomePage Design Photo/martin-katler-7wCxlBfGMdk-unsplash (4).jpg'); font-family:'Questrial'; max-width:100%;
                 max-height:100%; background-repeat: no-repeat; background-size: cover; ">
             <p class="text-center fade" style=" font-size:4vw;padding-top:45vh;color:white">PC Parts</p>
-            <a href="Category.aspx?category=popurbanart" class="btn" style="background-color:black;color:white;font-size:1vw">Shop Now</a>
+            <a href="showPCPPage.php?cate=all" class="btn" style="background-color:black;color:white;font-size:1vw">Shop Now</a>
 
         </div>
         <div class="col-6 text-center" style="background-image: url('HomePage Design Photo/Verification (2) (1) (1).png'); font-family:'Questrial'; background-size: cover;">
 
             <p class=" text-center fade" style=" font-size:4vw;padding-top:45vh;color:white">Pre-Build PC</p>
-            <a href="Category.aspx?category=fashionicons" class="btn" style="background-color:black;color:white;font-size:1vw">Shop Now</a>
+            <a href="showPREPage.php?cate=all" class="btn" style="background-color:black;color:white;font-size:1vw">Shop Now</a>
         </div>
 
     </div>

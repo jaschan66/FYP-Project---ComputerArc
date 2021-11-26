@@ -62,13 +62,29 @@
         $role = $_GET['roleget'];
         $id = $_GET['id'];
 
+
         if ($pass == $conPass) {
-            $result = mysqli_query($conn, "UPDATE `$role` SET pass ='$pass' WHERE id ='$id'");
-            if ($result) {
-                header("Location: loginPage.php?resetPass=true");
-            } else {
-                echo "something went wrong";
+            if (strlen($pass) <= '6') {
+                echo  "-Your Password Must Contain At Least 6 Characters!";
             }
+            elseif(!preg_match("#[0-9]+#",$pass)) {
+                echo "-Your Password Must Contain At Least 1 Number!";
+            }
+            elseif(!preg_match("#[A-Z]+#",$pass)) {
+                echo "-Your Password Must Contain At Least 1 Capital Letter!";
+            }
+            elseif(!preg_match("#[a-z]+#",$pass)) {
+                echo "-Your Password Must Contain At Least 1 Lowercase Letter!";
+            }
+            else{
+                $result = mysqli_query($conn, "UPDATE `$role` SET pass ='$pass' WHERE id ='$id'");
+                if ($result) {
+                    header("Location: loginPage.php?resetPass=true");
+                } else {
+                    echo "something went wrong";
+                }
+            }
+           
         } else {
             echo "Password and Re-type password are not the same";
         }
