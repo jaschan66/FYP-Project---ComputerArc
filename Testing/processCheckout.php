@@ -38,7 +38,7 @@ if($paymentStatus == "COMPLETED"){
                         $PaymentID = $PaymentData['id'];
                         $queryInsertCommission = "INSERT INTO `commission` (`date`,`rate`,`amount`,`referpay`) VALUES ('$paymentDate', '$commissionRate', '$commissionAmount', '$PaymentID')";
                             if ($executeInsertCommissionQuery = mysqli_query($conn, $queryInsertCommission)) {
-                            echo "Paid successfuly!";
+                            echo "Paid successfully!";
                                 }
                         else{
                        echo $err;
