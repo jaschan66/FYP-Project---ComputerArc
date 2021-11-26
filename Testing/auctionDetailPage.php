@@ -120,19 +120,21 @@
 
     <?php include "auction/auction-retrieve.php";
     $aucID = $_GET['idRetrieve'];
-    if (!empty($_SESSION['email'])) {
-        $MemberEmail   = $_SESSION['email'];
-        $MemberEmail    = mysqli_query($conn, "SELECT * FROM `member` WHERE email ='$MemberEmail'");
+    if (!empty($_SESSION['role'])) {
+        if ($_SESSION['role'] == "member") {
+            $MemberEmail   = $_SESSION['email'];
+            $MemberEmail    = mysqli_query($conn, "SELECT * FROM `member` WHERE email ='$MemberEmail'");
 
-        if (mysqli_num_rows($MemberEmail) > 0) {
-            $Getresult = mysqli_fetch_assoc($MemberEmail);
-            $GetBidderID = $Getresult['id'];
+            if (mysqli_num_rows($MemberEmail) > 0) {
+                $Getresult = mysqli_fetch_assoc($MemberEmail);
+                $GetBidderID = $Getresult['id'];
+            }
+
+            //Check if member has already deposit or not
+            $getAucData = "SELECT * FROM deposit WHERE auctionID = '$aucID' AND bidder = '$GetBidderID'";
+
+            $connGetBidderData = mysqli_query($conn, $getAucData);
         }
-
-        //Check if member has already deposit or not
-        $getAucData = "SELECT * FROM deposit WHERE auctionID = '$aucID' AND bidder = '$GetBidderID'";
-
-        $connGetBidderData = mysqli_query($conn, $getAucData);
     }
     ?>
 
