@@ -150,7 +150,7 @@
                 <div style="margin-bottom: 1.25rem">
                     <h2 style="margin-bottom: 3vh"><?php echo  $resultGetData["title"] ?></h2>
                     <p style="font-weight: bold; font-size: 20px">Auction Duration:</p>
-                    <p style="font-size: 20px; margin-bottom: 2vh"><?php echo date("j/n/Y", strtotime($resultGetData["start_date"])) ?> - <?php echo date("j/n/Y", strtotime($resultGetData["end_date"])) ?></p>
+                    <p style="font-size: 20px; margin-bottom: 2vh"><?php echo date("j/n/Y", strtotime($resultGetData["start_date"])) ?> - <?php echo date("j/n/Y H:m", strtotime($resultGetData["end_date"])) ?></p>
                     <p style="font-weight: bold; font-size: 20px">Starting Bid</p>
                     <p style="font-size: 20px" id="startingBid">RM <?php echo $resultGetData["starting_bid"] ?></p>
                     <p style="color: gray;">_________________________________________________________________</p>
@@ -162,7 +162,7 @@
                         <button type='button' class='btn btn-dark' style='width:100%'>Auction Ended</button>
                     <?php }
                     if (empty($_SESSION['role'])) { ?>
-                        <a href="loginPage.php" class='btn btn-dark' style='width: 100%;text-align:left'>Sign in as Member to bid</a>
+                        <a href="loginPage.php" class='btn btn-dark' style='width: 100%;'>Sign in as Member to bid</a>
 
                     <?php } else if ($_SESSION['role'] == "member" && mysqli_num_rows($connGetBidderData) > 0) { ?>
                         <button type='button' class='btn btn-dark' style='width:100%'>Start Bidding Now</button>
@@ -171,7 +171,7 @@
                         <button type='button' class='btn btn-dark' onclick="deposit()" style='width:100%'> Bid Now</button>
 
                     <?php } else if ($_SESSION['role'] == "partner" && $resultGetData["status"] == 3) { ?>
-                        <button class='btn btn-dark' style='width: 100%;text-align:left'>Sign in as Member to bid</button>
+                        <button class='btn btn-dark' style='width: 100%;'>Sign in as Member to bid</button>
 
                     <?php } else if ($_SESSION['role'] == "admin") { ?>
                         <button type="button" class='btn btn-dark' style='width: 40%;margin-right:2vw;margin-left:1vw;' onclick="approvedApp(this)" id="<?php echo $resultGetData["id"] ?>">Approved</button>
