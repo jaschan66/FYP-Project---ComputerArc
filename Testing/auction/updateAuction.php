@@ -17,6 +17,7 @@ $maxtime = date("h:i");
 $max = $maxdate . "T" . $maxtime;
 
 include "includes/dbh.inc.php";
+require "auction-status.php";
 session_start();
 $updateAucID = $_GET['idUpdate'];
 $getAucData = "SELECT * FROM auction WHERE id = '$updateAucID'";
