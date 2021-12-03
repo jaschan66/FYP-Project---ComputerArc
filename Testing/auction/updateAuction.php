@@ -86,10 +86,10 @@ $resultGetData = mysqli_fetch_assoc($connGetData);
                             if (x == "Auction updated successfuly!") {
                                 Swal.fire(x, '', 'success').then((result => {
                                     if (result.isConfirmed) {
-                                        window.location = "profilePage.php?editAuc=1&editPRE=0&editProf=0&editPCP=0";
+                                        window.location = "profilePage.php?editAuc=1&editPRE=0&editProf=0&editPCP=0&salesO=0";
                                     } else {
                                         setTimeout(function() {
-                                            window.location = "profilePage.php?editAuc=1&editPRE=0&editProf=0&editPCP=0";
+                                            window.location = "profilePage.php?editAuc=1&editPRE=0&editProf=0&editPCP=0&salesO=0";
                                         }, delay);
                                     }
                                 }))

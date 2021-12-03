@@ -30,7 +30,7 @@ session_start();
     window.onload = loadTable;
 </script>
 
-<form method="POST" action="profilePage.php?editAuc=0&editPRE=0&editProf=0&editPCP=2">
+<form method="POST" action="profilePage.php?editAuc=0&editPRE=0&editProf=0&editPCP=2&salesO=0">
     <div class="row">
         <div class="col-6" style="padding:0">
             <select class="form-control" id="PCPpart" name="PCPpart" style="margin-bottom:2vh">

@@ -12,25 +12,22 @@ date_default_timezone_set("Asia/Kuala_Lumpur");
 $mindate=date("Y-m-d");
 $mintime=date("h:i");
 $min=$mindate."T".$mintime;
-$maxdate=date("Y-m-d", strtotime("+12 Days"));
-$maxtime=date("h:i");
-$max=$maxdate."T".$maxtime;
 ?>
 
-<form style='font-family: Questrial; text-align: left' method='POST' id="createAuction" enctype='multipart/form-data'>
+<form style='font-family: Questrial; text-align: left' method='POST' id="createRaffle" enctype='multipart/form-data'>
     <div class='formspacing'>
-        <p class='formlabel'>Auction Title</p>
-        <input type='text' class='form-control' id='aucTitle' required placeholder='Auction Title...' autofocus name='aucTitle'>
+        <p class='formlabel'>Raffle Title</p>
+        <input type='text' class='form-control' id='rafTitle' required placeholder='Raffle Title...' autofocus name='rafTitle'>
     </div>
 
     <div class='formspacing'>
-        <p class='formlabel'>Starting Bid</p>
-        <input type='number' pattern='^\d+(\.|\,)\d{2}$' required placeholder='e.g. 999.99' class='form-control' name='bidPrice'>
+        <p class='formlabel'>Required Ticket</p>
+        <input type='number' required placeholder='e.g. 5' class='form-control' name='reqTicket'>
     </div>
 
     <div class='formspacing'>
-        <p class='formlabel'>Start Date</p>
-        <input type="datetime-local" placeholder="21/10/2021" required class="form-control" name="startDate" id="startDate" min="<?php echo $min; ?>">
+        <p class='formlabel'>Maximum Participant</p>
+        <input type='number' required placeholder='e.g. 100' class='form-control' name='maxParti'>
     </div>
 
     <div class='formspacing'>
@@ -39,15 +36,14 @@ $max=$maxdate."T".$maxtime;
     </div>
 
     <div class='formspacing'>
-        <p class='formlabel'>Product Picture</p>
-        <input class='filepond' id='auctionImage' name='auctionImage' type='file'>
+        <p class='formlabel'>Raffle Prize Picture</p>
+        <input class='filepond' id='raffleImage' name='raffleImage' type='file'>
     </div>
     
     <div class="form-inline">
-        <input type='submit' name='btnCreateAuction' id='btnCreateAuction' class='btn btn-dark col-3' style='font-size: 1vw; font-family: Questrial; margin-bottom: 2vh; margin-right: 5vw; margin-left: 3vw;' value='Create'>
-        <button type="reset" name="reset" id="reset" class="btn btn-danger col-3" style='font-size: 1vw; font-family: Questrial; margin-bottom: 2vh; margin-right: 5vw;'>Reset</button>
-        <button type="reset" onclick="history.back();" name="reset" id="reset" class="btn btn-secondary col-3" style='font-size: 1vw; font-family: Questrial; margin-bottom: 2vh;'>Back</button>
+        <input type='submit' name='btnCreateAuction' id='btnCreateRaffle' class='btn btn-dark col-12' style='font-size: 1vw; font-family: Questrial; margin-bottom: 2vh;' value='Create'>
     </div>
+
 </form>
 
 <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
@@ -55,13 +51,13 @@ $max=$maxdate."T".$maxtime;
 
 <script>
     $(document).ready(function() {
-        $('#btnCreateAuction').click(function(event) {
+        $('#btnCreateRaffle').click(function(event) {
             event.preventDefault();
-            var form = $('#createAuction');
+            var form = $('#createRaffle');
             var formData = new FormData(form[0]);
 
             Swal.fire ({
-                title: 'Create Auction?',
+                title: 'Create Raffle?',
                 showCancelButton: true,
                 confirmButtonText: 'Yes',
             }).then((result) => {
@@ -69,20 +65,20 @@ $max=$maxdate."T".$maxtime;
 
                     $.ajax({
                         type: "POST",
-                        url: "includes/auction-upload.inc.php",
+                        url: "raffle/createRaffle.php",
                         processData: false,
                         contentType: false,
                         data: formData,
                         success: function(x) {
                             var delay = 500;
                             console.log(x);
-                            if (x == "Auction created successfuly!") {
+                            if (x == "Raffle created successfuly!") {
                                 Swal.fire(x, '', 'success').then((result => {
                                     if (result.isConfirmed) {
-                                        window.location = "profilePage.php?editAuc=1&editPRE=0&editProf=0&editPCP=0&salesO=0";
+                                        window.location = "profilePage.php?editProf=0&reviewUser=0&reviewApp=0&comm=0&report=0&raffle=1";
                                     } else {
                                         setTimeout(function() {
-                                            window.location = "profilePage.php?editAuc=1&editPRE=0&editProf=0&editPCP=0&salesO=0";
+                                            window.location = "profilePage.php?editProf=0&reviewUser=0&reviewApp=0&comm=0&report=0&raffle=1";
                                         }, delay);
                                     }
                                 }))

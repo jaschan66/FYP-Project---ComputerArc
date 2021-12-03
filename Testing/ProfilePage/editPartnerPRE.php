@@ -66,10 +66,10 @@
                             if (x == "Pre-Build PC created successfuly!") {
                                 Swal.fire(x, '', 'success').then((result => {
                                     if (result.isConfirmed) {
-                                        window.location = "profilePage.php?editAuc=0&editPRE=1&editProf=0&editPCP=0";
+                                        window.location = "profilePage.php?editAuc=0&editPRE=1&editProf=0&editPCP=0&salesO=0";
                                     } else {
                                         setTimeout(function() {
-                                            window.location = "profilePage.php?editAuc=0&editPRE=1&editProf=0&editPCP=0";
+                                            window.location = "profilePage.php?editAuc=0&editPRE=1&editProf=0&editPCP=0&salesO=0";
                                         }, delay);
                                     }
                                 }))

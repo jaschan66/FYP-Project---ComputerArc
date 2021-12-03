@@ -29,7 +29,7 @@ if(isset($_POST['btnSubmitUpdateGpu'])){
                
           if (mysqli_query($conn, $updatePCPQuery) && mysqli_query($conn, $updateGpuQuery)) {
               echo "<script>
-              window.location.href = \"profilePage.php?editPCP=1&editProf=0&editPRE=0&editAuc=0\";
+              window.location.href = \"profilePage.php?editPCP=1&editProf=0&editPRE=0&editAuc=0&salesO=0\";
               </script>";
           } else {
               echo mysqli_error($conn);

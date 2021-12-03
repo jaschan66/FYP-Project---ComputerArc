@@ -80,8 +80,10 @@ if (($_SESSION['status']) == "login") {
 
     <!--header-->
     <?php
-    include("includes/header.php"); ?>
-
+    include("includes/header.php");
+    
+    ?>
+    
 
     <div class="row" style="height:70vh">
         <div class="col-12" style="padding:0">

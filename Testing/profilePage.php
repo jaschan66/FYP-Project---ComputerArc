@@ -171,12 +171,15 @@ session_start();
                 ?>
             </div>
             <!--profile picture-->
-            <div class="col-2" style="padding-left: 10vw">
+            <div class="col-2" style="padding-left: 2vw">
 
                 <?php
                 if ($_SESSION['role'] != "admin") {
                     while ($img = mysqli_fetch_array($resultimg)) {
-                        echo '<img src="data:image/jpg;base64,' . base64_encode($img['profilepic']) . '" height="180px" width="180px" alt="Profile Picture" class="img-thumbnail img-responsive"/>';
+                        echo '<img src="data:image/jpg;base64,' . base64_encode($img['profilepic']) . '" height="180px" width="180px" style="object-fit:contain" alt="Profile Picture" class="img-thumbnail img-responsive"/>';
+                    }
+                    if  ($_SESSION['role'] == "member") {
+                        echo "<p style='font-size: 20px'>Raffle Ticket Earned: <label style='text-align:right;font-size: 25px;color:#1770ff'>" . $name['raffleTicket']  . "</label></p>";
                     }
                 }
                 ?>
@@ -249,6 +252,10 @@ session_start();
                         include "auction/editPartnerAuction.php";
                     } else if ($_GET['editAuc'] == 3) {
                         include "auction/updateAuction.php";
+                    }else if ($_GET['salesO'] == 1){
+                        include "payment/salesOrder.php";
+                    }else if ($_GET['salesO'] == 2){
+                        include "commission/mainCommissionPage.php";
                     }
                 } 
                 else if ($_SESSION['role'] == "member") 
@@ -259,7 +266,11 @@ session_start();
                         include "auction/mainMemberAuction.php";
                     }  else if ($_GET['wishlist'] == 1) {
                         include "wishlist/mainWishlist.php";
-                    } 
+                    } else if ($_GET['paymentHis'] == 1) {
+                        include "payment/mainPaymentHistory.php";
+                    }else if ($_GET['raffle'] == 1) {
+                        include "raffle/raffleJoined.php";
+                    }
                 } 
                 else if($_SESSION['role'] == "admin") 
                 {           //Admin Pages
@@ -269,7 +280,20 @@ session_start();
                         include "ProfilePage/editAdminProf.php";
                     } else if ($_GET['reviewApp'] == 1) {
                         include "admin/mainListApproval.php";
-                    } 
+                    } else if ($_GET['comm'] == 1){
+                        include "commission/mainCommissionPage.php";
+                    }else if ($_GET['report'] == 1){
+                        include "report/mainReport.php";
+                    }else if ($_GET['report'] == 2){
+                        include "report/commissionReport.php";
+                    }else if ($_GET['report'] == 3){
+                        include "report/salesReport.php";
+                    }else if ($_GET['report'] == 4){
+                        include "report/raffleReport.php";
+                    }else if ($_GET['raffle'] == 1){
+                        include "raffle/mainRaffle.php";
+                    }
+                    
                 }
                 ?>
 
@@ -437,6 +461,21 @@ if ($_SESSION['role'] == "partner") {
         $(document).ready(function() {
             FilePond.registerPlugin(FilePondPluginImagePreview);
             const inputElement = document.querySelector('#profilepic');
+     
+            const pond = FilePond.create(inputElement, {
+                storeAsFile: true
+            });
+     
+           $('[data-toggle=\"tooltip\"]').tooltip();
+       });
+     </script>";
+    }
+}else if ($_SESSION['role'] == "admin") {
+    if ($_GET['raffle'] == 1) {
+        echo "<script>
+        $(document).ready(function() {
+            FilePond.registerPlugin(FilePondPluginImagePreview);
+            const inputElement = document.querySelector('#raffleImage');
      
             const pond = FilePond.create(inputElement, {
                 storeAsFile: true

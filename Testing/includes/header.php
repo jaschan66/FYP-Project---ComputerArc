@@ -211,7 +211,7 @@ echo '<nav class="navbar navbar-expand-sm bg-white navbar-light" style="max-heig
                         <a class="nav-link" style="font-size: 1vw;" href="forumTopic.php">Forum</a>
                     </li>
                     <li class="nav-item" style="padding-right:1vw">
-                        <a class="nav-link" style="font-size: 1vw;" href="raffle.php">Raffle</a>
+                        <a class="nav-link" style="font-size: 1vw;" href="showRaffle.php">Raffle</a>
                     </li>
                     <li class="nav-item" style="padding-right:1vw">
                         <a class="nav-link" style="font-size: 1vw;" href="auctionPage.php?sort=all">Auction</a>
