@@ -14,7 +14,7 @@
     <?php
 
     include "includes/dbh.inc.php";
-    $deposit = $_GET['deposit'];
+    $highestBid = $_GET['highestBid'];
     $auctionID = $_GET['auctionID'];
     $logonEmail = $_SESSION['email'];
 
@@ -22,9 +22,11 @@
     $getAuctionDetails = mysqli_query($conn, $querygetAuction);
     $auctionData = mysqli_fetch_assoc($getAuctionDetails);
 
-    $currentBid = $auctionData["starting_bid"];
-    $deposit =  number_format($deposit, 2, '.', '');
+    $startingBid = $auctionData["starting_bid"];
+    $deposit =  number_format(round(($startingBid * 0.10) * 100) / 100, 2, '.', ',');
 
+    $total = round($highestBid - $deposit, 2);
+    $total = number_format($total, 2, '.', '');
     ?>
 
 <body>
@@ -48,9 +50,9 @@
 
                 <div class='col-sm-12' style='margin-bottom:1vh;padding:0'>
                     <input type='hidden' value='<?php echo $auctionData['id'] ?>' id='auctionID'>
-                    <p>To Start Bidding you must first pay a minumum of 10% deposit</p>
-                    <p>RM <?php echo $currentBid ?> / 10</p>
-                    <p style="font-size: 20px">Total Deposit(RM): <?php echo $deposit ?><label style="text-align:right;font-size: 25px" id='totalPrice'></label></p>
+                    <p>Congratulations for bidding the highest but before you get to claim your reward. You have to pay the price you have bid</p>
+                    <p>RM <?php echo $highestBid ?> - RM <?php echo $deposit?></p>
+                    <p style="font-size: 20px">Total Bid (RM): <?php echo $total ?><label style="text-align:right;font-size: 25px" id='totalPrice'></label></p>
                 </div>
                 <div id="paypal-button-container"></div>
 
@@ -79,7 +81,7 @@
 
     <script>
         var getAuctionID = '<?php echo $auctionID?>';
-        var getDeposit = '<?php echo $deposit?>';
+        var getTotal = '<?php echo $total?>';
     </script>
 
     <script>
@@ -95,7 +97,7 @@
                 return actions.order.create({
                     purchase_units: [{
                         amount: {
-                            value: getDeposit
+                            value: getTotal
                         }
                     }]
                 });
@@ -108,10 +110,10 @@
 
                     $.ajax({
                         type: "POST",
-                        url: "processDeposit.php",
+                        url: "processWinner.php",
                         data: {
                             paymentDetail: details,
-                            deposit: getDeposit,
+                            total: getTotal,
                             auctionID: getAuctionID,
                         },
                         success: function(x) {

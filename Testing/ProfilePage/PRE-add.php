@@ -45,6 +45,8 @@
             }
             
             $InsertPRE = "INSERT INTO `prebuildpc` (`price`, `category`, `name`, `description`, `stock`, `image`, `status`, `seller`) VALUES ('$PREPrice', '$PRECategory', '$PREName', '$PREDesc', '$PREStock', '$PREImage', '$PREStatus', '$GetOwnerID')";
+
+            header("Location: ../includes/generateApproval.php?adminType=2&itemType=2&itemName=$PREName");
             
             if (mysqli_query($conn, $InsertPRE)) {
                 echo "Pre-Build PC created successfuly!";

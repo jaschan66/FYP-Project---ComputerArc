@@ -29,6 +29,8 @@ $rowNo = 1;
                 <th>Start Date</th>
                 <th>End Date</th>
                 <th></th>
+                <th>Status</th>
+                <th></th>
             </tr>
         </thead>
         <tbody>
@@ -38,6 +40,11 @@ $rowNo = 1;
                 while ($row = mysqli_fetch_array($resultAuctionJoined)) {
                     if (mysqli_num_rows($resultItem = mysqli_query($conn, "SELECT * FROM auction WHERE id = {$row['auctionID']}")) > 0) {
                         $rowItem = mysqli_fetch_assoc($resultItem);
+                        if ($rowItem["status"] == 3) {
+                            $aucstatus = "<td>Auction Started</td>";
+                        } else if ($rowItem["status"] == 4) {
+                            $aucstatus = "<td>Auction Ended</td>";
+                        }
             ?>
                         <tr id="<?php echo $row["id"] ?>">
                             <td><?php echo $rowNo ?></td>
@@ -46,6 +53,7 @@ $rowNo = 1;
                             <td>RM <?php echo $rowItem["starting_bid"] ?></td>
                             <td><?php echo date("j/n/Y", strtotime($rowItem["start_date"])) ?></td>
                             <td><?php echo date("j/n/Y", strtotime($rowItem["end_date"])) ?></td>
+                            <td><?php echo $aucstatus ?></td>
                             <td><a href="auctionDetailPage.php?idRetrieve=<?php echo $rowItem["id"] ?>" class="btn btn-dark">View</a></td>
                         </tr>
                         <?php $rowNo++; ?>

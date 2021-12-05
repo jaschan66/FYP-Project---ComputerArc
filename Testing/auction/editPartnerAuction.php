@@ -9,12 +9,13 @@
 
 <?php 
 date_default_timezone_set("Asia/Kuala_Lumpur"); 
-$mindate=date("Y-m-d");
-$mintime=date("h:i");
-$min=$mindate."T".$mintime;
-$maxdate=date("Y-m-d", strtotime("+12 Days"));
-$maxtime=date("h:i");
-$max=$maxdate."T".$maxtime;
+$mindate = date("Y-m-d", strtotime("+3 days"));
+$mintime = date("h:i");
+$min = $mindate."T".$mintime;
+
+// $maxdate=date("Y-m-d", strtotime("+12 Days"));
+// $maxtime=date("h:i");
+// $max=$maxdate."T".$maxtime;
 ?>
 
 <form style='font-family: Questrial; text-align: left' method='POST' id="createAuction" enctype='multipart/form-data'>
@@ -76,7 +77,7 @@ $max=$maxdate."T".$maxtime;
                         success: function(x) {
                             var delay = 500;
                             console.log(x);
-                            if (x == "Auction created successfuly!") {
+                            if (x == "Approval successfully sent to Admin") {
                                 Swal.fire(x, '', 'success').then((result => {
                                     if (result.isConfirmed) {
                                         window.location = "profilePage.php?editAuc=1&editPRE=0&editProf=0&editPCP=0&salesO=0";

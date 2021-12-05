@@ -84,9 +84,9 @@ session_start();
     <?php
     include "includes/dbh.inc.php";
     $msg = "";
-        if(empty($_SESSION['email']) && empty($_SESSION['role'])){
-            header("Location: homePage.php");
-        }
+    if (empty($_SESSION['email']) && empty($_SESSION['role'])) {
+        header("Location: homePage.php");
+    }
 
 
     $email = $_SESSION['email'];
@@ -104,7 +104,7 @@ session_start();
     // For edit Profile (Partner Ver)
     if (isset($_POST) && isset($_POST['btnSubmitEditProf'])) {
 
-        $description = $conn -> real_escape_string($_POST['description']);
+        $description = $conn->real_escape_string($_POST['description']);
         $telNo = $_POST['telNo'];
         $faxNo = $_POST['faxNo'];
         $twoFAStatus = $_POST['twoFAStatus'];
@@ -143,7 +143,7 @@ session_start();
     }
 
     // For Create PRE
-    
+
 
     $result = mysqli_query($conn, "SELECT * FROM `$role` WHERE email ='$email'");
     $resultimg = mysqli_query($conn, "SELECT profilepic FROM `$role` WHERE email ='$email'");
@@ -178,7 +178,7 @@ session_start();
                     while ($img = mysqli_fetch_array($resultimg)) {
                         echo '<img src="data:image/jpg;base64,' . base64_encode($img['profilepic']) . '" height="180px" width="180px" style="object-fit:contain" alt="Profile Picture" class="img-thumbnail img-responsive"/>';
                     }
-                    if  ($_SESSION['role'] == "member") {
+                    if ($_SESSION['role'] == "member") {
                         echo "<p style='font-size: 20px'>Raffle Ticket Earned: <label style='text-align:right;font-size: 25px;color:#1770ff'>" . $name['raffleTicket']  . "</label></p>";
                     }
                 }
@@ -230,7 +230,7 @@ session_start();
                 ?>
                 <?php
 
-                    //Partner Pages
+                //Partner Pages
                 if ($_SESSION['role'] == "partner") {
                     if ($_GET['editProf'] == 1) {
                         include "ProfilePage/editPartnerProf.php";
@@ -252,62 +252,69 @@ session_start();
                         include "auction/editPartnerAuction.php";
                     } else if ($_GET['editAuc'] == 3) {
                         include "auction/updateAuction.php";
-                    }else if ($_GET['salesO'] == 1){
+                    } else if ($_GET['salesO'] == 1) {
                         include "payment/salesOrder.php";
-                    }else if ($_GET['salesO'] == 2){
+                    } else if ($_GET['salesO'] == 2) {
                         include "commission/mainCommissionPage.php";
+                    } else if ($_GET['editAd'] == 1) {
+                        include "advertisement/mainAdvertisement.php";
+                    } else if ($_GET['editAd'] == 2) {
+                        include "advertisement/editAdvertisement.php";
                     }
-                } 
-                else if ($_SESSION['role'] == "member") 
-                {           //Member Pages
+                } else if ($_SESSION['role'] == "member") {           //Member Pages
                     if ($_GET['editProf'] == 1) {
                         include "ProfilePage/editMemberProf.php";
-                    }  else if ($_GET['memAuc'] == 1) {
+                    } else if ($_GET['memAuc'] == 1) {
                         include "auction/mainMemberAuction.php";
-                    }  else if ($_GET['wishlist'] == 1) {
+                    } else if ($_GET['wishlist'] == 1) {
                         include "wishlist/mainWishlist.php";
                     } else if ($_GET['paymentHis'] == 1) {
                         include "payment/mainPaymentHistory.php";
-                    }else if ($_GET['raffle'] == 1) {
+                    } else if ($_GET['raffle'] == 1) {
                         include "raffle/raffleJoined.php";
+                    } else if ($_GET['referral'] == 1) {
+                        include "ProfilePage/referral.php";
                     }
-                } 
-                else if($_SESSION['role'] == "admin") 
-                {           //Admin Pages
+                } else if ($_SESSION['role'] == "admin") {           //Admin Pages
                     if ($_GET['editProf'] == 1) {
                         include "admin/editAdminProf.php";
                     } else if ($_GET['reviewUser'] == 1) {
                         include "ProfilePage/editAdminProf.php";
                     } else if ($_GET['reviewApp'] == 1) {
                         include "admin/mainListApproval.php";
-                    } else if ($_GET['comm'] == 1){
+                    } else if ($_GET['comm'] == 1) {
                         include "commission/mainCommissionPage.php";
-                    }else if ($_GET['report'] == 1){
+                    } else if ($_GET['report'] == 1) {
                         include "report/mainReport.php";
-                    }else if ($_GET['report'] == 2){
+                    } else if ($_GET['report'] == 2) {
                         include "report/commissionReport.php";
-                    }else if ($_GET['report'] == 3){
+                    } else if ($_GET['report'] == 3) {
                         include "report/salesReport.php";
-                    }else if ($_GET['report'] == 4){
+                    } else if ($_GET['report'] == 4) {
                         include "report/raffleReport.php";
-                    }else if ($_GET['raffle'] == 1){
+                    } else if ($_GET['report'] == 5) {
+                        include "report/advertisementReport.php";
+                    } else if ($_GET['report'] == 6) {
+                        include "report/auctionReport.php";
+                    } else if ($_GET['report'] == 7) {
+                        include "report/approvalReport.php";
+                    } else if ($_GET['raffle'] == 1) {
                         include "raffle/mainRaffle.php";
                     }
-                    
                 }
                 ?>
 
-                </div>
-
-                <?php
-                if ($_SESSION['role'] == "partner" || $_SESSION['role'] == "member") {
-                    echo '<div class="col-1">
-                    </div>';
-                }
-                ?>
             </div>
 
+            <?php
+            if ($_SESSION['role'] == "partner" || $_SESSION['role'] == "member") {
+                echo '<div class="col-1">
+                    </div>';
+            }
+            ?>
         </div>
+
+    </div>
 
 
 
@@ -470,7 +477,7 @@ if ($_SESSION['role'] == "partner") {
        });
      </script>";
     }
-}else if ($_SESSION['role'] == "admin") {
+} else if ($_SESSION['role'] == "admin") {
     if ($_GET['raffle'] == 1) {
         echo "<script>
         $(document).ready(function() {

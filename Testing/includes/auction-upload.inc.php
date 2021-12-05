@@ -52,7 +52,7 @@ if (empty($err)) {
     session_start();
     $PartnerEmail   = $_SESSION['email'];
     $PartnerRole    = $_SESSION['role'];
-    $GetPartnerID    = mysqli_query($conn, "SELECT * FROM `$PartnerRole` WHERE email ='$PartnerEmail'");
+    $GetPartnerID   = mysqli_query($conn, "SELECT * FROM `$PartnerRole` WHERE email ='$PartnerEmail'");
     
     if (mysqli_num_rows($GetPartnerID) > 0) {
         $Getresult = mysqli_fetch_assoc($GetPartnerID);
@@ -61,8 +61,10 @@ if (empty($err)) {
     
     $insert = "INSERT INTO auction (`title`, `starting_bid`, `image`, `start_date`, `end_date`, `owner_id`, `status`) VALUES ('$auctionTittle', '$biddingPrice', '$image', '$auctionStartDt', '$auctionEndDt', '$GetOwnerID', 0)";
     
+    header("Location: generateApproval.php?adminType=3&itemType=3&itemName=$auctionTittle");
+    
     if (mysqli_query($conn, $insert)) {
-        echo "Auction created successfuly!";
+        echo "Approval successfully sent to Admin";
     } else {
         echo "Error occured: " . mysqli_error($conn);
     }

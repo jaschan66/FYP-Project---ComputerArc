@@ -104,10 +104,10 @@
 
 <?php
 include "includes/dbh.local.inc.php";
-$querySort = "SELECT * FROM auction WHERE status = 1 OR status = 3 ";
-$querySortName = "SELECT * FROM auction WHERE status = 1 OR status = 3 ORDER BY title ASC";
-$querySortDate = "SELECT * FROM auction WHERE status = 1 OR status = 3 ORDER BY start_date ASC";
-$querySortPrice = "SELECT * FROM auction WHERE status = 1 OR status = 3 ORDER BY starting_bid ASC";
+$querySort = "SELECT * FROM auction WHERE status = 1 OR status = 3 OR status = 4";
+$querySortName = "SELECT * FROM auction WHERE status = 1 OR status = 3  OR status = 4 ORDER BY title ASC";
+$querySortDate = "SELECT * FROM auction WHERE status = 1 OR status = 3  OR status = 4 ORDER BY start_date ASC";
+$querySortPrice = "SELECT * FROM auction WHERE status = 1 OR status = 3 OR status = 4 ORDER BY starting_bid ASC";
 
 ?>
 

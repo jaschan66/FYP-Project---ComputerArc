@@ -15,6 +15,8 @@ if (empty($_SESSION['email'])) {
 if (isset($_GET['logout'])) {
     unset($_SESSION['email']);
     unset($_SESSION['role']);
+    unset($_SESSION['emailSent']);
+    unset($_SESSION['aucPaid']);
     $_SESSION['status'] = "logout";
     header("Location: ../homePage.php");
 }

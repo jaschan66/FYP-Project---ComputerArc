@@ -9,7 +9,8 @@ if ($row["status"] == 0) {
             <td><button type="button" class="btn btn-danger" onclick="deleteAuction(this)" id="' . $row["id"] . '">Delete</button></td>';
 } else if ($row["status"] == 2) {
     $aucstatus = "<td>Rejected</td>";
-    $auctionBtn = '<td><a href="profilePage.php?editAuc=3&editPRE=0&editProf=0&editPCP=0&idUpdate=' . $row["id"] . '" class="btn btn-primary" >Update</a></td>
+    $auctionBtn = '<td><a href="auctionDetailPage.php?idRetrieve=' . $row["id"] . '" class="btn btn-dark" >View</a></td>
+            <td><a href="profilePage.php?editAuc=3&editPRE=0&editProf=0&editPCP=0&idUpdate=' . $row["id"] . '" class="btn btn-primary" >Update</a></td>
             <td><button type="button" class="btn btn-danger" onclick="deleteAuction(this)" id="' . $row["id"] . '">Delete</button></td>';
 } else if ($row["status"] == 3) {
     $aucstatus = "<td>Auction Started</td>";

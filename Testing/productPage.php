@@ -174,6 +174,9 @@
                         $querygetID = "SELECT id FROM member WHERE email = '$logonEmail'";
                         $getID = mysqli_query($conn, $querygetID);
                         $ID = mysqli_fetch_assoc($getID);
+
+                        $prodID = $productData["id"];
+                        $memID = $ID["id"];
                     } else if ($logonRole == "admin") {
                         $querygetID = "SELECT id FROM admin WHERE email = '$logonEmail'";
                         $getID = mysqli_query($conn, $querygetID);
@@ -200,20 +203,33 @@
                         </div>
                         <button type='button' onclick='tocheckout()' class='btn btn-dark' style='width:40%;margin-right:2vw;margin-left:1vw;'>Buy Now</button>
 
-                        <?php if ($isPCP == 0) { ?>
-                            <buttton class='btn btn-danger' style='width: 40%;' onclick="wishPRE(this)" id="<?php echo $productData["id"] ?>">Add to Wishlist</buttton>
+                        <?php if ($isPCP == 0) {
+                            $findDupp = mysqli_query($conn, "SELECT * FROM wishlist WHERE productType = 1 AND product_id = $prodID AND member_id = '$memID'");
 
-                        <?php } else if ($isPCP == 1) { ?>
-                            <buttton class='btn btn-danger' style='width: 40%;' onclick="wishPCP(this)" id="<?php echo $productData["id"] ?>">Add to Wishlist</buttton>
+                            if (mysqli_num_rows($findDupp) <= 0) { ?>
+                                <buttton class='btn btn-danger' style='width: 40%;' onclick="wishPRE(this)" id="<?php echo $productData["id"] ?>">Add to Wishlist</buttton>
 
-                        <?php } ?>
+                            <?php } else { ?>
+                                <buttton class='btn btn-primary' style='width: 40%;' onclick="wishPRE(this)" id="<?php echo $productData["id"] ?>">Remove from Wishlist</buttton>
+                            <?php }
+                        }
+                        if ($isPCP == 1) {
+                            $findDupp = mysqli_query($conn, "SELECT * FROM wishlist WHERE productType = 0 AND product_id = $prodID AND member_id = '$memID'");
+
+                            if (mysqli_num_rows($findDupp) <= 0) { ?>
+                                <buttton class='btn btn-danger' style='width: 40%;' onclick="wishPCP(this)" id="<?php echo $productData["id"] ?>">Add to Wishlist</buttton>
+                                
+                            <?php } else { ?>
+                                <buttton class='btn btn-primary' style='width: 40%;' onclick="wishPCP(this)" id="<?php echo $productData["id"] ?>">Remove from Wishlist</buttton>
+                        <?php }
+                        } ?>
                         <div class='col-sm-12'>
 
                         </div>
                     <?php } else if ($logonRole == "member" && $productData['stock'] <= 0) { ?>
                         <div class='col-sm-12'>
                             <buttton class='btn btn-dark' style='width: 40%;margin-right:2vw;margin-left:1vw;'>Out of stock</buttton>
-                            
+
                             <?php if ($isPCP == 0) { ?>
                                 <buttton class='btn btn-danger' style='width: 40%;' onclick="wishPRE(this)" id="<?php echo $productData["id"] ?>">Add to Wishlist</buttton>
 
@@ -225,9 +241,15 @@
 
                         <?php } else if ($_SESSION['role'] == "admin") {
                         if ($isPCP == 0) { ?>
+                            <b><label for="PREFeedback">Provide Feeback:</label></b>
+                            <textarea class="form-control mb-3" rows="3" id="PREFeedback" placeholder="Provide any necessary feeback" name="text"></textarea>
+
                             <button type="button" class='btn btn-dark' style='width: 40%;margin-right:2vw;margin-left:1vw;' onclick="approvedPREApp(this)" id="<?php echo $productData["id"] ?>">Approved</button>
                             <button type="button" class='btn btn-danger' style='width: 40%;' onclick="rejectPREApp(this)" id="<?php echo $productData["id"] ?>">Reject</button>
                         <?php } else if ($isPCP == 1) {  ?>
+                            <b><label for="PCPFeedback">Provide Feeback:</label></b>
+                            <textarea class="form-control mb-3" rows="3" id="PCPFeedback" placeholder="Provide any necessary feeback" name="text"></textarea>
+
                             <button type="button" class='btn btn-dark' style='width: 40%;margin-right:2vw;margin-left:1vw;' onclick="approvedPCPApp(this)" id="<?php echo $productData["id"] ?>">Approved</button>
                             <button type="button" class='btn btn-danger' style='width: 40%;' onclick="rejectPCPApp(this)" id="<?php echo $productData["id"] ?>">Reject</button>
                     <?php }
@@ -247,11 +269,15 @@
         </div>
         <hr />
         <div class="row">
-            <div class="col-sm-12" style="padding:0px">
+            <div class="col-sm-8" style="padding:0px">
                 <h4><u>Description</u></h4>
                 <p style="text-align:Left; width:auto;">
                     <?php echo $productData['description'] ?>
                 </p>
+            </div>
+            <div class="col-4 shadow p-4 mb-4 bg-white">
+                <h3 style="text-align: center;"><u>Advertisement</u></h3>
+                <?php include "advertisement/displayAdvertisement.php";?>
             </div>
         </div>
 
@@ -426,6 +452,7 @@ with the id of the image, and the strength of the magnifier glass:*/
         //Reject Pre-Build PC
         function rejectPREApp(e) {
             var id = $(e).attr('id');
+            var _feedback = $("#PREFeedback").val();
             Swal.fire({
                 title: 'Are you sure you want to reject this Approval?',
                 showCancelButton: true,
@@ -437,20 +464,27 @@ with the id of the image, and the strength of the magnifier glass:*/
                         type: "POST",
                         url: "admin/rejectApproval.php",
                         data: {
-                            idPREReject: id
+                            idPREReject: id,
+                            feedback: _feedback
                         },
                         success: function(result) {
                             var delay = 500
-
-                            Swal.fire(result, '', 'success').then((result => {
-                                if (result.isConfirmed) {
-                                    window.location = "profilePage.php?editProf=0&reviewUser=0&reviewApp=1";
-                                } else {
-                                    setTimeout(function() {
+                            if (result == "Approval has been Rejected") {
+                                Swal.fire(result, '', 'success').then((result => {
+                                    if (result.isConfirmed) {
                                         window.location = "profilePage.php?editProf=0&reviewUser=0&reviewApp=1";
-                                    }, delay);
-                                }
-                            }))
+                                    } else {
+                                        setTimeout(function() {
+                                            window.location = "profilePage.php?editProf=0&reviewUser=0&reviewApp=1";
+                                        }, delay);
+                                    }
+                                }))
+                            } else {
+                                Swal.fire({
+                                    icon: 'error',
+                                    title: result,
+                                })
+                            }
                         }
                     });
                 }
@@ -494,6 +528,7 @@ with the id of the image, and the strength of the magnifier glass:*/
         //Reject PC-part
         function rejectPCPApp(e) {
             var id = $(e).attr('id');
+            var _feedback = $("#PCPFeedback").val();
             Swal.fire({
                 title: 'Are you sure you want to reject this Approval?',
                 showCancelButton: true,
@@ -505,20 +540,27 @@ with the id of the image, and the strength of the magnifier glass:*/
                         type: "POST",
                         url: "admin/rejectApproval.php",
                         data: {
-                            idPCPReject: id
+                            idPCPReject: id,
+                            feedback: _feedback
                         },
                         success: function(result) {
                             var delay = 500
-
-                            Swal.fire(result, '', 'success').then((result => {
-                                if (result.isConfirmed) {
-                                    window.location = "profilePage.php?editProf=0&reviewUser=0&reviewApp=1";
-                                } else {
-                                    setTimeout(function() {
+                            if (result == "Approval has been Rejected") {
+                                Swal.fire(result, '', 'success').then((result => {
+                                    if (result.isConfirmed) {
                                         window.location = "profilePage.php?editProf=0&reviewUser=0&reviewApp=1";
-                                    }, delay);
-                                }
-                            }))
+                                    } else {
+                                        setTimeout(function() {
+                                            window.location = "profilePage.php?editProf=0&reviewUser=0&reviewApp=1";
+                                        }, delay);
+                                    }
+                                }))
+                            } else {
+                                Swal.fire({
+                                    icon: 'error',
+                                    title: result,
+                                })
+                            }
                         }
                     });
                 }

@@ -19,7 +19,7 @@ if ($updateAucTitle == "") {
 
 if ($updateAucBidPrice == "") {
     $err .= "Missing Starting Bidding Price! \n";
-} else if (!is_numeric($updateAucBidPrice) || $biddingPrice <= 0) {
+} else if (!is_numeric($updateAucBidPrice) || $updateAucBidPrice <= 0) {
     $err .= "Invalid Bidding Price! \n";
 }
 
@@ -47,8 +47,10 @@ if (empty($err)) {
     $updateQuery = "UPDATE auction SET title = '$updateAucTitle', starting_bid = '$updateAucBidPrice', start_date = '$updateAucStartDate', end_date = '$updateAucEndDate', status = 0 
                         $queryWithUpdatePicture WHERE id = '$updateAucID'";
 
+    header("Location: ../includes/generateApproval.php?adminType=3&itemType=3&itemName=$updateAucTitle");
+
     if (mysqli_query($conn, $updateQuery)) {
-        echo "Auction updated successfuly!";
+        echo "Approval successfully sent to Admin";
     } else {
         echo "Something went wrong when updating your auction, please try again later.";
         //echo mysqli_error($conn);

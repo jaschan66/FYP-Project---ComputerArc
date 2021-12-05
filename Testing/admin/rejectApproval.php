@@ -1,31 +1,44 @@
 <?php
 include "../includes/dbh.inc.php";
 
-if (!empty($_POST["idPCPReject"])) {
-    $idReject = $_POST['idPCPReject'];
+$feedback = $_POST['feedback'];
+if (!empty($feedback)) {
 
-    $updateQuery = "UPDATE pcpart SET status = 4 WHERE id = '$idReject'";
+    if (strlen($feedback) > 10) {
 
-    if (mysqli_query($conn, $updateQuery)) {
-        echo "Approval Rejected";
-    } 
-} else if (!empty($_POST["idPREReject"])) {
-    $idReject = $_POST['idPREReject'];
+        if (!empty($_POST["idPCPReject"])) {
+            $idReject = $_POST['idPCPReject'];
 
-    $updateQuery = "UPDATE prebuildpc SET status = 4 WHERE id = '$idReject'";
+            $updateQuery = "UPDATE pcpart SET status = 4, comment = '$feedback' WHERE id = '$idReject'";
 
-    if (mysqli_query($conn, $updateQuery)) {
-        echo "Approval Rejected";
-    }
-} else if (!empty($_POST["idAUCReject"])) {
-    $idReject = $_POST["idAUCReject"];
+            if (mysqli_query($conn, $updateQuery)) {
+                echo "Approval has been Rejected";
+            }
+        } else if (!empty($_POST["idPREReject"])) {
+            $idReject = $_POST['idPREReject'];
 
-    $updateQuery = "UPDATE auction SET status = 2 WHERE id = '$idReject'";
+            $updateQuery = "UPDATE prebuildpc SET status = 4, comment = '$feedback'  WHERE id = '$idReject'";
 
-    if (mysqli_query($conn, $updateQuery)) {
-        echo "Approval Rejected";
+            if (mysqli_query($conn, $updateQuery)) {
+                echo "Approval has been Rejected";
+            } else {
+                echo mysqli_error($conn);
+            }
+        } else if (!empty($_POST["idAUCReject"])) {
+            $idReject = $_POST["idAUCReject"];
+
+            $updateQuery = "UPDATE auction SET status = 2, comment = '$feedback' WHERE id = '$idReject'";
+
+            if (mysqli_query($conn, $updateQuery)) {
+                echo "Approval has been Rejected";
+            }
+        } else {
+            echo "Something went wrong when rejecting the approval, please try again later.";
+            echo mysqli_error($conn);
+        }
+    } else {
+        echo "Please provide more feedback";
     }
 } else {
-    echo "Something went wrong when rejecting the approval, please try again later.";
-    //echo mysqli_error($conn);
+    echo "Please provide some feedback";
 }

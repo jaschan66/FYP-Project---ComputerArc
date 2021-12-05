@@ -12,45 +12,58 @@
     <link href='SweetAlert/sweetalert2.min.css' rel='stylesheet'>
 
     <?php
-
+    date_default_timezone_set("Asia/Kuala_Lumpur");
+    require "includes/header.php";
     include "includes/dbh.inc.php";
-    $deposit = $_GET['deposit'];
-    $auctionID = $_GET['auctionID'];
+    $itemType = $_GET['itemType'];
+    $idRetrieve = $_GET['idRetrieve'];
     $logonEmail = $_SESSION['email'];
 
-    $querygetAuction = "SELECT * FROM auction WHERE id = '$auctionID'";
-    $getAuctionDetails = mysqli_query($conn, $querygetAuction);
-    $auctionData = mysqli_fetch_assoc($getAuctionDetails);
+    $querygetAd = "SELECT * FROM advertisement WHERE itemType = '$itemType' AND idRetrieve = '$idRetrieve' ORDER BY id DESC LIMIT 1";
+    $getAdDetails = mysqli_query($conn, $querygetAd);
+    $AdData = mysqli_fetch_assoc($getAdDetails);
 
-    $currentBid = $auctionData["starting_bid"];
-    $deposit =  number_format($deposit, 2, '.', '');
+    $advertID = $AdData["id"];
 
-    ?>
+    //Calculate Date and Price
+    $start_date = new DateTime($AdData["start_date"]);
+    $end_date = new DateTime($AdData["end_date"]);
+
+    $days_diff = $start_date->diff($end_date)->format("%a");
+    $total = $days_diff * 100;
+
+    if ($itemType == 0) {
+        $querygetProduct = "SELECT * FROM pcpart WHERE id = '$idRetrieve'";
+        $getProductDetails = mysqli_query($conn, $querygetProduct);
+        $ProductData = mysqli_fetch_assoc($getProductDetails);
+    } else if ($itemType == 1) {
+        $querygetProduct = "SELECT * FROM prebuildpc WHERE id = '$idRetrieve'";
+        $getProductDetails = mysqli_query($conn, $querygetProduct);
+        $ProductData = mysqli_fetch_assoc($getProductDetails);
+    } ?>
 
 <body>
     <script src='https://www.paypal.com/sdk/js?client-id=AQ4hQhEivZvuuZanNqIzkb23shsqzDUcwUMPb4hRvNkf9RAlWdpH0n-rbFxFw_hDV9ctv3OPxfOXAwoV&locale=en_GB&currency=MYR'>
         // Required. Replace YOUR_CLIENT_ID with your sandbox client ID.
     </script>
 
-    <?php
-    include("includes/header.php"); ?>
-
-
     <!--Content after here-->
     <div class="container">
         <div class="row" style="min-height:70vh;">
             <div class="col-lg-5" class="img-magnifier-container">
-                <img class="img-responsive" src="<?php echo 'data:image/jpg;base64,' . base64_encode($auctionData['image']) . '' ?>" height="440px" width="440px" style="object-fit: contain;" alt="Card image cap" id="productIMG">
+                <img class="img-responsive" src="<?php echo 'data:image/jpg;base64,' . base64_encode($ProductData['image']) . '' ?>" height="440px" width="440px" style="object-fit: contain;" alt="Card image cap" id="productIMG">
             </div>
             <div class="col-lg-7">
 
-                <p style="font-size: 28px"><?php echo $auctionData['title'] ?></p>
+                <p style="font-size: 28px"><?php echo $ProductData['name'] ?></p>
 
                 <div class='col-sm-12' style='margin-bottom:1vh;padding:0'>
-                    <input type='hidden' value='<?php echo $auctionData['id'] ?>' id='auctionID'>
-                    <p>To Start Bidding you must first pay a minumum of 10% deposit</p>
-                    <p>RM <?php echo $currentBid ?> / 10</p>
-                    <p style="font-size: 20px">Total Deposit(RM): <?php echo $deposit ?><label style="text-align:right;font-size: 25px" id='totalPrice'></label></p>
+                    <input type='hidden' value='<?php echo $ProductData['id'] ?>' id='auctionID'>
+                    <p>To Have your Item to be advertisement on our website you must first pay this amount</p>
+                    <p>Advertisement Duration: <?php echo date("j/n/Y", strtotime($AdData["start_date"])) ?> - <?php echo date("j/n/Y", strtotime($AdData["end_date"])) ?></p>
+                    <p>RM 100 * <?php echo $days_diff ?> per day</p>
+                    <p style="font-size: 20px">Total (RM): <?php echo $total ?><label style="text-align:right;font-size: 25px" id='totalPrice'></label></p>
+                    <button type="reset" onclick="history.back();" name="reset" id="reset" class="btn btn-secondary col-3" style='font-size: 1vw; font-family: Questrial; margin-bottom: 2vh;'>Back</button>
                 </div>
                 <div id="paypal-button-container"></div>
 
@@ -67,8 +80,6 @@
     </div>
     </div>
     </div>
-    <!--Content ends here-->
-    <?php include 'includes/footer.php'; ?>
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
@@ -78,8 +89,8 @@
     <script src="SweetAlert/sweetalert2.min.js"></script>
 
     <script>
-        var getAuctionID = '<?php echo $auctionID?>';
-        var getDeposit = '<?php echo $deposit?>';
+        var getAdID = '<?php echo $advertID ?>';
+        var getTotal = '<?php echo $total ?>';
     </script>
 
     <script>
@@ -95,7 +106,7 @@
                 return actions.order.create({
                     purchase_units: [{
                         amount: {
-                            value: getDeposit
+                            value: getTotal
                         }
                     }]
                 });
@@ -108,21 +119,21 @@
 
                     $.ajax({
                         type: "POST",
-                        url: "processDeposit.php",
+                        url: "advertisement/processAdvertisement.php",
                         data: {
                             paymentDetail: details,
-                            deposit: getDeposit,
-                            auctionID: getAuctionID,
+                            total: getTotal,
+                            advertisementID: getAdID,
                         },
                         success: function(x) {
                             if (x == "Paid successfully!") {
                                 Swal.fire(x, '', 'success').then((result => {
                                     var delay = 500;
                                     if (result.isConfirmed) {
-                                        window.location = "auctionDetailPage.php?idRetrieve=<?php echo $auctionID ?>";
+                                        window.location = "profilePage.php?sort=all&editAuc=0&editPRE=0&editProf=0&editPCP=0&editAd=1&salesO=0";
                                     } else {
                                         setTimeout(function() {
-                                            window.location = "auctionDetailPage.php?idRetrieve=<?php echo $auctionID ?>";
+                                            window.location = "profilePage.php?sort=all&editAuc=0&editPRE=0&editProf=0&editPCP=0&editAd=1&salesO=0";
                                         }, delay);
                                     }
                                 }))
@@ -146,7 +157,11 @@
 
         }).render('#paypal-button-container');
     </script>
-
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
 </body>
+<!--footer-->
+<?php require "includes/footer.php"; ?>
 
 </html>

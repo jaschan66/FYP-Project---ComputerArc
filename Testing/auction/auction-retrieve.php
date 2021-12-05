@@ -1,10 +1,14 @@
 <?php
 include "includes/dbh.inc.php";
+date_default_timezone_set("Asia/Kuala_Lumpur");
+
 $aucID = $_GET['idRetrieve'];
 $getAucData = "SELECT * FROM auction WHERE id = '$aucID'";
 
 $connGetData = mysqli_query($conn, $getAucData);
 $resultGetData = mysqli_fetch_assoc($connGetData);
+
+$countDownDateTime = date("M d, Y H:i:s", strtotime($resultGetData["end_date"]));
 
 if (mysqli_query($conn, $getAucData)) {
 

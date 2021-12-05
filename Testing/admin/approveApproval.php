@@ -23,7 +23,7 @@ if (!empty($_POST["idPCPApprove"])) {
     $updateQuery = "UPDATE auction SET status = 1 WHERE id = '$idApprove'";
 
     if (mysqli_query($conn, $updateQuery)) {
-        echo "Approval Approved";
+        echo "Item is now on listing";
     }
 } else {
     echo "Something went wrong when approving the approval, please try again later.";

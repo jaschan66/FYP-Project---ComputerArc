@@ -8,10 +8,11 @@
 </style>
 
 <?php
-date_default_timezone_set("Asia/Kuala_Lumpur");
-$mindate = date("Y-m-d");
+date_default_timezone_set("Asia/Kuala_Lumpur"); 
+$mindate = date("Y-m-d", strtotime("+3 days"));
 $mintime = date("h:i");
-$min = $mindate . "T" . $mintime;
+$min = $mindate."T".$mintime;
+
 $maxdate = date("Y-m-d", strtotime("+12 Days"));
 $maxtime = date("h:i");
 $max = $maxdate . "T" . $maxtime;
@@ -83,7 +84,7 @@ $resultGetData = mysqli_fetch_assoc($connGetData);
                         success: function(x) {
                             var delay = 500;
 
-                            if (x == "Auction updated successfuly!") {
+                            if (x == "Approval successfully sent to Admin") {
                                 Swal.fire(x, '', 'success').then((result => {
                                     if (result.isConfirmed) {
                                         window.location = "profilePage.php?editAuc=1&editPRE=0&editProf=0&editPCP=0&salesO=0";
