@@ -37,7 +37,7 @@ if (!empty($feedback)) {
             echo mysqli_error($conn);
         }
     } else {
-        echo "Please provide more feedback";
+        echo "Please provide a minimum 10 words of feedback";
     }
 } else {
     echo "Please provide some feedback";

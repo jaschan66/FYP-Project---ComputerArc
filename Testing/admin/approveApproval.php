@@ -7,7 +7,7 @@ if (!empty($_POST["idPCPApprove"])) {
     $updateQuery = "UPDATE pcpart SET status = 1 WHERE id = '$idApprove'";
 
     if (mysqli_query($conn, $updateQuery)) {
-        echo "Approval Approved";
+        echo "Item is now on listing";
     } 
 } else if (!empty($_POST["idPREApprove"])) {
     $idApprove = $_POST['idPREApprove'];
@@ -15,7 +15,7 @@ if (!empty($_POST["idPCPApprove"])) {
     $updateQuery = "UPDATE prebuildpc SET status = 1 WHERE id = '$idApprove'";
 
     if (mysqli_query($conn, $updateQuery)) {
-        echo "Approval Approved";
+        echo "Item is now on listing";
     }
 } else if (!empty($_POST["idAUCApprove"])) {
     $idApprove = $_POST["idAUCApprove"];
